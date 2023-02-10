@@ -1,8 +1,10 @@
-﻿@model List<Patient>
+﻿@using DentalManagementSystem.Models
+@model List<Patient>
+
 
 @{
     ViewData["Title"] = "Index";
-}
+ }
 
 <h1>Index</h1>
 
@@ -37,22 +39,22 @@
         <form asp-action="Index"  >
         <tr>
             <th>
-                <input type="text" />
+                <input type="text" name="Name" />
             </th>
             <th>
-                <input type="text" />
+                <input type="text" name="Birthday" />
             </th>
             <th>
-                <input type="text" />
+                <input type="text" name="Gender" />
             </th>
             <th>
-                <input type="text" />
+                <input type="text" name="Address" />
             </th>
             <th>
-                <input type="text" />
+                <input type="text" name="Phone" />
             </th>
             <th>
-                <input type="text" />
+                <input type="text" name="Email" />
             </th>
             <th>
                 <input type="submit" value="search" />
