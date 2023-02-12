@@ -14,6 +14,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>ID</th>
             <th>
                 Name
             </th>
@@ -38,6 +39,9 @@
     <tbody>
         <form asp-action="Index"  >
         <tr>
+            <th>
+                <input type="text" name="Id" />
+            </th>
             <th>
                 <input type="text" name="Name" />
             </th>
@@ -64,23 +68,31 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.Id</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @item.Name
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Birthday)
+                    @item.Birthday.Day/@item.Birthday.Month/@item.Birthday.Year
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
+                    @if (@item.Gender)
+                    {
+                        <p>nam</p>
+                    }
+                    else
+                    {
+                        <p>nữ</p>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                    @item.Address
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
+                    @item.Phone
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @item.Email
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

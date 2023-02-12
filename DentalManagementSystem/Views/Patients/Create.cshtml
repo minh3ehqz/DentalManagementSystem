@@ -19,12 +19,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Birthday" class="control-label"></label>
-                <input asp-for="Birthday" class="form-control" />
+                <input asp-for="Birthday" class="form-control" type="date" />
                 <span asp-validation-for="Birthday" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Gender" /> @Html.DisplayNameFor(model => model.Gender)
+                    <input type="radio" name="gender" value="true" checked>nam
+                    <input type="radio" name="gender" value="false">nữ
                 </label>
             </div>
             <div class="form-group">
