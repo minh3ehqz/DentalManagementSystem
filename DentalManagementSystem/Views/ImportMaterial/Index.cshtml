@@ -1,0 +1,62 @@
+﻿@model List<MaterialImport>
+<br>
+<h2>Material Import List</h2>
+<a class="btn btn-primary btn-sm" href="/ImportMaterial/Create">Import new Item</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Material ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Suply Name</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form asp-action="Index">
+        <tr>
+            <th>
+                <input type="text" name="Id" />
+            </th>
+            <th>
+                <input type="text" name="MaterialId" />
+            </th>
+            <th>
+                <input type="date" name="Date" />
+            </th>
+            <th>
+                <input type="number" name="Amount" />
+            </th>
+            <th>
+                <input type="text" name="SuplyName" />
+            </th>
+            <th>
+                <input type="numer" name="TotalPrice" />
+            </th>
+            <th>
+                <input type="submit" value="search" />
+            </th>
+        </tr>
+
+        </form>
+        @foreach(var item in Model)
+        {
+    <th>ID</th>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.MaterialId)</td>
+                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+                <td>@Html.DisplayFor(modelItem => item.SupplyName)</td>
+                <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                        <input type="hidden" value="@item.Id" />
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+                
+        }
+    </tbody>
+</table>
