@@ -21,13 +21,14 @@ namespace DentalManagementSystem.DAL
         {
             return Patients
                 .Include(x => x.PatientRecords)
+                .Include(x => x.Treatments)
+                .Include(x => x.Schedules)
                 .FirstOrDefault(x => x.Id == id);
         }
 
         public override List<Patient> ListAll()
         {
             return Patients
-                .Include(x => x.PatientRecords)
                 .Where(x => !x.IsDeleted).ToList();
         }
 
@@ -38,7 +39,8 @@ namespace DentalManagementSystem.DAL
 
         public override void Update(Patient entity)
         {
-            throw new NotImplementedException();
+            Patients.Update(entity);
+            SaveChanges();
         }
     }
 }

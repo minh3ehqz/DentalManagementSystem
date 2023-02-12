@@ -1,0 +1,107 @@
+﻿@using DentalManagementSystem.Models
+@model List<Patient>
+
+
+@{
+    ViewData["Title"] = "Index";
+ }
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>
+                Name
+            </th>
+            <th>
+                Birthday
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <form asp-action="Index"  >
+        <tr>
+            <th>
+                <input type="text" name="Id" />
+            </th>
+            <th>
+                <input type="text" name="Name" />
+            </th>
+            <th>
+                <input type="text" name="Birthday" />
+            </th>
+            <th>
+                <input type="text" name="Gender" />
+            </th>
+            <th>
+                <input type="text" name="Address" />
+            </th>
+            <th>
+                <input type="text" name="Phone" />
+            </th>
+            <th>
+                <input type="text" name="Email" />
+            </th>
+            <th>
+                <input type="submit" value="search" />
+            </th>
+        </tr>
+        </form>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Birthday.Day/@item.Birthday.Month/@item.Birthday.Year
+                </td>
+                <td>
+                    @if (@item.Gender)
+                    {
+                        <p>nam</p>
+                    }
+                    else
+                    {
+                        <p>nữ</p>
+                    }
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                        <input type="hidden" value="@item.Id" />
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
