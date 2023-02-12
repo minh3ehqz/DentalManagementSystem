@@ -15,16 +15,18 @@ namespace DentalManagementSystem.Controllers
         PatientDBContext DB = new PatientDBContext();
 
         // GET: Patients
-        public IActionResult Index(long id,String name,String Birthday,String address,String phone,String email )
+        public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email)
         {
-            if (id != 0 || Birthday !=null|| name != null || address != null || phone != null || email != null)
+            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null)
             {
-                var result = DB.Patients.Where(x => id != 0 && x.Id == id
-                || name != null && x.Name.Contains(name)
-                || Birthday !=null && x.Birthday.ToString().Contains(Birthday)
-                || address != null && x.Address.Contains(address)
-                || phone != null && x.Phone.Contains(phone)
-                || email != null && x.Email.Contains(email)).ToList();
+
+                var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
+                && p.Name.Contains((name ?? ""))
+                && p.Birthday.ToString().Contains((Birthday ?? ""))
+                && p.Address.Contains((address ?? ""))
+                && p.Phone.Contains((phone ?? ""))
+                && p.Email.Contains((email ?? ""))).ToList();
+
                 return View(result);
             }
             var PatientList = DB.ListAll();
