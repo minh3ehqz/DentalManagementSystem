@@ -1,4 +1,4 @@
-﻿using DentalManagementSystem.Models;
+using DentalManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.DAL
@@ -28,7 +28,7 @@ namespace DentalManagementSystem.DAL
 
         public override List<Service> ListAll()
         {
-            return Services.Where(x => !x.IsDeleted).ToList();
+            return Services.ToList();
         }
 
         public override List<Service> ListAll(long OwnerId)
