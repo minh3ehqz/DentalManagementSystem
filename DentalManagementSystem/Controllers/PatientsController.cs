@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
-
+using DentalManagementSystem.Utils;
 namespace DentalManagementSystem.Controllers
 {
-    public class PatientsController : Controller
+    public class PatientsController : AuthController
     {
+        ValidateBirthday v = new ValidateBirthday();
         PatientDBContext DB = new PatientDBContext();
 
         // GET: Patients
@@ -41,13 +42,6 @@ namespace DentalManagementSystem.Controllers
             return View(patient);
         }
 
-        //kiểm tra năm sinh hợp lệ
-        public bool checkBirthday(DateTime birthday)
-        {
-            if (DateTime.Now < birthday) return false;
-            else if(DateTime.Now.Year - birthday.Year>=150) return false;
-            return true;
-        } 
 
         // GET: thêm mới bệnh nhân
         public IActionResult Create()
@@ -60,7 +54,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (checkBirthday(patient.Birthday))
+            if (v.checkBirthday(patient.Birthday))
             {
                 DB.Add(patient);
                 return RedirectToAction(nameof(Index));
@@ -85,7 +79,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if(checkBirthday(patient.Birthday))
+            if(v.checkBirthday(patient.Birthday))
             DB.Update(patient);
             return RedirectToAction("Details", new { id = patient.Id });
         }
