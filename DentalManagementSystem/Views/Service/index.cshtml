@@ -1,4 +1,4 @@
-﻿@using DentalManagementSystem.Models
+@using DentalManagementSystem.Models
 @model List<Service>
 
 
@@ -43,7 +43,6 @@
         </form>
         @foreach (var item in Model)
         {
-        <th>ID</th>
         <td>@Html.DisplayFor(modelItem => item.Id)</td>
         <td>@Html.DisplayFor(modelItem => item.Name)</td>
         <td>@Html.DisplayFor(modelItem => item.Unit)</td>
