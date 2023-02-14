@@ -7,11 +7,11 @@ public partial class User
 {
     public long Id { get; set; }
 
-    public int Username { get; set; }
+    public string Username { get; set; } = null!;
 
-    public int FullName { get; set; }
+    public string FullName { get; set; } = null!;
 
-    public int Password { get; set; }
+    public string Password { get; set; } = null!;
 
     public DateTime Birthday { get; set; }
 

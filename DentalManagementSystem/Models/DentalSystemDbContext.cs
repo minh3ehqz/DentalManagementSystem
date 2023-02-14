@@ -45,10 +45,9 @@ public partial class DentalSystemDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    //Không đổi éo chạy đc đâu :D
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("server =DESKTOP-BII4AH5\\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=minh0941203221;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("server =DESKTOP-3PS4NQ2; database = DentalSystemDB;uid=sa;pwd=dopi4720;encrypt=true;trustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -59,12 +58,10 @@ public partial class DentalSystemDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Name)
-                .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasColumnName("name");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Unit)
-                .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasColumnName("unit");
         });
@@ -103,7 +100,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.Property(e => e.IsDeleted).HasColumnName("is_deleted");
             entity.Property(e => e.MaterialId).HasColumnName("material_id");
             entity.Property(e => e.SupplyName)
-                .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasColumnName("supply_name");
             entity.Property(e => e.TotalPrice).HasColumnName("total_price");
@@ -174,7 +170,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<PatientRecordServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83FB21B7A27");
+            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83FF2218379");
 
             entity.ToTable("patient_record_service_map");
 
@@ -198,35 +194,31 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Permission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83F8146E88C");
+            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83FF82EAA47");
 
             entity.ToTable("permission");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasMaxLength(1)
-                .HasColumnName("name");
+            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FCA69F8D7");
+            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FE73B7CBF");
 
             entity.ToTable("roles");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasMaxLength(1)
-                .HasColumnName("name");
+            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         modelBuilder.Entity<RolePermissionMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83F66CE531F");
+            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83F90F5C335");
 
             entity.ToTable("role_permission_map");
 
@@ -249,7 +241,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83F7106BDB0");
+            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83F2959252C");
 
             entity.ToTable("schedule");
 
@@ -271,7 +263,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__services__3213E83F5715F358");
+            entity.HasKey(e => e.Id).HasName("PK__services__3213E83F38E04C14");
 
             entity.ToTable("services");
 
@@ -279,16 +271,14 @@ public partial class DentalSystemDbContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.MarketPrice).HasColumnName("market_price");
-            entity.Property(e => e.Name)
-                .HasMaxLength(1)
-                .HasColumnName("name");
+            entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.Unit).HasColumnName("unit");
         });
 
         modelBuilder.Entity<Timekeeping>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83FFA78F7B5");
+            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83F97A187F4");
 
             entity.ToTable("timekeeping");
 
@@ -311,16 +301,14 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Treatment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F8D71ED4C");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83FBF280307");
 
             entity.ToTable("treatments");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasMaxLength(1)
-                .HasColumnName("name");
+            entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.PatientId).HasColumnName("patient_id");
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Treatments)
@@ -331,7 +319,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<TreatmentServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F772C5717");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83FCD3F0BDB");
 
             entity.ToTable("treatment_service_map");
 
@@ -373,19 +361,23 @@ public partial class DentalSystemDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("birthday");
             entity.Property(e => e.Email)
-                .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.Enable).HasColumnName("enable");
-            entity.Property(e => e.FullName).HasColumnName("full_name");
-            entity.Property(e => e.Password).HasColumnName("password");
+            entity.Property(e => e.FullName)
+                .HasMaxLength(50)
+                .HasColumnName("full_name");
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .HasColumnName("password");
             entity.Property(e => e.Phone)
-                .HasMaxLength(1)
                 .IsUnicode(false)
                 .HasColumnName("phone");
             entity.Property(e => e.RoleId).HasColumnName("role_id");
             entity.Property(e => e.Salary).HasColumnName("salary");
-            entity.Property(e => e.Username).HasColumnName("username");
+            entity.Property(e => e.Username)
+                .HasMaxLength(50)
+                .HasColumnName("username");
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)

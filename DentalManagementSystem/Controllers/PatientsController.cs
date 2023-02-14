@@ -32,8 +32,7 @@ namespace DentalManagementSystem.Controllers
             var PatientList = DB.ListAll();
             return View(PatientList);
         }
-
-
+        
 
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
