@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DentalManagementSystem.Models;
 
@@ -15,8 +16,10 @@ public partial class Patient
 
     public string Address { get; set; } = null!;
 
+    [RegularExpression(@"^\d{10,15}$", ErrorMessage = "Số điện thoại không hợp lệ")]
     public string Phone { get; set; } = null!;
 
+    [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage = "Email không hợp lệ")]
     public string Email { get; set; } = null!;
 
     public string BodyPrehistory { get; set; } = null!;
