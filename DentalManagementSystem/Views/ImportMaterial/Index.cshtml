@@ -1,7 +1,14 @@
-﻿@model List<MaterialImport>
+﻿@using DentalManagementSystem.Models
+@model List<MaterialImport>
+@{
+    ViewData["Title"] = "Index";
+ }
 <br>
+
 <h2>Material Import List</h2>
+
 <a class="btn btn-primary btn-sm" href="/ImportMaterial/Create">Import new Item</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,7 +24,7 @@
         <form asp-action="Index">
         <tr>
             <th>
-                <input type="text" name="Id" />
+                <input type="text" name="Id" maxlength="250" />
             </th>
             <th>
                 <input type="text" name="MaterialId" />
@@ -38,24 +45,24 @@
                 <input type="submit" value="search" />
             </th>
         </tr>
-
         </form>
         @foreach(var item in Model)
         {
-                <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                <td>@Html.DisplayFor(modelItem => item.MaterialId)</td>
-                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                <td>@Html.DisplayFor(modelItem => item.Amount)</td>
-                <td>@Html.DisplayFor(modelItem => item.SupplyName)</td>
-                <td>@Html.DisplayFor(modelItem => item.TotalPrice)</td>
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.MaterialId</td>
+                <td>@item.Date</td>
+                <td>@item.SupplyName</td>
+                <td>@item.Amount</td>
+                <td>@item.TotalPrice</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <form asp-action="Delete" method="post" asp-route-id="@item.Id">
                         <input type="hidden" value="@item.Id" />
                         <input type="submit" value="Delete" />
                     </form>
                 </td>
-                
+            </tr>
         }
-    </tbody>
+    </tbody>      
 </table>
