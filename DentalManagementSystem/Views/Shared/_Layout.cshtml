@@ -9,34 +9,19 @@
     <link rel="stylesheet" href="~/DentalManagementSystem.styles.css" asp-append-version="true" />
     <script src="~/js/site.js"></script>
 </head>
+
 <body>
     <header>
+        <button type="button" onclick="openPopup()" id="errorbtn">báo lỗi</button>
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DentalManagementSystem</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Dental Management System</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ImportMaterial" asp-action="Index">Import</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ExportMaterial" asp-action="Index">Export Material</a>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Service</a>
-                        </li>
-                        <button type="button" onclick="openPopup()">báo lỗi</button>
-                    </ul>
-                </div>
+
             </div>
         </nav>
         <!-- Popup -->
@@ -44,26 +29,46 @@
             <div class="popup-content">
                 <span class="close" onclick="closePopup()">&times;</span>
                 <h2>Hãy mô tả lỗi xảy ra</h2>
-                <textarea type="text" max="1000" style="width:100%;height:80% " name="error" cols="10" ></textarea><br />
-                <input type="submit" value="submit" style="margin:10px"/>
+                <textarea type="text" max="1000" style="width:100%;height:80% " name="error" cols="10"></textarea><br />
+                <input type="submit" value="submit" style="margin:10px" />
             </div>
         </div>
     </header>
-    <a href="#" onclick="notify()">Notify</a>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <div class="content">
+        <div class="content-left subcontent">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ImportMaterial" asp-action="Index">Import</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="ExportMaterial" asp-action="Index">Export Material</a>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Service</a>
+                    </li>
 
+                </ul>
+            </div>
+        </div>
+        <div class="content-right subcontent">
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - DentalManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
 </html>
