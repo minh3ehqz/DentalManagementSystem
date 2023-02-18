@@ -12,7 +12,6 @@ namespace DentalManagementSystem.Controllers
 {
     public class PatientsController : AuthController
     {
-        ValidateBirthday v = new ValidateBirthday();
         PatientDBContext DB = new PatientDBContext();
 
         // GET: Patients
@@ -20,7 +19,6 @@ namespace DentalManagementSystem.Controllers
         {
             if (id != null || Birthday != null || name != null || address != null || phone != null || email != null)
             {
-
                 var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
                 && p.Name.Contains((name ?? ""))
                 && p.Birthday.ToString().Contains((Birthday ?? ""))
@@ -33,11 +31,11 @@ namespace DentalManagementSystem.Controllers
             var PatientList = DB.ListAll();
             return View(PatientList);
         }
-        
+
 
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
-        { 
+        {
             var patient = DB.Get(id);
             return View(patient);
         }
@@ -54,13 +52,10 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (v.checkBirthday(patient.Birthday))
-            {
-                DB.Add(patient);
-                return RedirectToAction(nameof(Index));
-            }
-           
-            return View(patient);
+            TempData["addsuccess"] = "thêm mới thành công";
+            patient.Trim();
+            DB.Add(patient);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: thay đổi thông tin bênh nhân
@@ -79,8 +74,9 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if(v.checkBirthday(patient.Birthday))
+            patient.Trim();
             DB.Update(patient);
+            TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patient.Id });
         }
 
@@ -90,6 +86,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
         {
+            TempData["Delete messenger"] = "xóa thành công";
             DB.Delete(id);
             return RedirectToAction(nameof(Index));
         }
