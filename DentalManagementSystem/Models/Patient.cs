@@ -9,6 +9,7 @@ namespace DentalManagementSystem.Models
     {
         public long Id { get; set; }
 
+        [NameWithoutDigits]
         [TwoWords]
         [StringLength(maximumLength: 250, ErrorMessage = "tên chỉ có tối đa 250 kí tự")]
         public string Name { get; set; } = null!;
