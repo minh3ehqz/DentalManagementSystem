@@ -52,10 +52,14 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            TempData["addsuccess"] = "thêm mới thành công";
-            patient.Trim();
-            DB.Add(patient);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                patient.Trim();
+                DB.Add(patient);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
         // GET: thay đổi thông tin bênh nhân
@@ -74,10 +78,14 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            patient.Trim();
-            DB.Update(patient);
-            TempData["editsuccess"] = "edit thành công";
-            return RedirectToAction("Details", new { id = patient.Id });
+            if (ModelState.IsValid)
+            {
+                patient.Trim();
+                DB.Update(patient);
+                TempData["editsuccess"] = "edit thành công";
+                return RedirectToAction("Details", new { id = patient.Id });
+            }
+            return View();
         }
 
 

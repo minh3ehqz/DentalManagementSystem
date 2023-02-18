@@ -15,22 +15,21 @@ namespace DentalManagementSystem.Controllers
         ExportMaterialDBContext DB = new ExportMaterialDBContext();
 
         // GET: ExportMaterial
-        public IActionResult Index(long id, long MaterialId, int Amount, int totalPrice, long PatientRecordId)
+        public IActionResult Index(long? id, long MaterialId, int Amount, int totalPrice, long PatientRecordId)
         {
-            if (id != 0 || MaterialId != null || PatientRecordId != null || Amount != null || totalPrice != null)
+            if (id != null || MaterialId != null || PatientRecordId != null || Amount != null || totalPrice != null)
             {
-                var result = DB.MaterialExports.Where(x => id != 0 && x.Id == id
-                || Amount != null && x.Amount.Equals(Amount)    
-                || totalPrice != null && x.TotalPrice.Equals(totalPrice)).ToList();
+                var result = DB.MaterialExports.Where(x => (!id.HasValue || x.Id == id.Value)
+                && x.Amount == Amount    
+                && x.TotalPrice == totalPrice
+                && x.PatientRecordId==PatientRecordId).ToList();
                 return View(result);
             }
             var materialExportList = DB.ListAll();
             return View(materialExportList);
         }
 
-
-
-        // thông tin chi tiết của đơn xuất vật phẩm
+        // Details information of a record
         public IActionResult Details(long id)
         {
             if (id == null)
@@ -41,18 +40,18 @@ namespace DentalManagementSystem.Controllers
             return View(materialExport);
         }
 
-        // GET: thêm mới đơn xuất vật phẩm
+        // get: Add 1 record
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: thêm mới đơn xuất vật phẩm
+        // POST: Add 1 record 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id, Materialid, Amount, TotalPrice, PatientRecordId")] MaterialExport materialExport)
+        public IActionResult Create([Bind("Id,MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
         {
-            if (ModelState.IsValid)
+                 
             {
                 DB.Add(materialExport);
                 return RedirectToAction(nameof(Index));
@@ -60,7 +59,7 @@ namespace DentalManagementSystem.Controllers
             return View(materialExport);
         }
 
-        // GET: thay đổi thông tin đơn xuất vật phẩm
+        // GET: Change information of a record
         public IActionResult Edit(long id)
         {
             var materialExport = DB.Get(id);
@@ -71,10 +70,10 @@ namespace DentalManagementSystem.Controllers
             return View(materialExport);
         }
 
-        // POST: thay đổi thông tin đơn xuất vật phẩm
+        // POST: Change information of a record
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("Id, Materialid, Amount, TotalPrice, PatientRecordId")] MaterialExport materialExport)
+        public IActionResult Edit(long id, [Bind("Id, Materialid, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
         {
             if (id != materialExport.Id)
             {
@@ -85,7 +84,7 @@ namespace DentalManagementSystem.Controllers
         }
 
 
-        // xóa đơn xuất vật phẩm
+        // Delete a record 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
