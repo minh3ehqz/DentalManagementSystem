@@ -6,7 +6,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Services</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        <form asp-action="Index">
+        <form asp-action="Search" method="post">
         <tr>
             <th>
                 <input type="text" name="Id" />
@@ -39,23 +39,32 @@
             <th>
                 <input type="number" name="Price" />
             </th>
+            <th>
+                <input type="submit" value="Search" />
+            </th>
+
+            <th>
+                <input type="submit" name="Reset" value="Reset" />
+            </th>
         </tr>
+
         </form>
         @foreach (var item in Model)
         {
-        <td>@Html.DisplayFor(modelItem => item.Id)</td>
-        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        <td>@Html.DisplayFor(modelItem => item.Unit)</td>
-        <td>@Html.DisplayFor(modelItem => item.MarketPrice)</td>
-        <td>@Html.DisplayFor(modelItem => item.Price)</td>
-        <td>
-            <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
-            <form asp-action="Delete" method="post" asp-route-id="@item.Id">
-                <input type="hidden" value="@item.Id" />
-                <input type="submit" value="Delete" />
-            </form>
-        </td>
-
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Unit)</td>
+                <td>@Html.DisplayFor(modelItem => item.MarketPrice)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <form asp-action="Delete" method="post" asp-route-id="@item.Id">
+                        <input type="hidden" value="@item.Id" />
+                        <input type="submit" value="Delete" />
+                    </form>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
