@@ -15,7 +15,7 @@ html {
 
 html {
     position: relative;
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
@@ -28,11 +28,11 @@ body {
 
 .content{
     position : relative;
-    height : 100%;
+    height : 80%;
     width : 100%;
 }
 .subcontent{
-    height : 80%;
+    height : 100%;
 }
 
 .content-left{
