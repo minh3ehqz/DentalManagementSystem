@@ -268,7 +268,7 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("services");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                
                 .HasColumnName("id");
             entity.Property(e => e.MarketPrice).HasColumnName("market_price");
             entity.Property(e => e.Name).HasColumnName("name");
