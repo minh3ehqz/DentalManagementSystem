@@ -10,22 +10,17 @@ using DentalManagementSystem.Models;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class ImportMaterialController : Controller
+    public class ImportMaterialController : AuthController
     {
         ImportMaterialDBContext DB = new ImportMaterialDBContext();
 
         // GET: MaterialImport
         public IActionResult Index(long id, long MaterialId, DateTime Date, int Amount, String name, int totalPrice)
         {
-            if (id != 0 || name != null || MaterialId != null || Date != null || Amount != null || totalPrice != null)
-            {
-                var result = DB.MaterialImports.Where(x => id != 0 && x.Id == id
-                || name != null && x.SupplyName.Contains(name)
-                || Date != null && x.Date.ToString().Contains(Date.ToString())
-                || Amount != null && x.Amount.Equals(Amount)
-                || totalPrice != null && x.TotalPrice.Equals(totalPrice)).ToList();
-                return View(result);
-            }
+            //if ()
+            //{
+                
+            //}
             var materialImportList = DB.ListAll();
             return View(materialImportList);
         }
@@ -52,13 +47,11 @@ namespace DentalManagementSystem.Controllers
         // POST: thêm mới đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id, Materialid, Date, Amount, SuplyName, TotalPrice")]MaterialImport materialImport)
+        public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-            if (ModelState.IsValid)
-            {
-                DB.Add(materialImport);
-                return RedirectToAction(nameof(Index));
-            }
+
+            DB.Add(materialImport);
+            RedirectToAction("Index");
             return View(materialImport);
         }
 
@@ -76,7 +69,7 @@ namespace DentalManagementSystem.Controllers
         // POST: thay đổi thông tin đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("Id, Materialid, Date, Amount, SuplyName, TotalPrice")] MaterialImport materialImport)
+        public IActionResult Edit(long id, [Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")] MaterialImport materialImport)
         {
             if (id != materialImport.Id)
             {

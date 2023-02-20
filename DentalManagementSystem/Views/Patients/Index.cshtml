@@ -6,6 +6,7 @@
     ViewData["Title"] = "Index";
  }
 
+
 <h1>Index</h1>
 
 <p>
@@ -38,30 +39,30 @@
     </thead>
     <tbody>
         <form asp-action="Index"  >
-        <tr>
+        <tr class="searchPatientInput">
             <th>
-                <input type="text" name="Id" />
+                <input type="text" name="Id" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Name" />
+                <input type="text" name="Name" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Birthday" />
+                <input type="text" name="Birthday" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Gender" />
+                <input type="text" name="Gender" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Address" />
+                <input type="text" name="Address" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Phone" />
+                <input type="text" name="Phone" maxlength="250" />
             </th>
             <th>
-                <input type="text" name="Email" />
+                <input type="text" name="Email" maxlength="250" />
             </th>
             <th>
-                <input type="submit" value="search" />
+                <input type="submit" value="search" maxlength="250"  />
             </th>
         </tr>
         </form>
