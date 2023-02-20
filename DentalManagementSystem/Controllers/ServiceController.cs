@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class ServiceController : Controller
+    public class ServiceController : AuthController
     {
         ServiceDBContext DB = new ServiceDBContext();
 
