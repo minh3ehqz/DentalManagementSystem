@@ -1,3 +1,5 @@
+using DentalManagementSystem.Models;
+
 namespace DentalManagementSystem
 {
     public class Program
@@ -8,8 +10,15 @@ namespace DentalManagementSystem
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddSession(options =>
+            {
+                // Set the timeout for the session
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 
             var app = builder.Build();
+
+            app.UseSession();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

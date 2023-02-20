@@ -47,7 +47,7 @@ public partial class DentalSystemDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("server = MSI\\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=sa;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("server =DESKTOP-2QNQ58T; database = DentalSystemDB;uid=sa;pwd=sa;encrypt=true;trustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -138,7 +138,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("patient_record");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Causal).HasColumnName("causal");
             entity.Property(e => e.Date)
@@ -175,7 +174,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("patient_record_service_map");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.PatientRecordId).HasColumnName("patient_record_id");
             entity.Property(e => e.ServiceId).HasColumnName("service_id");
@@ -211,7 +209,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("roles");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
         });
@@ -246,7 +243,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("schedule");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Booked).HasColumnName("booked");
             entity.Property(e => e.Date)
@@ -283,7 +279,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("timekeeping");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.TimeCheckin)
                 .HasColumnType("datetime")
@@ -306,7 +301,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("treatments");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.Name).HasColumnName("name");
             entity.Property(e => e.PatientId).HasColumnName("patient_id");
@@ -324,7 +318,6 @@ public partial class DentalSystemDbContext : DbContext
             entity.ToTable("treatment_service_map");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.CurrentPrice).HasColumnName("current_price");
             entity.Property(e => e.Discount).HasColumnName("discount");

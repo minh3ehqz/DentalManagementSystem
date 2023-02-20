@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DentalManagementSystem.DAL;
+using DentalManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DentalManagementSystem.Controllers
 {
     public abstract class AuthController : Controller
     {
-        public bool isAuth()
+        public bool isAuth(out User user)
         {
-            if (HttpContext.Session.GetInt32("UserId") != null)
+            UserDBContext db = new UserDBContext();
+            if (HttpContext.Session.GetString("UserId") != null)
             {
+                user = db.Get(long.Parse(HttpContext.Session.GetString("UserId")));
                 return true;
             }
             else
             {
+                user = null;
                 return false;
             }
         }
