@@ -10,7 +10,7 @@ using DentalManagementSystem.Models;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class ExportMaterialController : Controller
+    public class ExportMaterialController : AuthController
     {
         ExportMaterialDBContext DB = new ExportMaterialDBContext();
 
