@@ -7,7 +7,7 @@ namespace DentalManagementSystem.Controllers
     {
         public IActionResult Index()
         {
-            if (isAuth())
+            if (isAuth(out _))
             {
                 return Redirect("/Home");
             }
@@ -15,16 +15,17 @@ namespace DentalManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string username, string password)
+        public IActionResult Login(string username, string password)
         {
-            if (isAuth())
+            if (isAuth(out _))
             {
                 return Redirect("/Home");
             }
-            UserDBContext DB = new UserDBContext();
-            var user = DB.GetByUsernamePassword(username, password);
+            UserDBContext userDBContext = new UserDBContext();
+            var user = userDBContext.GetByUsernamePassword(username.Trim(), password.Trim());
             if (user != null)
             {
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
                 return Redirect("/Home");
             }
             ViewData["LoginError"] = "Sai tài khoản hoặc mật khẩu";

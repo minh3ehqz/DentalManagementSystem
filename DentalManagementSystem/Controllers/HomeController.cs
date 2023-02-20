@@ -23,15 +23,7 @@ namespace DentalManagementSystem.Controllers
         {
             return View();
         }
-
-        public IActionResult Patient()
-        {
-            PatientDBContext DB = new PatientDBContext();
-            var PatientList = DB.ListAll();
-            
-            return View(PatientList);
-        }
-
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
