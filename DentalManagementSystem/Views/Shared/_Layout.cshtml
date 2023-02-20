@@ -1,74 +1,208 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<!--
+Author: Keenthemes
+Product Name: Seven
+Product Version: 1.1.2
+Purchase: https://keenthemes.com/products/seven-html-pro
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en" data-bs-theme-mode="light">
+<!--begin::Head-->
 <head>
+    <base href="" />
+    <title>Seven HTML Pro - Bootstrap 5 HTML Multipurpose Light/Dark Admin Dashboard Theme by Keenthemes</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DentalManagementSystem</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DentalManagementSystem.styles.css" asp-append-version="true" />
-    <script src="~/js/site.js"></script>
+    <meta name="description" content="Seven admin dashboard live demo. Check out all the features of the admin panel. Light & dark skins. A large number of settings, additional services and widgets." />
+    <meta name="keywords" content="Seven, bootstrap, bootstrap 5, dmin themes, free admin themes, bootstrap admin, bootstrap dashboard" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Seven HTML Pro - Bootstrap 5 HTML Multipurpose Light/Dark Admin Dashboard Theme" />
+    <meta property="og:url" content="https://keenthemes.com/products/seven-html-pro" />
+    <meta property="og:site_name" content="Keenthemes | Seven HTML Pro" />
+    <link rel="canonical" href="https://preview.keenthemes.com/seven-html-pro" />
+    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+
+    <!--thư viện jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="assets/js/script.js"></script>
 </head>
-
-<body>
-    <header>
-        <button type="button" onclick="openPopup()" id="errorbtn">báo lỗi</button>
-
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Dental Management System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-            </div>
-        </nav>
-        <!-- Popup -->
-        <div id="myPopup" class="popup">
-            <div class="popup-content">
-                <span class="close" onclick="closePopup()">&times;</span>
-                <h2>Hãy mô tả lỗi xảy ra</h2>
-                <textarea type="text" max="1000" style="width:100%;height:70% " name="error" cols="10"></textarea><br />
-                <input type="submit" value="submit" style="margin:10px" />
-            </div>
-        </div>
-    </header>
-    <div class="content">
-        <div class="content-left subcontent">
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="ImportMaterial" asp-action="Index">Import</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="ExportMaterial" asp-action="Index">Export Material</a>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Service</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-        <div class="content-right subcontent">
-            <div class="container">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-        </div>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body" data-kt-aside-minimize="on" class="page-loading-enabled page-loading aside-fixed aside-secondary-disabled">
+    <!--begin::Theme mode setup on page load-->
+    <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+    <!--end::Theme mode setup on page load-->
+    <!--begin::loader-->
+    <div class="page-loader flex-column">
+        <span class="spinner-border text-primary" role="status"></span>
+        <span class="text-muted fs-6 fw-semibold mt-5">Loading...</span>
     </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - DentalManagementSystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!--end::Loader-->
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Page-->
+        <div class="page d-flex flex-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div id="kt_aside"
+                 class="aside aside-extended "
+                 data-kt-drawer="true"
+                 data-kt-drawer-name="aside"
+                 data-kt-drawer-activate="{default: true, lg: false}"
+                 data-kt-drawer-overlay="true"
+                 data-kt-drawer-width="auto"
+                 data-kt-drawer-direction="start"
+                 data-kt-drawer-toggle="#kt_aside_toggle">
+                <!--begin::Primary-->
+                <div class="aside-primary d-flex flex-column align-items-lg-center flex-row-auto">
+                    <!--begin::Logo-->
+                    <div class="aside-logo d-none d-lg-flex flex-column align-items-center flex-column-auto py-10" id="kt_aside_logo">
+                        <a href="?page=index">
+                            <img alt="Logo" src="assets/media/logos/logo-default.svg" class="h-50px" />
+                        </a>
+                    </div>
+                    <!--end::Logo-->
+                    <!--begin::Nav-->
+                    <div class="aside-nav d-flex flex-column align-items-center flex-column-fluid w-100 pt-5 pt-lg-0" id="kt_aside_nav">
+                        <!--layout-partial:layout/aside/__tabs.html-->
+                    </div>
+                    <!--end::Nav-->
+                    <!--begin::Footer-->
+                    <div class="aside-footer d-flex flex-column align-items-center flex-column-auto" id="kt_aside_footer">
+                        <!--begin::Chat-->
+                        <div class="d-flex align-items-center mb-2">
+                            <!--begin::Menu wrapper-->
+                            <div class="btn btn-icon btn-custom" id="kt_drawer_chat_toggle">
+                                <!--begin::Svg Icon | path: icons/duotune/communication/com012.svg-->
+                                <span class="svg-icon svg-icon-2 svg-icon-lg-1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path opacity="0.3" d="M20 3H4C2.89543 3 2 3.89543 2 5V16C2 17.1046 2.89543 18 4 18H4.5C5.05228 18 5.5 18.4477 5.5 19V21.5052C5.5 22.1441 6.21212 22.5253 6.74376 22.1708L11.4885 19.0077C12.4741 18.3506 13.6321 18 14.8167 18H20C21.1046 18 22 17.1046 22 16V5C22 3.89543 21.1046 3 20 3Z" fill="currentColor" />
+                                        <rect x="6" y="12" width="7" height="2" rx="1" fill="currentColor" />
+                                        <rect x="6" y="7" width="12" height="2" rx="1" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Menu wrapper-->
+                        </div>
+                        <!--end::Chat-->
+                        <!--begin::Activities-->
+                        <div class="d-flex align-items-center mb-3">
+                            <!--begin::Drawer toggle-->
+                            <div class="btn btn-icon btn-custom"
+                                 data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                 data-kt-menu-overflow="true"
+                                 data-kt-menu-placement="top-start"
+                                 data-bs-toggle="tooltip"
+                                 data-bs-placement="right"
+                                 data-bs-dismiss="click"
+                                 title="Activity Logs"
+                                 id="kt_activities_toggle">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-2 svg-icon-lg-1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="8" y="9" width="3" height="10" rx="1.5" fill="currentColor" />
+                                        <rect opacity="0.5" x="13" y="5" width="3" height="14" rx="1.5" fill="currentColor" />
+                                        <rect x="18" y="11" width="3" height="8" rx="1.5" fill="currentColor" />
+                                        <rect x="3" y="13" width="3" height="6" rx="1.5" fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::drawer toggle-->
+                        </div>
+                        <!--end::Activities-->
+                        <!--begin::Theme mode-->
+                        <div class="d-flex align-items-center mb-3">
+                            <!--layout-partial:partials/theme-mode/_main.html-->
+                        </div>
+                        <!--end::Theme mode-->
+                        <!--begin::User-->
+                        <div class="d-flex align-items-center mb-10" id="kt_header_user_menu_toggle">
+                            <!--begin::Menu wrapper-->
+                            <div class="cursor-pointer symbol symbol-40px"
+                                 data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                 data-kt-menu-overflow="true"
+                                 data-kt-menu-placement="top-start">
+                                <img src="assets/media/avatars/300-1.jpg" alt="image" />
+                            </div>
+                            <!--layout-partial:partials/menus/_user-account-menu.html-->
+                            <!--end::Menu wrapper-->
+                        </div>
+                        <!--end::User-->
+                    </div>
+                    <!--end::Footer-->
+                </div>
+                <!--end::Primary-->
+            </div>
+            <!--end::Aside-->
+            <!--begin::Wrapper-->
+            <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+                <!--layout-partial:layout/header/_base.html-->
+                <!--begin::Content-->
+                <div class="content d-flex flex-column flex-column-fluid Container" id="kt_content">
+                    @RenderBody()
+                </div>
+                <!--end::Content-->
+                <!--layout-partial:layout/_footer.html-->
+            </div>
+            <!--end::Wrapper-->
         </div>
-    </footer>
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
+    <!--layout-partial:partials/_drawers.html-->
+    <!--end::Main-->
+    <!--layout-partial:partials/_scrolltop.html-->
+    <!--begin::Modals-->
+    <!--layout-partial:partials/modals/create-account/_main.html-->
+    <!--layout-partial:partials/modals/create-campaign/_main.html-->
+    <!--layout-partial:partials/modals/_view-users.html-->
+    <!--layout-partial:partials/modals/create-project/_main.html-->
+    <!--layout-partial:partials/modals/create-app/_main.html-->
+    <!--layout-partial:partials/modals/_upgrade-plan.html-->
+    <!--layout-partial:partials/modals/_new-address.html-->
+    <!--layout-partial:partials/modals/users-search/_main.html-->
+    <!--layout-partial:partials/modals/_invite-friends.html-->
+    <!--end::Modals-->
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "assets/";</script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="assets/plugins/global/plugins.bundle.js"></script>
+    <script src="assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--end::Javascript-->
 </body>
-
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
-
+<!--end::Body-->
 </html>
