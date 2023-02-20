@@ -54,7 +54,7 @@ namespace DentalManagementSystem.Controllers
         // POST: thêm mới đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id, Materialid, Date, Amount, SuplyName, TotalPrice")]MaterialImport materialImport)
+        public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
 
             DB.Add(materialImport);
