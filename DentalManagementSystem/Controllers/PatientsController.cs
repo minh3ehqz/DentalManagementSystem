@@ -15,15 +15,25 @@ namespace DentalManagementSystem.Controllers
         PatientDBContext DB = new PatientDBContext();
 
         // GET: Patients
-        public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email)
+        public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
         {
-            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null)
+            var checkgender = (gender ?? "");
+            TempData["id"] = (id ?? null);
+            TempData["name"] = (name ?? "");
+            TempData["Birthday"] = (Birthday ?? "");
+            TempData["address"] = (address ?? "");
+            TempData["phone"] = (phone ?? "");
+            TempData["email"] = (email ?? "");
+            TempData["gender"] = checkgender;
+            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null || gender != null)
             {
+
                 var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
                 && p.Name.Contains((name ?? ""))
                 && p.Birthday.ToString().Contains((Birthday ?? ""))
                 && p.Address.Contains((address ?? ""))
                 && p.Phone.Contains((phone ?? ""))
+                && (p.Gender ? "m" : "f").Contains(checkgender)
                 && p.Email.Contains((email ?? ""))).ToList();
 
                 return View(result);
@@ -32,16 +42,6 @@ namespace DentalManagementSystem.Controllers
             return View(PatientList);
         }
 
-
-        // thông tin chi tiết của bệnh nhân
-        public IActionResult Details(long id)
-        {
-            var patient = DB.Get(id);
-            return View(patient);
-        }
-
-
-        // GET: thêm mới bệnh nhân
         public IActionResult Create()
         {
             return View();
@@ -52,16 +52,17 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (ModelState.IsValid)
-            {
-                TempData["addsuccess"] = "thêm mới thành công";
-                patient.Trim();
-                DB.Add(patient);
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
+            TempData["addsuccess"] = "thêm mới thành công";
+            patient.Trim();
+            DB.Add(patient);
+            return RedirectToAction(nameof(Index));
         }
-
+        // thông tin chi tiết của bệnh nhân
+        public IActionResult Details(long id)
+        {
+            var patient = DB.Get(id);
+            return View(patient);
+        }
         // GET: thay đổi thông tin bênh nhân
         public IActionResult Edit(long id)
         {
@@ -92,10 +93,13 @@ namespace DentalManagementSystem.Controllers
         // xóa bệnh nhân
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(long[] selectedValues)
         {
             TempData["Delete messenger"] = "xóa thành công";
-            DB.Delete(id);
+            foreach (long id in selectedValues)
+            {
+                DB.Delete(id);
+            }
             return RedirectToAction(nameof(Index));
         }
 

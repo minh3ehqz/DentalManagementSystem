@@ -17,10 +17,17 @@ namespace DentalManagementSystem.Controllers
         // GET: MaterialImport
         public IActionResult Index(long id, long MaterialId, DateTime Date, int Amount, String name, int totalPrice)
         {
-            //if ()
-            //{
-                
-            //}
+            if (id != null || name != null || MaterialId != null || Date != null || Amount != null || totalPrice != null)
+            {
+                var result = DB.MaterialImports.Where(
+                    x => id != null && x.Id == id
+                || name != null && x.SupplyName.Contains(name)
+                || Date != null && x.Date.ToString().Contains(Date.ToString())
+                || Amount != null && x.Amount.Equals(Amount)
+                || totalPrice != null && x.TotalPrice.Equals(totalPrice)
+                || x.IsDeleted != true).ToList();
+                return View(result);
+            }
             var materialImportList = DB.ListAll();
             return View(materialImportList);
         }
@@ -46,13 +53,12 @@ namespace DentalManagementSystem.Controllers
 
         // POST: thêm mới đơn nhập vật phẩm
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-
-            DB.Add(materialImport);
-            RedirectToAction("Index");
-            return View(materialImport);
+                TempData["addsuccess"] = "thêm mới thành công";
+                DB.Add(materialImport);
+                return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: thay đổi thông tin đơn nhập vật phẩm
