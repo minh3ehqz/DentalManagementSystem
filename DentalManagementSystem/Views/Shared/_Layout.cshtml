@@ -26,13 +26,17 @@ License: For each use you must have a valid license purchased only from above li
     <meta property="og:url" content="https://keenthemes.com/products/seven-html-pro" />
     <meta property="og:site_name" content="Keenthemes | Seven HTML Pro" />
     <link rel="canonical" href="https://preview.keenthemes.com/seven-html-pro" />
-    <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+    <link rel="shortcut icon" href="~/assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+
+    <!--thư viện jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="~/assets/js/script.js"></script>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -84,7 +88,7 @@ License: For each use you must have a valid license purchased only from above li
                     <!--begin::Logo-->
                     <div class="aside-logo d-none d-lg-flex flex-column align-items-center flex-column-auto py-10" id="kt_aside_logo">
                         <a href="?page=index">
-                            <img alt="Logo" src="assets/media/logos/logo-default.svg" class="h-50px" />
+                            <img alt="Logo" src="~/assets/media/logos/logo-default.svg" class="h-50px" />
                         </a>
                     </div>
                     <!--end::Logo-->
@@ -150,7 +154,7 @@ License: For each use you must have a valid license purchased only from above li
                                  data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                  data-kt-menu-overflow="true"
                                  data-kt-menu-placement="top-start">
-                                <img src="assets/media/avatars/300-1.jpg" alt="image" />
+                                <img src="~/assets/media/avatars/300-1.jpg" alt="image" />
                             </div>
                             <!--layout-partial:partials/menus/_user-account-menu.html-->
                             <!--end::Menu wrapper-->
@@ -166,7 +170,7 @@ License: For each use you must have a valid license purchased only from above li
             <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
                 <!--layout-partial:layout/header/_base.html-->
                 <!--begin::Content-->
-                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+                <div class="content d-flex flex-column flex-column-fluid Container" id="kt_content">
                     @RenderBody()
                 </div>
                 <!--end::Content-->
@@ -195,8 +199,8 @@ License: For each use you must have a valid license purchased only from above li
     <script>
         var hostUrl = "assets/";</script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="assets/plugins/global/plugins.bundle.js"></script>
-    <script src="assets/js/scripts.bundle.js"></script>
+    <script src="~/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="~/assets/js/scripts.bundle.js"></script>
     <!--end::Global Javascript Bundle-->
     <!--end::Javascript-->
 </body>
