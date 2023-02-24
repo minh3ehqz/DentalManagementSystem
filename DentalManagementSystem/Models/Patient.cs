@@ -51,6 +51,8 @@ namespace DentalManagementSystem.Models
         {
             Name = Name?.Trim();
             Address = Address?.Trim();
+            Email= Email?.Trim();
+            Phone= Phone?.Trim();
             BodyPrehistory = BodyPrehistory?.Trim();
             TeethPrehistory = TeethPrehistory?.Trim();
         }

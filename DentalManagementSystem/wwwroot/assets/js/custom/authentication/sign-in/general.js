@@ -112,6 +112,18 @@ var KTSigninGeneral = function() {
 }();
 
 // On document ready
-KTUtil.onDOMContentLoaded(function() {
+KTUtil.onDOMContentLoaded(function () {
     KTSigninGeneral.init();
+    if (form.getAttribute('error-message') !== '') {
+        let errorMessage = form.getAttribute('error-message');
+        Swal.fire({
+            text: errorMessage,
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    }
 });

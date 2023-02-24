@@ -53,17 +53,12 @@ namespace DentalManagementSystem.Controllers
 
         // POST: thêm mới đơn nhập vật phẩm
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-            if (ModelState.IsValid)
-            {
                 TempData["addsuccess"] = "thêm mới thành công";
-                materialImport.Date = DateTime.Now;
                 DB.Add(materialImport);
                 return RedirectToAction(nameof(Index));
-            }
-            return View();
+            
         }
 
         // GET: thay đổi thông tin đơn nhập vật phẩm
