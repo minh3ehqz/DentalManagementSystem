@@ -79,14 +79,10 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (ModelState.IsValid)
-            {
-                patient.Trim();
-                DB.Update(patient);
-                TempData["editsuccess"] = "edit thành công";
-                return RedirectToAction("Details", new { id = patient.Id });
-            }
-            return View();
+            patient.Trim();
+            DB.Update(patient);
+            TempData["editsuccess"] = "edit thành công";
+            return RedirectToAction("Details", new { id = patient.Id });
         }
 
 
