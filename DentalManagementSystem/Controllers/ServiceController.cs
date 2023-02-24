@@ -50,13 +50,11 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Name,Unit,MarketPrice,Price")] Service service)
         {
-            if (ModelState.IsValid)
-            {
+           
                 DB.Add(service);
                 return RedirectToAction(nameof(Index));
-            }
-
-            return View(service);
+            
+           
         }
 
         // GET: thay đổi thông tin service
@@ -88,12 +86,20 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction("Details", new { id = editService.Id });
         }
 
+
+
+       
+
         // xóa service
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(long[] selectedValues)
         {
+            TempData["Delete messenger"] = "xóa thành công";
+            foreach (long id in selectedValues)
+            { 
             DB.Delete(id);
+             }
             return RedirectToAction(nameof(Index));
 
         }
