@@ -89,9 +89,13 @@ namespace DentalManagementSystem.Controllers
         // xóa đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(long[] selectedValues)
         {
-            DB.Delete(id);
+            TempData["Delete messenger"] = "xóa thành công";
+            foreach (long id in selectedValues)
+            {
+                DB.Delete(id);
+            }
             return RedirectToAction(nameof(Index));
         }
 
