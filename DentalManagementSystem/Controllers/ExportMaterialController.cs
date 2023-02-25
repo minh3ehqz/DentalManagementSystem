@@ -15,14 +15,14 @@ namespace DentalManagementSystem.Controllers
         ExportMaterialDBContext DB = new ExportMaterialDBContext();
 
         // GET: ExportMaterial
-        public IActionResult Index(long? id, long MaterialId, int Amount, int totalPrice, long PatientRecordId)
+        public IActionResult Index(long? id, long? MaterialId, int? Amount, int? totalPrice, long? PatientRecordId)
         {
             if (id != null || MaterialId != null || PatientRecordId != null || Amount != null || totalPrice != null)
             {
                 var result = DB.MaterialExports.Where(x => (!id.HasValue || x.Id == id.Value)
                 && x.Amount == Amount    
                 && x.TotalPrice == totalPrice
-                && x.PatientRecordId==PatientRecordId).ToList();
+                && x.PatientRecordId == PatientRecordId).ToList();
                 return View(result);
             }
             var materialExportList = DB.ListAll();
@@ -31,11 +31,7 @@ namespace DentalManagementSystem.Controllers
 
         // Details information of a record
         public IActionResult Details(long id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        {           
             var materialExport = DB.Get(id);
             return View(materialExport);
         }
@@ -49,14 +45,11 @@ namespace DentalManagementSystem.Controllers
         // POST: Add 1 record 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
-        {
-                 
-            {
-                DB.Add(materialExport);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(materialExport);
+        public IActionResult Create([Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
+        {						
+			TempData["addsuccess"] = "thêm mới thành công"; 
+		    DB.Add(materialExport);
+            return RedirectToAction(nameof(Index));                        
         }
 
         // GET: Change information of a record
@@ -67,21 +60,19 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            else
             return View(materialExport);
         }
 
         // POST: Change information of a record
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("Id, Materialid, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
-        {
-            if (id != materialExport.Id)
-            {
-                return NotFound();
-            }
-            DB.Update(materialExport);
-            return RedirectToAction("Details", new { id = materialExport.Id });
-        }
+        public IActionResult Edit(long id, [Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
+        {         
+				DB.Update(materialExport);
+				TempData["editsuccess"] = "edit thành công";
+				return RedirectToAction("Details", new { id = materialExport.Id });			
+		}
 
 
         // Delete a record 
@@ -89,7 +80,8 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
         {
-            DB.Delete(id);
+			TempData["Delete messenger"] = "xóa thành công";
+			DB.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
