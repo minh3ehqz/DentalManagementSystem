@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using DentalManagementSystem.DAL;
+using DentalManagementSystem.Models;
+
+namespace DentalManagementSystem.Controllers
+{
+    public class SystemLogsController : Controller
+    {
+        SystemLogDBContext DB = new SystemLogDBContext();
+
+        // GET: SystemLogs
+        public async Task<IActionResult> Index()
+        {
+            var list = DB.ListAll();
+            return View(list);
+        }
+    }
+}
