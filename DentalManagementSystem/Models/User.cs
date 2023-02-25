@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace DentalManagementSystem.Models;
 
@@ -18,7 +17,6 @@ public partial class User
 
     public string Phone { get; set; } = null!;
 
-    [Range(0, 999999, ErrorMessage = "Salary can't be negative.")]
     public int Salary { get; set; }
 
     public long RoleId { get; set; }
@@ -30,6 +28,8 @@ public partial class User
     public virtual ICollection<PatientRecord> PatientRecords { get; } = new List<PatientRecord>();
 
     public virtual Role Role { get; set; } = null!;
+
+    public virtual SystemLog? SystemLog { get; set; }
 
     public virtual ICollection<Timekeeping> Timekeepings { get; } = new List<Timekeeping>();
 }
