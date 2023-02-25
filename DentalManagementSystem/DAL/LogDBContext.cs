@@ -4,36 +4,38 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.DAL
 {
-    public class LogDBContext : DBContext<Log>
+    public class SystemLogDBContext : DBContext<SystemLog>
     {
-        public override void Add(Log entity)
+        public override void Add(SystemLog entity)
         {
-            throw new NotImplementedException();
+            SystemLogs.Add(entity);
+            SaveChanges();
+
         }
 
         public override void Delete(long Id)
         {
-           
+
         }
 
-        public override Log Get(long id)
+        public override SystemLog Get(long id)
         {
-            return null;
+            return SystemLogs.FirstOrDefault(x => x.Id == id);
         }
 
-        public override List<Log> ListAll()
+        public override List<SystemLog> ListAll()
         {
-            return null;
+            return SystemLogs.ToList();
         }
 
-        public override List<Log> ListAll(long OwnerId)
+        public override List<SystemLog> ListAll(long OwnerId)
         {
             throw new NotImplementedException();
         }
 
-        public override void Update(Log entity)
+        public override void Update(SystemLog entity)
         {
-           
+            throw new NotImplementedException();
         }
     }
 }
