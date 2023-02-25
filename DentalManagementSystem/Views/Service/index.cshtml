@@ -276,7 +276,7 @@
         <!--begin::Card body-->
         <div class="card-body py-4">
             <!--begin::Table-->
-            @using (Html.BeginForm("Delete", "Service", FormMethod.Post, new { id="delete" }))
+            @using (Html.BeginForm("Delete", "Service", FormMethod.Post, new { id = "delete" }))
             {
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                     <!--begin::Table head-->
@@ -309,7 +309,9 @@
                                     </div>
                                 </td>
                                 <td>@item.Id</td>
-                                <td>@item.Name</td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                </td>
                                 <td>@item.Unit</td>
                                 <td>@item.MarketPrice</td>
                                 <td>@item.Price</td>
@@ -326,8 +328,8 @@
 </div>
 
 @section Patientscript{
-    <script src="~/assets/js/custom/script/searchPatient.js"></script>
-    <script src="~/assets/js/custom/script/create-validate.js"></script>
+    <script src="~/assets/js/custom/script/search-service.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
-}
+    <script src="~/assets/js/custom/script/create-validate.js"></script>
+ }
 
