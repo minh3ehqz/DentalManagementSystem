@@ -16,13 +16,10 @@ var KTSigninGeneral = function () {
                 fields: {
                     'MaterialId': {
                         validators: {
-                            //regexp: {
-                            //    regexp: /^([1-9]\d*(\d+)*)$/,
-                            //    message: 'Mã vật tư chưa đúng',
-                            //},
-                            notEmpty: {
-                                message: 'Mã vật tư không được để trống',
-                            }
+                            regexp: {
+                                regexp: /^([1-9]\d*(\d+)*)$/,
+                                message: 'Mã vật tư chưa đúng',
+                            },
                         }
                     },
                     'SupplyName': {
@@ -42,29 +39,11 @@ var KTSigninGeneral = function () {
                             },
                         }
                     },
-
-                    'Date': {
-                        validators: {
-                            callback: function (input) {
-                                var birthdate = moment(input.value, 'MM/DD/YYYY');
-                                var age = moment().diff(birthdate, 'years');
-                                return age >= 0 && age <= 150;
-                            },
-                            notEmpty: {
-                                message: 'Birthday is required'
-                            }
-                        }
-                    },
-
                     'TotalPrice': {
                         validators: {
-                            callback: {
-                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
-                                callback: function (input) {
-                                    var name = input.value.trim();
-                                    var wordCount = name.split(' ').length;
-                                    return wordCount >= 2;
-                                }
+                            regexp: {
+                                regexp: /^[0-9]*$/,
+                                message: "dữ liệu phải là số",
                             },
                         }
                     },
