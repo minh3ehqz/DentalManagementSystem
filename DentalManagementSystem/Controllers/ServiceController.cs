@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -18,8 +19,7 @@ namespace DentalManagementSystem.Controllers
 
         // GET: Services
         public IActionResult Index(long? id, string name, int unit, int marketprice, int price)
-        {
-            if (id != 0 && name != null && unit != null && marketprice != null && price != null)
+        { if (id != 0 && name != null && unit != null && marketprice != null && price != null)
             {
                 var result = DB.Services.Where(s => id != 0 && s.Id == id
             && (name != null && s.Name.Contains(name))
@@ -77,7 +77,7 @@ namespace DentalManagementSystem.Controllers
             service = DB.Services.FirstOrDefault(s => s.Id == editService.Id);
             if (service != null)
             {
-                service.Name = editService.Name.Trim();
+                service.Name = editService.Name;
                 service.Unit = editService.Unit;
                 service.MarketPrice = editService.MarketPrice;
                 service.Price = editService.Price;
@@ -103,7 +103,6 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
         //tìm service
         [HttpPost]
         [ValidateAntiForgeryToken]
