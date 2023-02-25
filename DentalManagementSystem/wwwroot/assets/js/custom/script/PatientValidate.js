@@ -56,13 +56,16 @@ var KTSigninGeneral = function () {
 
                     'Birthday': {
                         validators: {
-                            callback: function (input) {
-                                var birthdate = moment(input.value, 'MM/DD/YYYY');
-                                var age = moment().diff(birthdate, 'years');
-                                return age >= 0 && age <= 150;
-                            },
                             notEmpty: {
                                 message: 'Birthday is required'
+                            },
+                            callback: {
+                                message: 'Tuổi phải lớn hơn 0',
+                                callback: function (input) {
+                                    var currentDate = new Date();
+                                    var birthday = new Date(input.value);
+                                    return (currentDate >= birthday);
+                                }
                             }
                         }
                     },
