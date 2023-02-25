@@ -15,7 +15,7 @@ public partial class PatientRecord
 
     public DateTime Date { get; set; }
 
-    public DateTime TreatmentName { get; set; }
+    public string TreatmentName { get; set; } = null!;
 
     public string MarrowRecord { get; set; } = null!;
 
@@ -23,7 +23,7 @@ public partial class PatientRecord
 
     public string Note { get; set; } = null!;
 
-    public int TreatmentId { get; set; }
+    public long TreatmentId { get; set; }
 
     public long UserId { get; set; }
 

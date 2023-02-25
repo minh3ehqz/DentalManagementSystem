@@ -31,6 +31,9 @@ var KTSigninGeneral = function () {
                                 regexp: /^(0|\+84)(\d{9})$/,
                                 message: 'số điện thoại không hợp lệ',
                             },
+                            notEmpty: {
+                                message: 'Phone is required',
+                            },
                         }
                     },
 

@@ -55,7 +55,7 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-            
+                materialImport.Date = DateTime.Now;           
                 DB.Add(materialImport);
                 return RedirectToAction("Index");
 

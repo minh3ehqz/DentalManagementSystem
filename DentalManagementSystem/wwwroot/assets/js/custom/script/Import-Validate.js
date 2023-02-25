@@ -16,10 +16,10 @@ var KTSigninGeneral = function () {
                 fields: {
                     'MaterialId': {
                         validators: {
-                            regexp: {
-                                regexp: /^([1-9]\d*(\d+)*)$/,
-                                message: 'Mã vật tư chưa đúng',
-                            },
+                            //regexp: {
+                            //    regexp: /^([1-9]\d*(\d+)*)$/,
+                            //    message: 'Mã vật tư chưa đúng',
+                            //},
                             notEmpty: {
                                 message: 'Mã vật tư không được để trống',
                             }
@@ -143,8 +143,8 @@ var KTSigninGeneral = function () {
     return {
         // Initialization
         init: function () {
-            form = document.querySelector('#add_patient_form');
-            submitButton = document.querySelector('#create_patient');
+            form = document.querySelector('#import_material_form');
+            submitButton = document.querySelector('#import_submit');
             handleForm();
         }
     };
