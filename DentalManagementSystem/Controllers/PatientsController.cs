@@ -51,7 +51,7 @@ namespace DentalManagementSystem.Controllers
             TempData["addsuccess"] = "thêm mới thành công";
             patient.Trim();
             DB.Add(patient);
-            //Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=1,Content="người dùng đã thêm mới bệnh nhân" });
+      //      Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=1,Content="người dùng đã thêm mới bệnh nhân" });
             return RedirectToAction(nameof(Index));
         }
         // thông tin chi tiết của bệnh nhân
