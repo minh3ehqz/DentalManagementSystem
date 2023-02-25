@@ -375,7 +375,7 @@
                                     <a asp-action="Details" asp-route-id="@item.Id">@item.SupplyName</a>
                                 </td>
                                 <td>
-                                    @item.Date.Day/@item.Date.Month/@item.Date.Year
+                                    @item.Date.Day/@item.Date.Month/@item.Date.Year @item.Date.Hour:@item.Date.Minute:@item.Date.Second
                                 </td>
                                 <td>
                                     @item.Amount
