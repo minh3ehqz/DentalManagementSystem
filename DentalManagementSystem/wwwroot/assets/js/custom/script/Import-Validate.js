@@ -14,101 +14,39 @@ var KTSigninGeneral = function () {
             form,
             {
                 fields: {
-                    'Email': {
+                    'MaterialId': {
                         validators: {
                             regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'Email không hợp lệ',
-                            },
-                            notEmpty: {
-                                message: 'Email address is required',
-                            }
-                        }
-                    },
-                    'Phone': {
-                        validators: {
-                            regexp: {
-                                regexp: /^(0|\+84)(\d{9})$/,
-                                message: 'số điện thoại không hợp lệ',
-                            },
-                            notEmpty: {
-                                message: 'Phone is required',
+                                regexp: /^([1-9]\d*(\d+)*)$/,
+                                message: 'Mã vật tư chưa đúng',
                             },
                         }
                     },
-
-                     'Name': {
+                    'SupplyName': {
                         validators: {
                             regexp: {
                                 regexp: /^[^0-9]*$/,
-                                message: "tên không được chứa số",
+                                message: 'Tên vật tư không hợp lệ',
                             },
-                            callback: {
-                                message: 'Tên phải có ít nhất 2 từ',
-                                callback: function (input) {
-                                    var name = input.value.trim();
-                                    var wordCount = name.split(' ').length;
-                                    return wordCount >= 2;
-                                }
-                            }
                         }
                     },
 
-                    'Birthday': {
+                    'Amount': {
                         validators: {
-                            notEmpty: {
-                                message: 'Birthday is required'
+                            regexp: {
+                                regexp: /^[0-9]*$/,
+                                message: "dữ liệu phải là số",
                             },
-                            callback: {
-                                message: 'Tuổi phải lớn hơn 0',
-                                callback: function (input) {
-                                    var currentDate = new Date();
-                                    var birthday = new Date(input.value);
-                                    return (currentDate >= birthday);
-                                }
-                            }
                         }
                     },
-
-                    'BodyPrehistory': {
+                    'TotalPrice': {
                         validators: {
-                            callback: {
-                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
-                                callback: function (input) {
-                                    var name = input.value.trim();
-                                    var wordCount = name.split(' ').length;
-                                    return wordCount >= 2;
-                                }
+                            regexp: {
+                                regexp: /^[0-9]*$/,
+                                message: "dữ liệu phải là số",
                             },
                         }
                     },
-
-                    'TeethPrehistory': {
-                        validators: {
-                            callback: {
-                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
-                                callback: function (input) {
-                                    var name = input.value.trim();
-                                    var wordCount = name.split(' ').length;
-                                    return wordCount >= 2;
-                                }
-                            },
-                        }
-                    },
-
-                    'Address': {
-                        validators: {
-                            callback: {
-                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
-                                callback: function (input) {
-                                    var name = input.value.trim();
-                                    var wordCount = name.split(' ').length;
-                                    return wordCount >= 2;
-                                }
-                            },
-                        }
-                    },
-
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -184,8 +122,8 @@ var KTSigninGeneral = function () {
     return {
         // Initialization
         init: function () {
-            form = document.querySelector('#add_patient_form');
-            submitButton = document.querySelector('#create_patient');
+            form = document.querySelector('#import_material_form');
+            submitButton = document.querySelector('#import_submit');
             handleForm();
         }
     };

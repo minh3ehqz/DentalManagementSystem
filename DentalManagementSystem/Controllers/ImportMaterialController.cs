@@ -17,17 +17,6 @@ namespace DentalManagementSystem.Controllers
         // GET: MaterialImport
         public IActionResult Index(long id, long MaterialId, DateTime Date, int Amount, String name, int totalPrice)
         {
-            if (id != null || name != null || MaterialId != null || Date != null || Amount != null || totalPrice != null)
-            {
-                var result = DB.MaterialImports.Where(
-                    x => id != null && x.Id == id
-                || name != null && x.SupplyName.Contains(name)
-                || Date != null && x.Date.ToString().Contains(Date.ToString())
-                || Amount != null && x.Amount.Equals(Amount)
-                || totalPrice != null && x.TotalPrice.Equals(totalPrice)
-                || x.IsDeleted != true).ToList();
-                return View(result);
-            }
             var materialImportList = DB.ListAll();
             return View(materialImportList);
         }
@@ -55,10 +44,10 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-                TempData["addsuccess"] = "thêm mới thành công";
+                materialImport.Date = DateTime.Now;           
                 DB.Add(materialImport);
-                return RedirectToAction(nameof(Index));
-            
+                return RedirectToAction("Index");
+
         }
 
         // GET: thay đổi thông tin đơn nhập vật phẩm
@@ -77,11 +66,9 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")] MaterialImport materialImport)
         {
-            if (id != materialImport.Id)
-            {
-                return NotFound();
-            }
+            materialImport.Date = DateTime.Now;
             DB.Update(materialImport);
+            TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = materialImport.Id });
         }
 
@@ -89,9 +76,13 @@ namespace DentalManagementSystem.Controllers
         // xóa đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(long[] selectedValues)
         {
-            DB.Delete(id);
+            TempData["Delete messenger"] = "xóa thành công";
+            foreach (long id in selectedValues)
+            {
+                DB.Delete(id);
+            }
             return RedirectToAction(nameof(Index));
         }
 
