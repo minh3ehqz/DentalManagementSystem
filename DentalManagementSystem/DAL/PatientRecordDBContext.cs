@@ -22,10 +22,10 @@ namespace DentalManagementSystem.DAL
             return PatientRecords.FirstOrDefault(x => x.Id == id);
         }
 
-        //public override List<PatientRecord> ListAll()
-        //{
-        //    return PatientRecords.Include(x => x.User);
-        //}
+        public override List<PatientRecord> ListAll()
+        {
+            return PatientRecords.Include(x => x.Patient).ToList();
+        }
 
         public override List<PatientRecord> ListAll(long OwnerId)
         {

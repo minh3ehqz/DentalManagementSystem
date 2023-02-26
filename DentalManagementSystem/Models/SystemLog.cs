@@ -13,5 +13,5 @@ public partial class SystemLog
 
     public long OwnerId { get; set; }
 
-    public virtual User IdNavigation { get; set; } = null!;
+    public virtual User Owner { get; set; } = null!;
 }
