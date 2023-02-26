@@ -51,7 +51,7 @@ namespace DentalManagementSystem.Controllers
             TempData["addsuccess"] = "thêm mới thành công";
             patient.Trim();
             DB.Add(patient);
-      //      Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=1,Content="người dùng đã thêm mới bệnh nhân" });
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=3,Content="người dùng đã thêm mới bệnh nhân" });
             return RedirectToAction(nameof(Index));
         }
         // thông tin chi tiết của bệnh nhân
@@ -91,6 +91,7 @@ namespace DentalManagementSystem.Controllers
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã xóa bệnh nhân có id là "+id+"" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
