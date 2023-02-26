@@ -17,8 +17,8 @@ var KTSigninGeneral = function () {
                     'username': {
                         validators: {
                             regexp: {
-                                regexp: /^[a-zA-Z0-9 ]{3,16}$/,
-                                message: 'tên phải có chữ hoa và chữ thường'
+                                regexp: /^[a-zA-Z0-9]+$/,
+                                message: 'username chỉ cưa kí tự chữ và số'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập tên Service'
@@ -61,7 +61,7 @@ var KTSigninGeneral = function () {
                     'phone': {
                         validators: {
                             regexp: {
-                                regexp: /\d{1,1000}/,
+                                regexp: /^0[9843]{1}\\d{8}$/,
                                 message: 'chưa hợp lệ'
                             },
                             notEmpty: {
@@ -69,10 +69,21 @@ var KTSigninGeneral = function () {
                             }
                         }
                     },
+                    'birthday': {
+                        validators: {
+                            regexp: {
+                                regexp: /^\d{2}\/\d{2}\/\d{4}$/,
+                                message: 'chưa hợp lệ'
+                            },
+                            notEmpty: {
+                                message: 'chưa nhập dữ liệu'
+                            }
+                        }
+                    },
                     'salary': {
                         validators: {
                             regexp: {
-                                regexp: /\d{1,1000}/,
+                                regexp: /^[0-9]*$/,
                                 message: 'chưa hợp lệ'
                             },
                             notEmpty: {
