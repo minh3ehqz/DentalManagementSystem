@@ -48,8 +48,9 @@ public partial class DentalSystemDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("server =DESKTOP-BII4AH5\\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=minh0941203221;encrypt=true;trustServerCertificate=true;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Material>(entity =>
@@ -267,13 +268,12 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.ToTable("SystemLog");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.SystemLog)
-                .HasForeignKey<SystemLog>(d => d.Id)
+            entity.HasOne(d => d.Owner).WithMany(p => p.SystemLogs)
+                .HasForeignKey(d => d.OwnerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SystemLog__Id__4AB81AF0");
+                .HasConstraintName("FK__SystemLog__Owner__6B24EA82");
         });
 
         modelBuilder.Entity<Timekeeping>(entity =>

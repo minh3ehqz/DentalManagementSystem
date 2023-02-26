@@ -29,7 +29,7 @@ public partial class User
 
     public virtual Role Role { get; set; } = null!;
 
-    public virtual SystemLog? SystemLog { get; set; }
+    public virtual ICollection<SystemLog> SystemLogs { get; } = new List<SystemLog>();
 
     public virtual ICollection<Timekeeping> Timekeepings { get; } = new List<Timekeeping>();
 }
