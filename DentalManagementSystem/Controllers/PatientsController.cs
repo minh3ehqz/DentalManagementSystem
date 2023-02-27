@@ -18,6 +18,14 @@ namespace DentalManagementSystem.Controllers
         // GET: Patients
         public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
         {
+            if (!isAuth(out User user))
+            {
+                return Redirect("/Home");
+            }
+            
+            //Get Session
+            
+
             var checkgender = (gender ?? "");
             TempData["id"] = (id ?? null);
             TempData["name"] = (name ?? "");
@@ -97,5 +105,10 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult sdfjkhsjkd(string email, string sdt)
+        {
+            //xu ly lay sdt o day
+            return Ok("Valid");
+        }
     }
 }
