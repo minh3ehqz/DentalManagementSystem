@@ -37,7 +37,7 @@ var KTSigninGeneral = function () {
                         }
                     },
 
-                     'Name': {
+                    'Name': {
                         validators: {
                             regexp: {
                                 regexp: /^[^0-9]*$/,
@@ -153,14 +153,31 @@ var KTSigninGeneral = function () {
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
-                        }).then(function (result) {
+                        }).then(async function (result) {
                             if (result.isConfirmed) {
 
-                                form.submit(); // submit form
-                                var redirectUrl = form.getAttribute('data-kt-redirect-url');
-                                if (redirectUrl) {
-                                    location.href = redirectUrl;
+                                let url = window.location.origin;
+                                let valid = '';
+                                await fetch(url + '/Patients/sdfjkhsjkd').then((response) => response.text())
+                                    .then((text) => {
+                                        valid = text;
+                                    });
+                                if (valid === 'Valid') {
+                                    form.submit(); // submit form
                                 }
+                                else {
+                                    Swal.fire({
+                                        text: "Trung me no email roi.",
+                                        icon: "error",
+                                        buttonsStyling: false,
+                                        confirmButtonText: "Ok, got it!",
+                                        customClass: {
+                                            confirmButton: "btn btn-primary"
+                                        }
+                                    });
+                                    return;
+                                }
+
                             }
                         });
                     }, 2000);
