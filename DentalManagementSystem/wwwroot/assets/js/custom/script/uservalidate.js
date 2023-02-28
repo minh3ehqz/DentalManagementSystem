@@ -58,17 +58,6 @@ var KTSigninGeneral = function () {
                             }
                         }
                     },
-                    'phone': {
-                        validators: {
-                            regexp: {
-                                regexp: /^0[9843]{1}\\d{8}$/,
-                                message: 'chưa hợp lệ'
-                            },
-                            notEmpty: {
-                                message: 'chưa nhập số điên thoại'
-                            }
-                        }
-                    },
                     'birthday': {
                         validators: {
                             regexp: {
