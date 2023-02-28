@@ -49,7 +49,7 @@ public partial class DentalSystemDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("server =DESKTOP-BII4AH5\\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=minh0941203221;encrypt=true;trustServerCertificate=true;");
+        => optionsBuilder.UseSqlServer("server =MSI\\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=sa;encrypt=true;trustServerCertificate=true;");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Material>(entity =>
