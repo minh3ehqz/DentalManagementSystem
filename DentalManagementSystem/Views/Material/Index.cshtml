@@ -1,5 +1,5 @@
 ﻿@using DentalManagementSystem.Models
-@model List<MaterialExport>
+@model List<Material>
 
 
 
@@ -9,7 +9,7 @@
 }
 @section Patientscript{
 	<script src="~/assets/js/custom/script/search-export.js"></script>
-	<script src="~/assets/js/custom/script/create-exportmaterial-validate.js"></script>
+	<script src="~/assets/js/custom/script/create-material-validate.js"></script>
 	<script src="~/assets/js/widgets.bundle.js"></script>
 }
 
@@ -18,7 +18,7 @@
 	<!--begin::Page title-->
 	<div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
 		<!--begin::Heading-->
-		<h1 class="text-dark fw-semibold my-0 fs-2">Export Material List</h1>
+		<h1 class="text-dark fw-semibold my-0 fs-2">Material List</h1>
 		<!--end::Heading-->
 	</div>
 	<!--end::Page title=-->
@@ -182,16 +182,26 @@
 							<!--begin::Modal body-->
 							<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
 								<!--begin::Form add new-->
-								<form asp-action="create" method="post" id="kt_modal_add_export">
+								<form asp-action="create" method="post" id="kt_modal_add_material">
 									<!--begin::Scroll-->
 									<div class="d-flex flex-column scroll-y me-n7 pe-7" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-offset="300px">
 										<!--begin::Input group-->
 										<div class="fv-row mb-7">
 											<!--begin::Label-->
-											<label class="required fw-semibold fs-6 mb-2">Material ID</label>
+											<label class="required fw-semibold fs-6 mb-2">Name</label>
 											<!--end::Label-->
 											<!--begin::Input-->
-											<input type="text" name="MaterialId" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Material ID" value="0" />
+											<input type="text" name="Name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Name" value="" />
+											<!--end::Input-->
+										</div>
+										<!--end::Input group-->
+										<!--begin::Input group-->
+										<div class="fv-row mb-7">
+											<!--begin::Label-->
+											<label class="required fw-semibold fs-6 mb-2">Unit</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input type="text" name="Unit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Unit" value="" />
 											<!--end::Input-->
 										</div>
 										<!--end::Input group-->
@@ -204,23 +214,13 @@
 											<input type="number" name="Amount" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Amount" value="0" />
 											<!--end::Input-->
 										</div>
-										<!--end::Input group-->
 										<!--begin::Input group-->
 										<div class="fv-row mb-7">
 											<!--begin::Label-->
-											<label class="required fw-semibold fs-6 mb-2">TotalPrice</label>
+											<label class="required fw-semibold fs-6 mb-2">Price</label>
 											<!--end::Label-->
 											<!--begin::Input-->
-											<input type="number" name="TotalPrice" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="TotalPrice" value="0" />
-											<!--end::Input-->
-										</div>
-										<!--begin::Input group-->
-										<div class="fv-row mb-7">
-											<!--begin::Label-->
-											<label class="required fw-semibold fs-6 mb-2">PatientRecordId</label>
-											<!--end::Label-->
-											<!--begin::Input-->
-											<input type="number" name="PatientRecordId" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="PatientRecordId" value="0" />
+											<input type="number" name="Price" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Price" value="0" />
 											<!--end::Input-->
 										</div>									
 									</div>
@@ -228,7 +228,7 @@
 									<!--begin::Actions-->
 									<div class="text-center pt-15">
 										<button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
-										<button type="submit" class="btn btn-primary" id="create_submit_1" form="create">
+										<button type="submit" class="btn btn-primary" id="create_material" form="create">
 											<span class="indicator-label">Submit</span>
 											<span class="indicator-progress">
 												Please wait...
@@ -259,7 +259,7 @@
 							<!--begin::Modal header-->
 							<div class="modal-header">
 								<!--begin::Modal title-->
-								<h2 class="fw-bold">Export bệnh nhân</h2>
+								<h2 class="fw-bold">Export</h2>
 								<!--end::Modal title-->
 								<!--begin::Close-->
 								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -321,7 +321,7 @@
 		<!--begin::Card body-->
 		<div class="card-body py-4">
 			<!--begin::Table-->
-			@using (Html.BeginForm("Delete", "ExportMaterial", FormMethod.Post, new { id = "ListForm" }))
+			@using (Html.BeginForm("Delete", "Material", FormMethod.Post, new { id = "ListForm" }))
 			{
 				<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
 					<!--begin::Table head-->
@@ -334,10 +334,10 @@
 								</div>
 							</th>
 							<th class="min-w-125px">ID</th>
-							<th class="min-w-125px">Material ID</th>
+							<th class="min-w-125px">Name</th>
+							<th class="min-w-125px">Unit</th>
 							<th class="min-w-125px">Amount</th>
-							<th class="min-w-125px">TotalPrice</th>
-							<th class="min-w-125px">PatientRecordId</th>
+							<th class="min-w-125px">Price</th>
 							<th class="min-w-125px">Actions</th>
 						</tr>
 						<!--end::Table row-->
@@ -355,10 +355,10 @@
 									</div>
 								</td>
 								<td>@item.Id</td>
-								<td>@item.MaterialId</td>
+								<td>@item.Name</td>
+								<td>@item.Unit</td>
 								<td>@item.Amount</td>
-								<td>@item.TotalPrice</td>
-								<td>@item.PatientRecordId</td>
+								<td>@item.Price</td>
 								<td>
 									<a asp-action="Details" asp-route-id="@item.Id">Details</a>
 								</td>

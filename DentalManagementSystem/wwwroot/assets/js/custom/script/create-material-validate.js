@@ -14,84 +14,52 @@ var KTSigninGeneral = function () {
             form,
             {
                 fields: {
-                    'username': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9]+$/,
-                                message: 'username chỉ cưa kí tự chữ và số'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập tên Service'
-                            }
-                        }
-                    },
-                    'fullname': {
+                    'Name': {
                         validators: {
                             regexp: {
                                 regexp: /[A-Z][a-z]/,
-                                message: 'tên phải gồm cả chữ hoa và chữ thường'
+                                message: 'tên phải có chữ hoa và chữ thường'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập tên Service'
+                                message: 'Chưa nhập tên'
                             }
                         }
                     },
-                    'password': {
+                    'Unit': {
                         validators: {
                             regexp: {
-                                regexp: /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                                message: 'mật khảu chứa ít nhát 8 kí tự, 1 chữ thường, 1 chữ sô'
+                                regexp: /[a-z]/,
+                                message: 'Chỉ nhập chữ'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
                             }
                         }
                     },
-                    'email': {
+                    'Amount': {
                         validators: {
                             regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'email nhập vào chưa hợp lệ'
+                                regexp: /^[1-9]\d*$/,
+                                message: 'Chỉ được nhập số nguyên dương'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập email'
+                                message: 'Không được để trống'
                             }
+
                         }
                     },
-                    'phone': {
+                    'Price': {
                         validators: {
                             regexp: {
-                                regexp: /^0[9843]{1}\\d{8}$/,
-                                message: 'chưa hợp lệ'
+                                regexp: /^[1-9]\d*$/,
+                                message: 'Chỉ được nhập số nguyên dương'
                             },
                             notEmpty: {
-                                message: 'chưa nhập số điên thoại'
+                                message: 'Không được để trống'
                             }
-                        }
-                    },
-                    'birthday': {
-                        validators: {
-                            regexp: {
-                                regexp: /^\d{2}\/\d{2}\/\d{4}$/,
-                                message: 'chưa hợp lệ'
-                            },
-                            notEmpty: {
-                                message: 'chưa nhập dữ liệu'
-                            }
-                        }
-                    },
-                    'salary': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[0-9]*$/,
-                                message: 'chưa hợp lệ'
-                            },
-                            notEmpty: {
-                                message: 'chưa nhập dữ liệu'
-                            }
+
                         }
                     }
-
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -198,8 +166,8 @@ var KTSigninGeneral = function () {
     return {
         // Initialization
         init: function () {
-            form = document.querySelector('#add_employee_form');
-            submitButton = document.querySelector('#create_submit');
+            form = document.querySelector('#kt_modal_add_material');
+            submitButton = document.querySelector('#create_material');
 
             handleForm();
         }

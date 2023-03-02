@@ -41,11 +41,11 @@ var KTUsersList = function () {
             const realDate = moment().subtract(timeCount, timeFormat).format();
 
             // Insert real date to last login attribute
-            dateRow[3]?.setAttribute('data-order', realDate);
+            dateRow[3].setAttribute('data-order', realDate);
 
             // Set real date for joined column
             const joinedDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5]?.setAttribute('data-order', joinedDate);
+            dateRow[5].setAttribute('data-order', joinedDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -78,12 +78,51 @@ var KTUsersList = function () {
 
     // Filter Datatable
     var handleFilterDatatable = () => {
+        // Select filter options
+        const filterForm = document.querySelector('[data-kt-user-table-filter="form"]');
+        const filterButton = filterForm.querySelector('[data-kt-user-table-filter="filter"]');
+        const selectOptions = filterForm.querySelectorAll('select');
 
+        // Filter datatable on submit
+        filterButton.addEventListener('click', function () {
+            var filterString = '';
+
+            // Get filter values
+            selectOptions.forEach((item, index) => {
+                if (item.value && item.value !== '') {
+                    if (index !== 0) {
+                        filterString += ' ';
+                    }
+
+                    // Build filter value options
+                    filterString += item.value;
+                }
+            });
+
+            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search(filterString).draw();
+        });
     }
 
     // Reset Filter
     var handleResetForm = () => {
-        
+        // Select reset button
+        const resetButton = document.querySelector('[data-kt-user-table-filter="reset"]');
+
+        // Reset datatable
+        resetButton.addEventListener('click', function () {
+            // Select filter options
+            const filterForm = document.querySelector('[data-kt-user-table-filter="form"]');
+            const selectOptions = filterForm.querySelectorAll('select');
+
+            // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
+            selectOptions.forEach(select => {
+                $(select).val('').trigger('change');
+            });
+
+            // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search('').draw();
+        });
     }
 
 
@@ -259,12 +298,13 @@ var KTUsersList = function () {
                 return;
             }
 
-           // initUserTable();
+            initUserTable();
             initToggleToolbar();
             handleSearchDatatable();
             handleResetForm();
             handleDeleteRows();
             handleFilterDatatable();
+
         }
     }
 }();
