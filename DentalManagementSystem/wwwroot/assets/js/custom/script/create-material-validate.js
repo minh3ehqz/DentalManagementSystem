@@ -14,85 +14,52 @@ var KTSigninGeneral = function () {
             form,
             {
                 fields: {
-                    'username': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9]+$/,
-                                message: 'Tên đăng nhập chứa kí tự chữ hoặc số'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập tên đăng nhập'
-                            }
-                        }
-                    },
-                    'fullname': {
+                    'Name': {
                         validators: {
                             regexp: {
                                 regexp: /[A-Z][a-z]/,
-                                message: 'Fullname chưa ít nhất một chữ hoa và chữ thường'
+                                message: 'tên phải có chữ hoa và chữ thường'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập họ và tên'
+                                message: 'Chưa nhập tên'
                             }
                         }
                     },
-                    'password': {
+                    'Unit': {
                         validators: {
                             regexp: {
-                                regexp: /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                                message: 'Mật khẩu chứa ít nhát 8 kí tự, 1 chữ thường, 1 chữ sô'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập mật khẩu'
-                            }
-                        }
-                    },
-                    'email': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'Email nhập vào chưa hợp lệ'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập email'
-                            }
-                        }
-                    },
-                    'phone': {
-                        validators: {
-                            regexp: {
-                                regexp: /^(0|\+84)(\d{9})$/,
-                                message: 'Số điện thoại nhập chưa hợp lệ '
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập số điên thoại'
-                            }
-                        }
-                    },
-
-                    'birthday': {
-                        validators: {
-                            regexp: {
-                                regexp: /^\d{2}\/\d{2}\/\d{4}$/,
-                                message: 'Chưa hợp lệ'
+                                regexp: /[a-z]/,
+                                message: 'Chỉ nhập chữ'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
                             }
                         }
                     },
-                    'salary': {
+                    'Amount': {
                         validators: {
                             regexp: {
                                 regexp: /^[1-9]\d*$/,
-                                message: 'Chưa hợp lệ'
+                                message: 'Chỉ được nhập số nguyên dương'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập dữ liệu'
+                                message: 'Không được để trống'
                             }
+
+                        }
+                    },
+                    'Price': {
+                        validators: {
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: 'Chỉ được nhập số nguyên dương'
+                            },
+                            notEmpty: {
+                                message: 'Không được để trống'
+                            }
+
                         }
                     }
-
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -195,13 +162,12 @@ var KTSigninGeneral = function () {
         });
     }
 
-
     // Public functions
     return {
         // Initialization
         init: function () {
-            form = document.querySelector('#add_employee_form');
-            submitButton = document.querySelector('#create_submit');
+            form = document.querySelector('#kt_modal_add_material');
+            submitButton = document.querySelector('#create_material');
 
             handleForm();
         }

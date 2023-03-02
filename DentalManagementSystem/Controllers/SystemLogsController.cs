@@ -10,15 +10,23 @@ using DentalManagementSystem.Models;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class SystemLogsController : Controller
+    public class SystemLogsController : AuthController
     {
         SystemLogDBContext DB = new SystemLogDBContext();
 
         // GET: SystemLogs
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var list = DB.ListAll();
             return View(list);
         }
+
+        [HttpPost]
+        public IActionResult CreateReportLog(String context, String url)
+        {
+
+            return Redirect(url);
+        }
+
     }
 }

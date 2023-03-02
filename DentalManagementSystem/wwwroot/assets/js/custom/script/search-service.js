@@ -78,51 +78,12 @@ var KTUsersList = function () {
 
     // Filter Datatable
     var handleFilterDatatable = () => {
-        // Select filter options
-        const filterForm = document.querySelector('[data-kt-user-table-filter="form"]');
-        const filterButton = filterForm.querySelector('[data-kt-user-table-filter="filter"]');
-        const selectOptions = filterForm.querySelectorAll('select');
 
-        // Filter datatable on submit
-        filterButton.addEventListener('click', function () {
-            var filterString = '';
-
-            // Get filter values
-            selectOptions.forEach((item, index) => {
-                if (item.value && item.value !== '') {
-                    if (index !== 0) {
-                        filterString += ' ';
-                    }
-
-                    // Build filter value options
-                    filterString += item.value;
-                }
-            });
-
-            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.search(filterString).draw();
-        });
     }
 
     // Reset Filter
     var handleResetForm = () => {
-        // Select reset button
-        const resetButton = document.querySelector('[data-kt-user-table-filter="reset"]');
-
-        // Reset datatable
-        resetButton.addEventListener('click', function () {
-            // Select filter options
-            const filterForm = document.querySelector('[data-kt-user-table-filter="form"]');
-            const selectOptions = filterForm.querySelectorAll('select');
-
-            // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
-            selectOptions.forEach(select => {
-                $(select).val('').trigger('change');
-            });
-
-            // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
-            datatable.search('').draw();
-        });
+        
     }
 
 
@@ -297,8 +258,6 @@ var KTUsersList = function () {
             if (!table) {
                 return;
             }
-
-           // initUserTable();
             initToggleToolbar();
             handleSearchDatatable();
             handleResetForm();
