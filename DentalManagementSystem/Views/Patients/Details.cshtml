@@ -7,6 +7,7 @@
 @section Patientscript{
     <script src="~/assets/js/custom/script/searchPatient.js"></script>
     <script src="~/assets/js/custom/script/PatientValidate.js"></script>
+    <script src="~/assets/js/custom/script/Search_Patient_Record.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
 }
 
@@ -352,7 +353,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm bệnh nhân">
+                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm bệnh án">
                 </div>
                 <!--end::Search-->
             </div>
@@ -559,18 +560,6 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="fw-semibold fs-6 mb-2">IsDelete</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="IsDeleted" value="true" />
-                                            </label>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->
@@ -607,7 +596,7 @@
                             <!--begin::Modal header-->
                             <div class="modal-header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bold">Export bệnh nhân</h2>
+                                <h2 class="fw-bold">Export bệnh án</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -682,19 +671,13 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
                                 </div>
                             </th>
-                            <th class="min-w-125px">ID</th>
-                            <th class="min-w-125px">Reason</th>
-                            <th class="min-w-125px">Diagnostic</th>
-                            <th class="min-w-125px">Causal</th>
-                            <th class="min-w-125px">Date</th>
-                            <th class="min-w-125px">Treatment Name</th>
-                            <th class="min-w-125px">Marrow Record</th>
-                            <th class="min-w-125px">Debit</th>
-                            <th class="min-w-125px">Note</th>
-                            <th class="min-w-125px">Treatment Id</th>
-                            <th class="min-w-125px">UserId</th>
-                            <th class="min-w-125px">PatientId</th>
-                            <th class="min-w-125px">Prescription</th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Lí do đến khám</th>
+                            <th class="min-w-125px">Chẩn đoán</th>
+                            <th class="min-w-125px">Nguyên nhân</th>
+                            <th class="min-w-125px">Ngày khám</th>
+                            <th class="min-w-125px">Tủy</th>
+                            <th class="min-w-125px">Kê đơn</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -724,25 +707,7 @@
                                     @item.Date.Day/@item.Date.Month/@item.Date.Year
                                 </td>
                                 <td>
-                                    @item.TreatmentName
-                                </td>
-                                <td>
                                     @item.MarrowRecord
-                                </td>
-                                <td>
-                                    @item.Debit
-                                </td>
-                                <td>
-                                    @item.Note
-                                </td>
-                                <td>
-                                    @item.TreatmentId
-                                </td>
-                                <td>
-                                    @item.UserId
-                                </td>
-                                <td>
-                                    @item.PatientId
                                 </td>
                                 <td>
                                     @item.Prescription

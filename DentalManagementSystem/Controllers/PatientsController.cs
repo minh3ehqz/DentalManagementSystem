@@ -18,23 +18,37 @@ namespace DentalManagementSystem.Controllers
         // GET: Patients
         public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
         {
-         /*   if (!isAuth(out User user))
+            if (!isAuth(out User user))
             {
-                    return NotFound();
+                return Redirect("/Home");
             }
-            else*/
+            
+            //Get Session
+            
+
+            var checkgender = (gender ?? "");
+            TempData["id"] = (id ?? null);
+            TempData["name"] = (name ?? "");
+            TempData["Birthday"] = (Birthday ?? "");
+            TempData["address"] = (address ?? "");
+            TempData["phone"] = (phone ?? "");
+            TempData["email"] = (email ?? "");
+            TempData["gender"] = checkgender;
+            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null || gender != null)
             {
-                var checkgender = (gender ?? "");
-                TempData["id"] = (id ?? null);
-                TempData["name"] = (name ?? "");
-                TempData["Birthday"] = (Birthday ?? "");
-                TempData["address"] = (address ?? "");
-                TempData["phone"] = (phone ?? "");
-                TempData["email"] = (email ?? "");
-                TempData["gender"] = checkgender;
-                var PatientList = DB.ListAll();
-                return View(PatientList);
+
+                var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
+                && p.Name.Contains((name ?? ""))
+                && p.Birthday.ToString().Contains((Birthday ?? ""))
+                && p.Address.Contains((address ?? ""))
+                && p.Phone.Contains((phone ?? ""))
+                && (p.Gender ? "m" : "f").Contains(checkgender)
+                && p.Email.Contains((email ?? ""))).ToList();
+
+                return View(result);
             }
+            var PatientList = DB.ListAll();
+            return View(PatientList);
         }
 
         // POST: thêm mới bệnh nhân
