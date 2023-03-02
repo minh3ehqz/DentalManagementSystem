@@ -11,6 +11,7 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Home");
             }
+            ViewData["LoginError"] = "";
             return View();
         }
 
