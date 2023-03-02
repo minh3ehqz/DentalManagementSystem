@@ -11,8 +11,8 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Home");
             }
-            UserDBContext userDBContext = new UserDBContext();
-            if (HttpContext.Session.GetString(User + "-ResetPassword") == ValidateToken)
+            
+            if (HttpContext.Session.GetString(UserId + "-ResetPassword") == ValidateToken)
             {
                 return View();
             }
