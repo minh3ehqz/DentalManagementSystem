@@ -66,7 +66,6 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")] MaterialImport materialImport)
         {
-            materialImport.Date = DateTime.Now;
             DB.Update(materialImport);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = materialImport.Id });
