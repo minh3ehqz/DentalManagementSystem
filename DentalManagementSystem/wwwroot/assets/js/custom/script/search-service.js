@@ -259,7 +259,7 @@ var KTUsersList = function () {
                 return;
             }
 
-           // initUserTable();
+            initUserTable();
             initToggleToolbar();
             handleSearchDatatable();
             handleResetForm();
