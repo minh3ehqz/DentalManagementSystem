@@ -7,24 +7,21 @@ var KTSigninGeneral = function() {
     var submitButton;
     var validator;
 
-    // Handle form
+    // Handle
     var handleForm = function(e) {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
 			form,
 			{
 				fields: {					
-					'username': {
+                    'email': {
                         validators: {
-							notEmpty: {
-								message: 'Bạn chưa nhập tên đăng nhập'
-							}
-						}
-					},
-                    'password': {
-                        validators: {
+                            regexp: {
+                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: 'The value is not a valid email address',
+                            },
                             notEmpty: {
-                                message: 'Bạn chưa nhập password'
+                                message: 'Email address is required'
                             }
                         }
                     } 
@@ -65,7 +62,7 @@ var KTSigninGeneral = function() {
 
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Đã gửi yêu cầu đăng nhập",
+                            text: "Đã gửi yêu cầu lấy lại mật khẩu, vui lòng chờ trong giây lát",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "OK",
@@ -82,7 +79,7 @@ var KTSigninGeneral = function() {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Bạn đã nhập thiếu Username hoặc Password",
+                        text: "Bạn đã nhập thiếu Email",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "OK",
@@ -117,6 +114,20 @@ KTUtil.onDOMContentLoaded(function () {
         Swal.fire({
             text: errorMessage,
             icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    }
+
+    if (form.getAttribute('success-message') !== '' && form.getAttribute('success-message') != null) {
+        console.log(form.getAttribute('success-message'));
+        let successMessage = form.getAttribute('success-message');
+        Swal.fire({
+            text: successMessage,
+            icon: "success",
             buttonsStyling: false,
             confirmButtonText: "OK",
             customClass: {

@@ -47,10 +47,10 @@
         <div>
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.MaterialId)
+                    @Html.DisplayNameFor(model => model.SupplyName)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.MaterialId)
+                    @Html.DisplayFor(model => model.SupplyName)
                 </dd>
                 <dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Date)
@@ -69,12 +69,6 @@
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.TotalPrice)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.IsDeleted)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.IsDeleted)
                 </dd>
             </dl>
         </div>
@@ -113,7 +107,7 @@
                             <!--begin::Modal header-->
                             <div class="modal-header" id="kt_modal_add_user_header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bold">Sửa bệnh nhân</h2>
+                                <h2 class="fw-bold">Sửa phiếu nhập</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -136,16 +130,9 @@
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                         <!--begin::Input group-->
-                                        <input type="hidden" name="Id" value="@Model.Id" />
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Mã vật tư</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="text" name="MaterialId" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Material ID" maxlength="250" value="@Model.MaterialId" required />
-
-                                            <!--end::Input-->
-                                        </div>
+                                        <input type="hidden" name="Id" value="@Model.Id" />                                  
+                                        <input type="hidden" name="MaterialId" value="@Model.MaterialId" />
+                                        <input type="hidden" name="Date" value="@Model.Date" />
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
@@ -154,11 +141,9 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="SupplyName" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.SupplyName" />
-
                                             <!--end::Input-->
                                         </div>
-                                        <!--end::Input group-->
-                                        
+                                        <!--end::Input group--> 
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
@@ -166,7 +151,6 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="Amount" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.Amount" />
-
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -176,20 +160,7 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="TotalPrice" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.TotalPrice" />
-
-                                            <!--end::Input-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="fw-semibold fs-6 mb-2">IsDelete</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="IsDeleted" value="@Model.IsDeleted" />
-                                            </label>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
+                                            <!--end::Input-->              
                                     </div>
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->

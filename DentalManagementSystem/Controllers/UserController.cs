@@ -22,7 +22,6 @@ namespace DentalManagementSystem.Controllers
         {
             var UserList = DB.Users.Include(u => u.Role).ToList();
 
-
             return View(UserList);
         }
 

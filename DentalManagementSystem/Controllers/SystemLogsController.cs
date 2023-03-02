@@ -17,6 +17,10 @@ namespace DentalManagementSystem.Controllers
         // GET: SystemLogs
         public IActionResult Index()
         {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
             var list = DB.ListAll();
             return View(list);
         }
@@ -24,7 +28,6 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult CreateReportLog(String context, String url)
         {
-
             return Redirect(url);
         }
 

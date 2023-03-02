@@ -11,11 +11,12 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Home");
             }
+            ViewData["LoginError"] = "";
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Index(string username, string password)
         {
             if (isAuth(out _))
             {

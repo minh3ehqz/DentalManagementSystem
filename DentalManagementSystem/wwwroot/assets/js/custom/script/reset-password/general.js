@@ -7,27 +7,33 @@ var KTSigninGeneral = function() {
     var submitButton;
     var validator;
 
-    // Handle form
+    // Handle
     var handleForm = function(e) {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
 			form,
 			{
-				fields: {					
-					'username': {
-                        validators: {
-							notEmpty: {
-								message: 'Bạn chưa nhập tên đăng nhập'
-							}
-						}
-					},
+				fields: {				
                     'password': {
                         validators: {
                             notEmpty: {
                                 message: 'Bạn chưa nhập password'
                             }
                         }
-                    } 
+                    },
+                    'confirm-password': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vui lòng nhập lại mật khẩu'
+                            },
+                            identical: {
+                                compare: function () {
+                                    return form.querySelector('[name="password"]').value;
+                                },
+                                message: 'Mật khẩu mới không trùng khớp'
+                            }
+                        }
+                    }
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -63,26 +69,12 @@ var KTSigninGeneral = function() {
                         // Enable button
                         submitButton.disabled = false;
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "Đã gửi yêu cầu đăng nhập",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "OK",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                                             
-                                form.submit(); // submit form
-                            }
-                        });
+                        form.submit(); // submit form
                     }, 2000);   						
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Bạn đã nhập thiếu Username hoặc Password",
+                        text: "Bạn đã nhập thiếu Email",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "OK",
@@ -121,6 +113,26 @@ KTUtil.onDOMContentLoaded(function () {
             confirmButtonText: "OK",
             customClass: {
                 confirmButton: "btn btn-primary"
+            }
+        });
+    }
+
+    if (form.getAttribute('success-message') !== '' && form.getAttribute('success-message') != null) {
+        console.log(form.getAttribute('success-message'));
+        let successMessage = form.getAttribute('success-message');
+        Swal.fire({
+            text: successMessage,
+            icon: "success",
+            buttonsStyling: false,
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                setTimeout(function () {
+                    window.location.href = "/Home";
+                }, 500);
             }
         });
     }

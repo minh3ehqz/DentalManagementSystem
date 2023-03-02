@@ -148,9 +148,9 @@
                 </div>
                 <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
                     <div class="fw-bold me-5">
-                        <span class="me-2"data-kt-user-table-select="selected_count"></span>Selected
+                        <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected
                     </div>
-                    <button type="submit" class="btn btn-danger"data-kt-user-table-select="delete_selected" form="ListForm">
+                    <button type="submit" class="btn btn-danger" data-kt-user-table-select="delete_selected" form="ListForm">
                         Delete Selected
                     </button>
                 </div>
@@ -191,7 +191,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Full Name</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="Name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" maxlength="250" required />
+                                            <input type="text" name="Name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name" maxlength="20" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -216,7 +216,6 @@
                                                 <input type="radio" name="Gender" value="true" checked>nam
                                                 <input type="radio" name="Gender" value="false">nữ
                                             </label>
-
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -227,7 +226,6 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="Address" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required />
-
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -236,7 +234,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Số điện thoại</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="Phone" class="form-control form-control-solid mb-3 mb-lg-0"  maxlength="10" id="txtPhone" required />
+                                            <input type="text" name="Phone" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" id="txtPhone" required />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -247,7 +245,6 @@
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="email" name="Email" id="txtEmail" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" maxlength="250" required />
-
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -257,8 +254,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">BodyPrehistory</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="BodyPrehistory" class="form-control form-control-solid mb-3 mb-lg-0" data-val=true maxlength="250" required />
-
+                                            <textarea maxlength="250" style="height:100px" name="BodyPrehistory" class="form-control form-control-solid mb-3 mb-lg-0" required></textarea>
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -268,30 +264,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">TeethPrehistory</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="TeethPrehistory" class="form-control form-control-solid mb-3 mb-lg-0" data-val="true" maxlength="250" required />
-
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Status</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <input type="number" name="Status" class="form-control form-control-solid mb-3 mb-lg-0" data-val="true" required />
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="fw-semibold fs-6 mb-2">IsDelete</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="IsDeleted" value="true" />
-                                            </label>
+                                            <textarea maxlength="250" style="height:100px" name="TeethPrehistory" class="form-control form-control-solid mb-3 mb-lg-0" required></textarea>
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -406,12 +379,12 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
                                 </div>
                             </th>
-                            <th class="min-w-125px">ID</th>
-                            <th class="min-w-125px">Name</th>
-                            <th class="min-w-125px">Birthday</th>
-                            <th class="min-w-125px">Gender</th>
-                            <th class="min-w-125px">Address</th>
-                            <th class="min-w-125px">Phone</th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Tên</th>
+                            <th class="min-w-125px">thời gian sinh</th>
+                            <th class="min-w-125px">Giới tính</th>
+                            <th class="min-w-125px">Địa chỉ</th>
+                            <th class="min-w-125px">SĐT</th>
                             <th class="min-w-125px">Email</th>
                         </tr>
                         <!--end::Table row-->
@@ -420,6 +393,10 @@
                     <!--begin::Table body (nội dung dữ liệu)-->
 
                     <tbody class="text-gray-600 fw-semibold">
+                        @{
+                            int index = 1;
+                        }
+
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -428,7 +405,12 @@
                                         <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
                                     </div>
                                 </td>
-                                <td>@item.Id</td>
+                                <td>
+                                    <p>@index</p>
+                                    @{
+                                        index++;
+                                    }
+                                </td>
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
                                 </td>
