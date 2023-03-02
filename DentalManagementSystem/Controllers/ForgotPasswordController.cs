@@ -30,9 +30,9 @@ namespace DentalManagementSystem.Controllers
             }
 
             string ValidateToken = StringHelper.GenerateToken();
-            HttpContext.Session.SetString(User + "-ResetPassword", ValidateToken);
+            HttpContext.Session.SetString(user.Id + "-ResetPassword", ValidateToken);
             string UserEmail = user.Email;
-            EmailHelper.Send(UserEmail, "Khôi phục mật khẩu cho hệ thống", "Chào bạn, đường dẫn khôi phục hệ thống của bạn là: <a href='https://localhost:7006/ResetPassword?UserId=" + user.Id + "&ValidateToken=" + ValidateToken + "</a>");
+            EmailHelper.Send(UserEmail, "Khôi phục mật khẩu cho hệ thống", "Chào bạn, đường dẫn khôi phục hệ thống của bạn là: https://localhost:7006/ResetPassword?UserId=" + user.Id + "&ValidateToken=" + ValidateToken);
             ViewData["Success"] = "Chúng tôi đã gửi cho bạn một email khôi phục mật khẩu, vui lòng làm theo hướng dẫn để khôi phục mật khẩu!";
             return View();
         }

@@ -4,7 +4,7 @@
     {
         public static string GenerateToken()
         {
-            string data = "1234567890-=`qwertyuiop[]asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}ASDFGHJKL:ZXCVBNM<>?";
+            string data = "1234567890-qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
             string Token = "";
             Random rd = new Random();
             for (int i = 0; i < 100; i++)

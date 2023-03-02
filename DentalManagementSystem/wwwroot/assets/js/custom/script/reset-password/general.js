@@ -13,18 +13,27 @@ var KTSigninGeneral = function() {
         validator = FormValidation.formValidation(
 			form,
 			{
-				fields: {					
-                    'email': {
+				fields: {				
+                    'password': {
                         validators: {
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'The value is not a valid email address',
-                            },
                             notEmpty: {
-                                message: 'Email address is required'
+                                message: 'Bạn chưa nhập password'
                             }
                         }
-                    } 
+                    },
+                    'confirm-password': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vui lòng nhập lại mật khẩu'
+                            },
+                            identical: {
+                                compare: function () {
+                                    return form.querySelector('[name="password"]').value;
+                                },
+                                message: 'Mật khẩu mới không trùng khớp'
+                            }
+                        }
+                    }
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -60,21 +69,7 @@ var KTSigninGeneral = function() {
                         // Enable button
                         submitButton.disabled = false;
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "Đã gửi yêu cầu lấy lại mật khẩu, vui lòng chờ trong giây lát",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "OK",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                                             
-                                form.submit(); // submit form
-                            }
-                        });
+                        form.submit(); // submit form
                     }, 2000);   						
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
@@ -132,6 +127,12 @@ KTUtil.onDOMContentLoaded(function () {
             confirmButtonText: "OK",
             customClass: {
                 confirmButton: "btn btn-primary"
+            }
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                setTimeout(function () {
+                    window.location.href = "/Home";
+                }, 500);
             }
         });
     }
