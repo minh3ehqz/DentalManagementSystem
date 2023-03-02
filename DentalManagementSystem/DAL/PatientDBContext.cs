@@ -5,6 +5,15 @@ namespace DentalManagementSystem.DAL
 {
     public class PatientDBContext : DBContext<Patient>
     {
+        public Patient GetPatientsByEmail(string email)
+        {
+            return Patients.FirstOrDefault(x => x.Email == email);
+        }
+        public Patient GetPatientsByPhone(string phone)
+        {
+            return Patients.FirstOrDefault(x => x.Phone == phone);
+        }
+
         public override void Add(Patient entity)
         {
             Patients.Add(entity);

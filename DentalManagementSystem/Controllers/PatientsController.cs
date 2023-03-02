@@ -18,13 +18,13 @@ namespace DentalManagementSystem.Controllers
         // GET: Patients
         public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
         {
-            if (!isAuth(out User user))
-            {
-                return Redirect("/Home");
-            }
-            
+            //  if (!isAuth(out User user))
+            //{
+            //        return Redirect("/Home");
+            //}
+
             //Get Session
-            
+
 
             var checkgender = (gender ?? "");
             TempData["id"] = (id ?? null);
@@ -59,7 +59,7 @@ namespace DentalManagementSystem.Controllers
             TempData["addsuccess"] = "thêm mới thành công";
             patient.Trim();
             DB.Add(patient);
-            Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=3,Content="người dùng đã thêm mới bệnh nhân" });
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã thêm mới bệnh nhân" });
             return RedirectToAction(nameof(Index));
         }
         // thông tin chi tiết của bệnh nhân
@@ -99,16 +99,30 @@ namespace DentalManagementSystem.Controllers
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã xóa bệnh nhân có id là "+id+"" });
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã xóa bệnh nhân có id là " + id + "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult sdfjkhsjkd(string email, string sdt)
+        public IActionResult checkEmailPhone(string email, string phone)
         {
-            //xu ly lay sdt o day
-            return Ok("Valid");
+            var checkEmail = DB.GetPatientsByEmail(email);
+            var checkPhone = DB.GetPatientsByPhone(phone);
+            if (checkEmail != null || checkPhone != null)
+            {
+                string result = "";
+                if (checkEmail != null) result += "email ";
+                if (checkPhone != null) {
+                    if (!result.Equals("")) result += "và ";
+                    result += "phone ";
+                } 
+                return Ok(result + "đã tồn tại");
+            }
+            else
+            {
+                return Ok("Valid");
+            }
         }
     }
 }
