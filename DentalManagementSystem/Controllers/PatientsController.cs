@@ -18,37 +18,23 @@ namespace DentalManagementSystem.Controllers
         // GET: Patients
         public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
         {
-            //  if (!isAuth(out User user))
-            //{
-            //        return Redirect("/Home");
-            //}
-
-            //Get Session
-
-
-            var checkgender = (gender ?? "");
-            TempData["id"] = (id ?? null);
-            TempData["name"] = (name ?? "");
-            TempData["Birthday"] = (Birthday ?? "");
-            TempData["address"] = (address ?? "");
-            TempData["phone"] = (phone ?? "");
-            TempData["email"] = (email ?? "");
-            TempData["gender"] = checkgender;
-            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null || gender != null)
+         /*   if (!isAuth(out User user))
             {
-
-                var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
-                && p.Name.Contains((name ?? ""))
-                && p.Birthday.ToString().Contains((Birthday ?? ""))
-                && p.Address.Contains((address ?? ""))
-                && p.Phone.Contains((phone ?? ""))
-                && (p.Gender ? "m" : "f").Contains(checkgender)
-                && p.Email.Contains((email ?? ""))).ToList();
-
-                return View(result);
+                    return NotFound();
             }
-            var PatientList = DB.ListAll();
-            return View(PatientList);
+            else*/
+            {
+                var checkgender = (gender ?? "");
+                TempData["id"] = (id ?? null);
+                TempData["name"] = (name ?? "");
+                TempData["Birthday"] = (Birthday ?? "");
+                TempData["address"] = (address ?? "");
+                TempData["phone"] = (phone ?? "");
+                TempData["email"] = (email ?? "");
+                TempData["gender"] = checkgender;
+                var PatientList = DB.ListAll();
+                return View(PatientList);
+            }
         }
 
         // POST: thêm mới bệnh nhân
@@ -56,28 +42,28 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            TempData["addsuccess"] = "thêm mới thành công";
-            patient.Trim();
-            DB.Add(patient);
-            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã thêm mới bệnh nhân" });
-            return RedirectToAction(nameof(Index));
+            if(isAuth(out User user))
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                patient.Trim();
+                DB.Add(patient);
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân" });
+                return RedirectToAction(nameof(Index));
+            }else return NotFound();
+            
         }
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
         {
+            /*if (!isAuth(out User user))
+            {
+                return NotFound();
+            }*/
             var patient = DB.Get(id);
             return View(patient);
         }
         // GET: thay đổi thông tin bênh nhân
-        public IActionResult Edit(long id)
-        {
-            var patient = DB.Get(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-            return View(patient);
-        }
+
 
         // POST: thay đổi thông tin bênh nhân
         [HttpPost]
@@ -96,10 +82,14 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
+          /*  if (!isAuth(out User user))
+            {
+                return NotFound();
+            }*/
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã xóa bệnh nhân có id là " + id + "" });
+     //           Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân có id là " + id + "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
