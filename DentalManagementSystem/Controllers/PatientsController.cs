@@ -17,7 +17,12 @@ namespace DentalManagementSystem.Controllers
 
         // GET: Patients
         public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
-        {           
+        {
+            if (!isAuth(out User user))
+            {
+                return Redirect("/Home");
+            }
+            
             //Get Session
             
 
@@ -51,28 +56,28 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            TempData["addsuccess"] = "thêm mới thành công";
-            patient.Trim();
-            DB.Add(patient);
-            Log.Add(new SystemLog { CreatedDate = DateTime.Now,OwnerId=3,Content="người dùng đã thêm mới bệnh nhân" });
-            return RedirectToAction(nameof(Index));
+            if(isAuth(out User user))
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                patient.Trim();
+                DB.Add(patient);
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân" });
+                return RedirectToAction(nameof(Index));
+            }else return NotFound();
+            
         }
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
         {
+            /*if (!isAuth(out User user))
+            {
+                return NotFound();
+            }*/
             var patient = DB.Get(id);
             return View(patient);
         }
         // GET: thay đổi thông tin bênh nhân
-        public IActionResult Edit(long id)
-        {
-            var patient = DB.Get(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-            return View(patient);
-        }
+
 
         // POST: thay đổi thông tin bênh nhân
         [HttpPost]
@@ -91,19 +96,37 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
+          /*  if (!isAuth(out User user))
+            {
+                return NotFound();
+            }*/
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = 3, Content = "người dùng đã xóa bệnh nhân có id là "+id+"" });
+     //           Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân có id là " + id + "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult sdfjkhsjkd(string email, string sdt)
+        public IActionResult checkEmailPhone(string email, string phone)
         {
-            //xu ly lay sdt o day
-            return Ok("Valid");
+            var checkEmail = DB.GetPatientsByEmail(email);
+            var checkPhone = DB.GetPatientsByPhone(phone);
+            if (checkEmail != null || checkPhone != null)
+            {
+                string result = "";
+                if (checkEmail != null) result += "email ";
+                if (checkPhone != null) {
+                    if (!result.Equals("")) result += "và ";
+                    result += "phone ";
+                } 
+                return Ok(result + "đã tồn tại");
+            }
+            else
+            {
+                return Ok("Valid");
+            }
         }
     }
 }

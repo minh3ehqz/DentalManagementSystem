@@ -14,20 +14,18 @@ var KTSigninGeneral = function() {
 			form,
 			{
 				fields: {					
-					'username': {
+					'email': {
                         validators: {
+                            regexp: {
+                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: 'Bạn cần nhập đúng định dạng email',
+                            },
 							notEmpty: {
-								message: 'Bạn chưa nhập tên đăng nhập'
+								message: 'Bạn chưa nhập email'
 							}
 						}
 					},
-                    'password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Bạn chưa nhập password'
-                            }
-                        }
-                    } 
+
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -117,6 +115,18 @@ KTUtil.onDOMContentLoaded(function () {
         Swal.fire({
             text: errorMessage,
             icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "OK",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    }
+    if (form.getAttribute('success-message') !== '' && form.getAttribute('success-message') != null) {
+        let errorMessage = form.getAttribute('success-message');
+        Swal.fire({
+            text: errorMessage,
+            icon: "success",
             buttonsStyling: false,
             confirmButtonText: "OK",
             customClass: {
