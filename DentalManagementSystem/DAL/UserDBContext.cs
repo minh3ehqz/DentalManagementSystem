@@ -8,6 +8,12 @@ namespace DentalManagementSystem.DAL
 		{
 			return Users.FirstOrDefault(x => x.Username == username && x.Password == password);
 		}
+
+		public User GetByEmail(string email)
+		{
+			return Users.FirstOrDefault(x => x.Email == email);
+		}
+		
 		public override void Add(User entity)
 		{
 			Users.Add(entity);
