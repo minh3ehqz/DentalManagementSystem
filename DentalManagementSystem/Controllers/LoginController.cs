@@ -16,7 +16,7 @@ namespace DentalManagementSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Index(string username, string password)
         {
             if (isAuth(out _))
             {
