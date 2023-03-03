@@ -35,7 +35,8 @@ namespace DentalManagementSystem.DAL
 
         public override void Update(Schedule entity)
         {
-            throw new NotImplementedException();
+            Schedules.Update(entity);
+            SaveChanges();
         }
     }
 }

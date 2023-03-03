@@ -143,8 +143,6 @@ var KTSigninGeneral = function () {
                         .then((text) => {
                             valid = text;
                         });
-                    console.log(valid);
-
                     // Hide loading indication
                     submitButton.removeAttribute('data-kt-indicator');
 

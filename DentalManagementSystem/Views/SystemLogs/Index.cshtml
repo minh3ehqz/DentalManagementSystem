@@ -238,7 +238,7 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
                                 </div>
                             </th>
-                            <th class="min-w-125px">ID</th>
+                            <th class="min-w-125px">STT</th>
                             <th class="min-w-125px">OwnerId</th>
                             <th class="min-w-125px">CreatedDate</th>
                             <th class="min-w-125px">Content</th>
@@ -249,6 +249,9 @@
                     <!--begin::Table body (nội dung dữ liệu)-->
 
                     <tbody class="text-gray-600 fw-semibold">
+                        @{
+                            int index = 1;
+                        }
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -257,7 +260,12 @@
                                         <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
                                     </div>
                                 </td>
-                                <td>@item.Id</td>
+                                <td>
+                                    <p>@index</p>
+                                    @{
+                                        index++;
+                                    }
+                                </td>
                                 <td>@item.OwnerId</td>
                                 <td>@item.CreatedDate</td>
                                 <td>@item.Content</td>
