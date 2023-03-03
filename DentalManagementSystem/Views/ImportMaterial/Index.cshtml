@@ -61,7 +61,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm bệnh nhân">
+                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm phiếu nhập">
                 </div>
                 <!--end::Search-->
             </div>
@@ -225,18 +225,6 @@
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
-                                        <!--begin::Input group-->
-                                        <div class="fv-row mb-7">
-                                            <!--begin::Label-->
-                                            <label class="fw-semibold fs-6 mb-2">IsDelete</label>
-                                            <!--end::Label-->
-                                            <!--begin::Input-->
-                                            <label class="form-check-label">
-                                                <input type="checkbox" class="form-check-input" name="IsDeleted" value="true" />
-                                            </label>
-                                            <!--end::Input-->
-                                        </div>
-                                        <!--end::Input group-->
                                     </div>
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->
@@ -348,12 +336,12 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_imports .form-check-input" value="1">
                                 </div>
                             </th>
-                            <th class="min-w-125px">ID</th>
-                            <th class="min-w-125px">Material ID</th>
-                            <th class="min-w-125px">Supply Name</th>
-                            <th class="min-w-125px">Date</th>
-                            <th class="min-w-125px">Amount</th>
-                            <th class="min-w-125px">Total Price</th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Mã vật tư</th>
+                            <th class="min-w-125px">Tên</th>
+                            <th class="min-w-125px">Ngày nhập</th>
+                            <th class="min-w-125px">Số lượng</th>
+                            <th class="min-w-125px">Đơn giá</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -369,7 +357,7 @@
                                         <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
                                     </div>
                                 </td>
-                                <td>@item.Id</td>
+                                <td>@(Model.IndexOf(item)+1)</td>
                                 <td>@item.MaterialId</td>
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">@item.SupplyName</a>

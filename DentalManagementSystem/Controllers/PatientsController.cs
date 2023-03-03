@@ -20,7 +20,7 @@ namespace DentalManagementSystem.Controllers
         {
             if (!isAuth(out User user))
             {
-                    return NotFound();
+                return Redirect("/Home");
             }
             else
             {

@@ -18,10 +18,10 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[a-zA-Z0-9]+$/,
-                                message: 'username chỉ cưa kí tự chữ và số'
+                                message: 'Tên đăng nhập chứa kí tự chữ hoặc số'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập tên Service'
+                                message: 'Chưa nhập tên đăng nhập'
                             }
                         }
                     },
@@ -29,10 +29,10 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /[A-Z][a-z]/,
-                                message: 'tên phải gồm cả chữ hoa và chữ thường'
+                                message: 'Fullname chưa ít nhất một chữ hoa và chữ thường'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập tên Service'
+                                message: 'Chưa nhập họ và tên'
                             }
                         }
                     },
@@ -40,10 +40,10 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                                message: 'mật khảu chứa ít nhát 8 kí tự, 1 chữ thường, 1 chữ sô'
+                                message: 'Mật khẩu chứa ít nhát 8 kí tự, 1 chữ thường, 1 chữ sô'
                             },
                             notEmpty: {
-                                message: 'Chưa nhập dữ liệu'
+                                message: 'Chưa nhập mật khẩu'
                             }
                         }
                     },
@@ -51,7 +51,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'email nhập vào chưa hợp lệ'
+                                message: 'Email nhập vào chưa hợp lệ'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập email'
@@ -61,33 +61,34 @@ var KTSigninGeneral = function () {
                     'phone': {
                         validators: {
                             regexp: {
-                                regexp: /^0[9843]{1}\\d{8}$/,
-                                message: 'chưa hợp lệ'
+                                regexp: /^(0|\+84)(\d{9})$/,
+                                message: 'Số điện thoại nhập chưa hợp lệ '
                             },
                             notEmpty: {
-                                message: 'chưa nhập số điên thoại'
+                                message: 'Chưa nhập số điên thoại'
                             }
                         }
                     },
+
                     'birthday': {
                         validators: {
                             regexp: {
                                 regexp: /^\d{2}\/\d{2}\/\d{4}$/,
-                                message: 'chưa hợp lệ'
+                                message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
-                                message: 'chưa nhập dữ liệu'
+                                message: 'Chưa nhập dữ liệu'
                             }
                         }
                     },
                     'salary': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
-                                message: 'chưa hợp lệ'
+                                regexp: /^[1-9]\d*$/,
+                                message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
-                                message: 'chưa nhập dữ liệu'
+                                message: 'Chưa nhập dữ liệu'
                             }
                         }
                     }
@@ -193,6 +194,7 @@ var KTSigninGeneral = function () {
             });
         });
     }
+
 
     // Public functions
     return {

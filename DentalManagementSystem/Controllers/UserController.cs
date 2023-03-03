@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class UserController : Controller
+    public class UserController : AuthController
     {
         UserDBContext DB = new UserDBContext();
         RoleDBContext RoleDB = new RoleDBContext();
@@ -21,7 +21,6 @@ namespace DentalManagementSystem.Controllers
         public IActionResult Index()
         {
             var UserList = DB.Users.Include(u => u.Role).ToList();
-
 
             return View(UserList);
         }
@@ -50,9 +49,6 @@ namespace DentalManagementSystem.Controllers
 
             DB.Add(user);
             return RedirectToAction(nameof(Index));
-
-
-            ViewBag.Roles = RoleDB.Roles.ToList();
             return View(user);
         }
 
@@ -133,6 +129,7 @@ namespace DentalManagementSystem.Controllers
 
             return View("Index", users);
         }
+
 
     }
 }

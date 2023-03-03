@@ -43,16 +43,7 @@ namespace DentalManagementSystem.DAL
 
 		public override void Update(User entity)
 		{
-			var user = Users.FirstOrDefault(x => x.Id == entity.Id);
-			user.Username = entity.Username.Trim();
-			user.FullName = entity.FullName;
-			user.Password = entity.Password;
-			user.Birthday = entity.Birthday;
-			user.Phone = entity.Phone;
-			user.Salary = entity.Salary;
-			user.RoleId = entity.RoleId;
-			user.Enable = entity.Enable;
-			user.Email = entity.Email;
+			Users.Update(entity);
 			SaveChanges();
 		}
 	}
