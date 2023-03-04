@@ -5,6 +5,17 @@ namespace DentalManagementSystem.DAL
 {
     public class PatientDBContext : DBContext<Patient>
     {
+        public List<Patient> GetByGender(bool gender, string name)
+        {
+            var AllPatients = Patients.Where(x => x.Gender == gender && x.Name == name).ToList();
+            int page = 10;
+            int PageSize = 10;
+            int index = (page - 1) * PageSize;
+            int ResultCount = AllPatients.Count - index >= 10 ? index + PageSize : AllPatients.Count - index;
+            AllPatients = AllPatients.GetRange(index, ResultCount);
+            return AllPatients;
+        }
+
         public Patient GetPatientsByEmail(string email)
         {
             return Patients.FirstOrDefault(x => x.Email == email);
@@ -22,7 +33,7 @@ namespace DentalManagementSystem.DAL
         
         public override void Delete(long Id)
         {
-            Patients.Remove(Patients.FirstOrDefault(x => x.Id == Id));
+            Patients.Remove(Get(Id));
             SaveChanges();
         }
 
