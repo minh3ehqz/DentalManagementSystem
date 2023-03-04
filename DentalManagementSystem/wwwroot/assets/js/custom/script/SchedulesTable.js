@@ -2,7 +2,7 @@
 
 var KTUsersList = function () {
     // Define shared variables
-    var table = document.getElementById('kt_table_users');
+    var table = document.getElementById('kt_table_schedules');
     var datatable;
     var toolbarBase;
     var toolbarSelected;
@@ -41,11 +41,11 @@ var KTUsersList = function () {
             const realDate = moment().subtract(timeCount, timeFormat).format();
 
             // Insert real date to last login attribute
-            dateRow[3]?.setAttribute('data-order', realDate);
+            dateRow[3].setAttribute('data-order', realDate);
 
             // Set real date for joined column
             const joinedDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5]?.setAttribute('data-order', joinedDate);
+            dateRow[5].setAttribute('data-order', joinedDate);
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
@@ -70,7 +70,7 @@ var KTUsersList = function () {
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-user-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-schedules-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -78,19 +78,58 @@ var KTUsersList = function () {
 
     // Filter Datatable
     var handleFilterDatatable = () => {
+        // Select filter options
+        const filterForm = document.querySelector('[data-kt-schedules-table-filter="form"]');
+        const filterButton = filterForm.querySelector('[data-kt-schedules-table-filter="filter"]');
+        const selectOptions = filterForm.querySelectorAll('select');
 
+        // Filter datatable on submit
+        filterButton.addEventListener('click', function () {
+            var filterString = '';
+
+            // Get filter values
+            selectOptions.forEach((item, index) => {
+                if (item.value && item.value !== '') {
+                    if (index !== 0) {
+                        filterString += ' ';
+                    }
+
+                    // Build filter value options
+                    filterString += item.value;
+                }
+            });
+
+            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search(filterString).draw();
+        });
     }
 
     // Reset Filter
     var handleResetForm = () => {
-        
+        // Select reset button
+        const resetButton = document.querySelector('[data-kt-schedules-table-filter="reset"]');
+
+        // Reset datatable
+        resetButton.addEventListener('click', function () {
+            // Select filter options
+            const filterForm = document.querySelector('[data-kt-schedules-table-filter="form"]');
+            const selectOptions = filterForm.querySelectorAll('select');
+
+            // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
+            selectOptions.forEach(select => {
+                $(select).val('').trigger('change');
+            });
+
+            // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search('').draw();
+        });
     }
 
 
     // Delete subscirption
     var handleDeleteRows = () => {
         // Select all delete buttons
-        const deleteButtons = table.querySelectorAll('[data-kt-users-table-filter="delete_row"]');
+        const deleteButtons = table.querySelectorAll('[data-kt-schedules-table-filter="delete_row"]');
 
         deleteButtons.forEach(d => {
             // Delete button on click
@@ -155,10 +194,10 @@ var KTUsersList = function () {
         const checkboxes = table.querySelectorAll('[type="checkbox"]');
 
         // Select elements
-        toolbarBase = document.querySelector('[data-kt-user-table-toolbar="base"]');
-        toolbarSelected = document.querySelector('[data-kt-user-table-toolbar="selected"]');
-        selectedCount = document.querySelector('[data-kt-user-table-select="selected_count"]');
-        const deleteSelected = document.querySelector('[data-kt-user-table-select="delete_selected"]');
+        toolbarBase = document.querySelector('[data-kt-schedules-table-toolbar="base"]');
+        toolbarSelected = document.querySelector('[data-kt-schedules-table-toolbar="selected"]');
+        selectedCount = document.querySelector('[data-kt-schedules-table-select="selected_count"]');
+        const deleteSelected = document.querySelector('[data-kt-schedules-table-select="delete_selected"]');
 
         // Toggle delete selected toolbar
         checkboxes.forEach(c => {
@@ -258,12 +297,13 @@ var KTUsersList = function () {
             if (!table) {
                 return;
             }
-            initUserTable();
+
+           // initUserTable();
             initToggleToolbar();
             handleSearchDatatable();
-            handleResetForm();
+            //handleResetForm();
             handleDeleteRows();
-            handleFilterDatatable();
+            //handleFilterDatatable();
 
         }
     }

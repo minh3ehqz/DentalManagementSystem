@@ -22,33 +22,19 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Home");
             }
-            
-            //Get Session
-            
-
-            var checkgender = (gender ?? "");
-            TempData["id"] = (id ?? null);
-            TempData["name"] = (name ?? "");
-            TempData["Birthday"] = (Birthday ?? "");
-            TempData["address"] = (address ?? "");
-            TempData["phone"] = (phone ?? "");
-            TempData["email"] = (email ?? "");
-            TempData["gender"] = checkgender;
-            if (id != null || Birthday != null || name != null || address != null || phone != null || email != null || gender != null)
+            else
             {
-
-                var result = DB.Patients.Where(p => (!id.HasValue || p.Id == id.Value)
-                && p.Name.Contains((name ?? ""))
-                && p.Birthday.ToString().Contains((Birthday ?? ""))
-                && p.Address.Contains((address ?? ""))
-                && p.Phone.Contains((phone ?? ""))
-                && (p.Gender ? "m" : "f").Contains(checkgender)
-                && p.Email.Contains((email ?? ""))).ToList();
-
-                return View(result);
+                var checkgender = (gender ?? "");
+                TempData["id"] = (id ?? null);
+                TempData["name"] = (name ?? "");
+                TempData["Birthday"] = (Birthday ?? "");
+                TempData["address"] = (address ?? "");
+                TempData["phone"] = (phone ?? "");
+                TempData["email"] = (email ?? "");
+                TempData["gender"] = checkgender;
+                var PatientList = DB.ListAll();
+                return View(PatientList);
             }
-            var PatientList = DB.ListAll();
-            return View(PatientList);
         }
 
         // POST: thêm mới bệnh nhân
@@ -69,10 +55,10 @@ namespace DentalManagementSystem.Controllers
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
         {
-            /*if (!isAuth(out User user))
+            if (!isAuth(out User user))
             {
                 return NotFound();
-            }*/
+            }
             var patient = DB.Get(id);
             return View(patient);
         }
@@ -84,6 +70,11 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+" có sđt là "+patient.Phone+"" });
             patient.Trim();
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
@@ -96,14 +87,14 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
-          /*  if (!isAuth(out User user))
+            if (!isAuth(out User user))
             {
                 return NotFound();
-            }*/
+            }
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-     //           Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân có id là " + id + "" });
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân " + DB.Get(id).Name + "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));

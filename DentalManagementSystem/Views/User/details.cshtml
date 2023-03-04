@@ -8,7 +8,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="text-dark fw-semibold my-0 fs-2">View Infomation Employee</h1>
+        <h1 class="text-dark fw-semibold my-0 fs-2">Thông tin chi tiết nhân viên</h1>
         <!--end::Heading-->
     </div>
     <!--end::Page title=-->
@@ -36,52 +36,52 @@
 </div>
 
 <div class="card container-xxl">
-    <div class="card-body">
+    <div class="card-body ">
+        <div class="d-flex">
         <div>
             <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Username)
+                <dt class="col-sm-4">Tên đăng nhập
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Username)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.FullName)
+                <dt class="col-sm-4">Họ và tên
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.FullName)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Birthday)
+                <dt class="col-sm-4">Sinh nhật
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Birthday)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Phone)
+            </dl>
+        </div>
+        <div>
+            <dl class="row">
+                <dt class="col-sm-4">Số điện thoại
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Phone)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Salary)
+                <dt class="col-sm-4">Lương
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Salary)
                 </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
+                <dt class="col-sm-4">Email
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Email)
                 </dd>
-                <dt class="col-sm-2">
-                   Role
+                <dt class="col-sm-4">
+                   Chức vụ
                 </dt>
-                <dd class="col-sm-10">
+                <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Role.Name)
                 </dd>
             </dl>
+        </div>
         </div>
         <div class="card-header border-0 pt-6">
             <!--begin::Card title
@@ -91,12 +91,12 @@
                 <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        Edit
+                        Chỉnh sửa
                     </button>
                     <!--end::Add user-->
                 </div>
                 &nbsp;&nbsp;
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Quay lại</a>
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
@@ -106,7 +106,7 @@
                             <!--begin::Modal header-->
                             <div class="modal-header" id="kt_modal_add_user_header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bold">Edit Infomation</h2>
+                                <h2 class="fw-bold">Chỉnh sửa thông tin nhân viên</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -125,7 +125,7 @@
                             <!--begin::Modal body-->
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form add new-->
-                                <form id="add_employee_form" asp-action="Edit" class="form" method="post">
+                                <form id="add_employee_form" asp-action="Chỉnh sửa" class="form" method="post">
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                         <!--begin::Input group-->
@@ -133,7 +133,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">User Name</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Tên đăng nhập</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="username" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="username" maxlength="250" required />
@@ -144,7 +144,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Password</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Mật khẩu</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="password" maxlength="16" required />
@@ -153,7 +153,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Full Name</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Họ và tên</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="fullname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="fullname" maxlength="250" required />
@@ -164,30 +164,32 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Birthday</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Sinh nhật</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="date" name="Birthday" class="form-control form-control-solid mb-3 mb-lg-0" required />
+                                            <input type="date" name="birthday" class="form-control form-control-solid mb-3 mb-lg-0" required />
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="mb-10">
-                                            <label class="form-label fs-6 fw-semibold">Role:</label>
+                                            <label class="form-label fs-5 fw-semibold">Chức vụ:</label>
                                             <select name="RoleId" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-hide-search="true">
                                                 <option></option>
-                                                <option value="1">Administrator</option>
-                                                <option value="2">Analyst</option>
-                                                <option value="3">Developer</option>
-                                                <option value="4">Support</option>
-                                                <option value="5">Trial</option>
+                                                <option value="1">Giám đốc</option>
+                                                <option value="2">Quản lí</option>
+                                                <option value="3">Quản trị viên hệ thống</option>
+                                                <option value="4">Y tá</option>
+                                                <option value="5">Bác sĩ</option>
+                                                <option value="6">Tiếp tân</option>
+                                                <option value="7">Kế toán</option>
                                             </select>
                                         </div>
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Email</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Email</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" required />
@@ -198,7 +200,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label name="Phone" class="required fw-semibold fs-6 mb-2">Phone</label>>
+                                            <label class="required fw-semibold fs-5 mb-2">Số điện thoại</label>>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required />
@@ -209,7 +211,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Salary</label>
+                                            <label class="required fw-semibold fs-5 mb-2">Lương</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="salary" class="form-control form-control-solid mb-3 mb-lg-0" required />
@@ -236,7 +238,7 @@
                                     <div class="text-center pt-15">
                                         <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
                                         <button type="submit" class="btn btn-primary" id="create_submit" form="add_employee_form">
-                                            <span class="indicator-label">Submit</span>
+                                            <span class="indicator-label">Thay đổi</span>
                                             <span class="indicator-progress">
                                                 Please wait...
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

@@ -28,6 +28,16 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult CreateReportLog(String context, String url)
         {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
+            DB.Add(new SystemLog
+            {
+                Content = context,
+                OwnerId = user.Id,
+                CreatedDate = DateTime.Now,
+            }) ;
             return Redirect(url);
         }
 

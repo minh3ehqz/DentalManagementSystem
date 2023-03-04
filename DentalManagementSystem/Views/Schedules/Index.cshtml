@@ -8,7 +8,8 @@
 
 }
 @section Patientscript{
-    <script src="~/assets/js/custom/script/searchPatient.js"></script>
+    <script src="~/assets/js/custom/script/SchedulesTable.js"></script>
+    <script src="~/assets/js/custom/script/SchedulesValidate.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
 }
 
@@ -17,7 +18,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="text-dark fw-semibold my-0 fs-2">Lịch sử hoạt động</h1>
+        <h1 class="text-dark fw-semibold my-0 fs-2">Lịch hẹn</h1>
         <!--end::Heading-->
     </div>
     <!--end::Page title=-->
@@ -62,7 +63,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm Log">
+                    <input type="text" data-kt-schedules-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm Log">
                 </div>
                 <!--end::Search-->
             </div>
@@ -70,7 +71,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
+                <div class="d-flex justify-content-end " data-kt-schedules-table-toolbar="base">
                     <!--begin::Filter-->
                     <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
@@ -108,7 +109,7 @@
                         </span>
                         <!--end::Svg Icon-->Export
                     </button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_schedules">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                         <span class="svg-icon svg-icon-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,27 +121,27 @@
                     </button>
                     <!--end::Export-->
                 </div>
-                <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
+                <div class="d-flex justify-content-end align-items-center d-none" data-kt-schedules-table-toolbar="selected">
                     <div class="fw-bold me-5">
-                        <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected
+                        <span class="me-2" data-kt-schedules-table-select="selected_count"></span>Selected
                     </div>
-                    <button type="submit" class="btn btn-danger" data-kt-user-table-select="delete_selected" form="ListForm">
+                    <button type="submit" class="btn btn-danger" data-kt-schedules-table-select="delete_selected" form="ListFormIncoming">
                         Delete Selected
                     </button>
                 </div>
                 <!--begin::Modal - Add task-->
-                <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
+                <div class="modal fade" id="kt_modal_add_schedules" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
                     <div class="modal-dialog modal-dialog-centered mw-650px">
                         <!--begin::Modal content-->
                         <div class="modal-content">
                             <!--begin::Modal header-->
-                            <div class="modal-header" id="kt_modal_add_user_header">
+                            <div class="modal-header" id="kt_modal_add_schedules_header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bold">Thêm bệnh nhân</h2>
+                                <h2 class="fw-bold">Thêm Lịch Hẹn</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
-                                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                                <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-schedules-modal-action="close">
                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
                                     <span class="svg-icon svg-icon-1">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -235,188 +236,81 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body py-4">
-            <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Đang chờ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">Đã tiếp nhận</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3">Muộn</a>
-                </li>
-            </ul>
+            @using (Html.BeginForm("Delete", "Schedules", FormMethod.Post, new { id = "ListFormIncoming" }))
+            {
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_schedules">
+                    <!--begin::Table head-->
+                    <thead>
+                        <!--begin::Table row-->
+                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                            <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=" " style="width: 29.8906px;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_schedules .form-check-input" value="1">
+                                </div>
+                            </th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Bệnh nhân</th>
+                            <th class="min-w-125px">Thời gian</th>
+                            <th class="min-w-125px">Tình trạng</th>
+                            <th></th>
+                        </tr>
+                        <!--end::Table row-->
+                    </thead>
+                    <!--end::Table head-->
+                    <!--begin::Table body (nội dung dữ liệu)-->
 
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
-                    @using (Html.BeginForm("Delete", "Patients", FormMethod.Post, new { id = "ListForm" }))
-                    {
-                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                            <!--begin::Table head-->
-                            <thead>
-                                <!--begin::Table row-->
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=" " style="width: 29.8906px;">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
+                    <tbody class="text-gray-600 fw-semibold">
+                        @{
+                            int index = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            @if (item.Status != -1)
+                            {
+
+
+                                <tr>
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
                                         </div>
-                                    </th>
-                                    <th class="min-w-125px">STT</th>
-                                    <th class="min-w-125px">OwnerId</th>
-                                    <th class="min-w-125px">CreatedDate</th>
-                                    <th class="min-w-125px">Tình trạng</th>
-                                </tr>
-                                <!--end::Table row-->
-                            </thead>
-                            <!--end::Table head-->
-                            <!--begin::Table body (nội dung dữ liệu)-->
-
-                            <tbody class="text-gray-600 fw-semibold">
-                                @{
-                                    int index = 1;
-                                }
-                                @foreach (var item in Model)
-                                {
+                                    </td>
+                                    <td>
+                                        <p>@index</p>
+                                        @{
+                                            index++;
+                                        }
+                                    </td>
+                                    <td><a href="~/Patients/Details/@item.Patient.Id">@item.Patient.Name</a></td>
+                                    <td>@item.Date</td>
                                     @if (item.Status == 0)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p>@index</p>
-                                                @{
-                                                    index++;
-                                                }
-                                            </td>
-                                            <td><a href="~/Patients/Details/@item.Patient.Id">@item.Patient.Name</a></td>
-                                            <td>@item.Date</td>
-                                            <td class="min-w-125px" style="color:purple">incoming</td>
-                                        </tr>
+                                        <td class="min-w-125px" style="color:purple">incoming</td>
+                                        <td><button class="btn btn-white" type="submit" form="schedules_checkin"> Check in</button></td>
+                                        <form hidden asp-action="Update" id="schedules_checkin">
+                                            <input hidden value="@item.Id" name="Id">
+                                            <input hidden value="@item.PatientId" name="PatientId">
+                                            <input hidden value="@item.Date" name="Date">
+                                            <input hidden value="1" name="Status">
+                                        </form>
                                     }
-                                }
-                            </tbody>
-
-                            <!--end::Table body-->
-                        </table>
-                    }
-                </div>
-                <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
-                    @using (Html.BeginForm("Delete", "Patients", FormMethod.Post, new { id = "ListForm" }))
-                    {
-                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                            <!--begin::Table head-->
-                            <thead>
-                                <!--begin::Table row-->
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=" " style="width: 29.8906px;">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
-                                        </div>
-                                    </th>
-                                    <th class="min-w-125px">STT</th>
-                                    <th class="min-w-125px">OwnerId</th>
-                                    <th class="min-w-125px">CreatedDate</th>
-                                    <th class="min-w-125px">Tình trạng</th>
-                                </tr>
-                                <!--end::Table row-->
-                            </thead>
-                            <!--end::Table head-->
-                            <!--begin::Table body (nội dung dữ liệu)-->
-
-                            <tbody class="text-gray-600 fw-semibold">
-                                @{
-                                    int index = 1;
-                                }
-                                @foreach (var item in Model)
-                                {
-                                    @if (item.Status == 1)
+                                    else if (item.Status == 1)
                                     {
-                                        <tr>
-                                            <td>
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p>@index</p>
-                                                @{
-                                                    index++;
-                                                }
-                                            </td>
-                                            <td><a href="~/Patients/Details/@item.Patient.Id">@item.Patient.Name</a></td>
-                                            <td>@item.Date</td>
-                                            <td class="min-w-125px" style="color:green">received</td>
-                                        </tr>
+                                        <td class="min-w-125px" style="color:lawngreen">received</td>
                                     }
-                                }
-                            </tbody>
 
-                            <!--end::Table body-->
-                        </table>
-                    }
-                </div>
-                <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
-                    @using (Html.BeginForm("Delete", "Patients", FormMethod.Post, new { id = "ListForm" }))
-                    {
-                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
-                            <!--begin::Table head-->
-                            <thead>
-                                <!--begin::Table row-->
-                                <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=" " style="width: 29.8906px;">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
-                                        </div>
-                                    </th>
-                                    <th class="min-w-125px">STT</th>
-                                    <th class="min-w-125px">OwnerId</th>
-                                    <th class="min-w-125px">CreatedDate</th>
-                                    <th class="min-w-125px">Tình trạng</th>
                                 </tr>
-                                <!--end::Table row-->
-                            </thead>
-                            <!--end::Table head-->
-                            <!--begin::Table body (nội dung dữ liệu)-->
+                            }
+                        }
+                    </tbody>
 
-                            <tbody class="text-gray-600 fw-semibold">
-                                @{
-                                    int index = 1;
-                                }
-                                @foreach (var item in Model)
-                                {
-                                    @if (item.Status == -1)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                    <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p>@index</p>
-                                                @{
-                                                    index++;
-                                                }
-                                            </td>
-                                            <td><a href="~/Patients/Details/@item.Patient.Id">@item.Patient.Name</a></td>
-                                            <td>@item.Date</td>
-                                            <td class="min-w-125px" style="color:red">lated</td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-
-                            <!--end::Table body-->
-                        </table>
-                    }
-                </div>
-            </div>
-            <!--begin::Table-->
-            <!--end::Table-->
+                    <!--end::Table body-->
+                </table>
+            }
         </div>
+
+        <!--begin::Table-->
+        <!--end::Table-->
         <!--end::Card body-->
     </div>
     <!--end::Card-->
