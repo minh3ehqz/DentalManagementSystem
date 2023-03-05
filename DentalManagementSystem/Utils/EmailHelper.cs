@@ -36,7 +36,7 @@ namespace DentalManagementSystem.Utils
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return "Fail";
             }
 
         }
