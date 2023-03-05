@@ -22,7 +22,8 @@ namespace DentalManagementSystem.DAL
         
         public override void Delete(long Id)
         {
-            Patients.Remove(Patients.FirstOrDefault(x => x.Id == Id));
+            PatientRecordDBContext patientsRecord = new PatientRecordDBContext();
+            Patients.Remove(Get(Id));
             SaveChanges();
         }
 

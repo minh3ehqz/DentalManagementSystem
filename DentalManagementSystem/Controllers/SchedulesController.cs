@@ -40,7 +40,13 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create([Bind("PatientId,Date")] Schedule schedule)
         {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
             DB.Add(schedule);
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã đặt lịch hẹn lúc " + schedule.Date + " của bênh nhân " + patient.Get(schedule.PatientId).Name + 
+                " số điện thoại là "+ patient.Get(schedule.PatientId) .Phone+ "" });
             return Redirect("~/Patients/Details/" + schedule.PatientId + "");
         }
 
@@ -55,7 +61,8 @@ namespace DentalManagementSystem.Controllers
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã hủy lịch hẹn lúc " + DB.Get(id).Date + " của bênh nhân " + patient.Get(DB.Get(id).PatientId).Name + "" });
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã hủy lịch hẹn lúc " + DB.Get(id).Date + " của bênh nhân " + patient.Get(DB.Get(id).PatientId).Name + 
+                    " số điện thoại là "+ patient.Get(DB.Get(id).PatientId).Phone+ "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
