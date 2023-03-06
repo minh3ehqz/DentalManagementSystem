@@ -81,12 +81,12 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Material).WithMany(p => p.MaterialExports)
                 .HasForeignKey(d => d.MaterialId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_material_export_materials");
 
             entity.HasOne(d => d.PatientRecord).WithMany(p => p.MaterialExports)
                 .HasForeignKey(d => d.PatientRecordId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_material_export_patient_record");
         });
 
@@ -108,7 +108,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Material).WithMany(p => p.MaterialImports)
                 .HasForeignKey(d => d.MaterialId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_material_import_materials");
         });
 
@@ -157,12 +157,12 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Patient).WithMany(p => p.PatientRecords)
                 .HasForeignKey(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_patient_record_patients");
 
             entity.HasOne(d => d.User).WithMany(p => p.PatientRecords)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_patient_record_users");
         });
 
@@ -179,12 +179,12 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.PatientRecord).WithMany(p => p.PatientRecordServiceMaps)
                 .HasForeignKey(d => d.PatientRecordId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_patient_record_service_map_patient_record");
 
             entity.HasOne(d => d.Service).WithMany(p => p.PatientRecordServiceMaps)
                 .HasForeignKey(d => d.ServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_patient_record_service_map_services");
         });
 
@@ -220,12 +220,12 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Permission).WithMany(p => p.RolePermissionMaps)
                 .HasForeignKey(d => d.PermissionId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_role_permission_map_permission");
 
             entity.HasOne(d => d.Role).WithMany(p => p.RolePermissionMaps)
                 .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_role_permission_map_roles");
         });
 
@@ -245,7 +245,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Schedules)
                 .HasForeignKey(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_schedule_patients");
         });
 
@@ -272,7 +272,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Owner).WithMany(p => p.SystemLogs)
                 .HasForeignKey(d => d.OwnerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__SystemLog__Owner__6B24EA82");
         });
 
@@ -293,7 +293,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Timekeepings)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_timekeeping_users");
         });
 
@@ -309,7 +309,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Patient).WithMany(p => p.Treatments)
                 .HasForeignKey(d => d.PatientId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_treatments_patients");
         });
 
@@ -328,17 +328,17 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.PatientRecord).WithMany(p => p.TreatmentServiceMaps)
                 .HasForeignKey(d => d.PatientRecordId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_treatment_service_map_patient_record");
 
             entity.HasOne(d => d.Service).WithMany(p => p.TreatmentServiceMaps)
                 .HasForeignKey(d => d.ServiceId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_treatment_service_map_services");
 
             entity.HasOne(d => d.Treatment).WithMany(p => p.TreatmentServiceMaps)
                 .HasForeignKey(d => d.TreatmentId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_treatment_service_map_treatments");
         });
 
@@ -367,7 +367,7 @@ public partial class DentalSystemDbContext : DbContext
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)
                 .HasForeignKey(d => d.RoleId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_users_roles");
         });
 
