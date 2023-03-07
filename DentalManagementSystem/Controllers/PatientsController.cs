@@ -47,7 +47,8 @@ namespace DentalManagementSystem.Controllers
                 TempData["addsuccess"] = "thêm mới thành công";
                 patient.Trim();
                 DB.Add(patient);
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân" });
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân " +
+                    ""+patient.Name+" có sô điện thoại là "+patient.Phone+" và email là "+patient.Email+"" });
                 return RedirectToAction(nameof(Index));
             }else return NotFound();
             
@@ -74,7 +75,7 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
-            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+" có sđt là "+patient.Phone+"" });
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+ " có sđt là " + patient.Phone + " và email là " + patient.Email + "" });
             patient.Trim();
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
@@ -94,7 +95,7 @@ namespace DentalManagementSystem.Controllers
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân " + DB.Get(id).Name + "" });
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh nhân " + DB.Get(id).Name + " có sđt là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + "" });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
@@ -119,5 +120,6 @@ namespace DentalManagementSystem.Controllers
                 return Ok("Valid");
             }
         }
+        
     }
 }

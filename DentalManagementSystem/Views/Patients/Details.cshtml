@@ -49,19 +49,19 @@
         <div style="display:flex;">
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Name)
+                    Họ và tên
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Name)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Birthday)
+                    Ngày tháng năm sinh 
                 </dt>
                 <dd class="col-sm-10">
                     @Model.Birthday.Day/@Model.Birthday.Month/@Model.Birthday.Year
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Gender)
+                    Giới tính
                 </dt>
                 <dd class="col-sm-10">
                     @if (@Model.Gender)
@@ -74,7 +74,7 @@
                     }
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Address)
+                    Địa chỉ
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Address)
@@ -83,24 +83,24 @@
                     @Html.DisplayNameFor(model => model.Phone)
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Phone)
+                    Số điện thoại
                 </dd>
             </dl>
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
+                    Email
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Email)
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.BodyPrehistory)
+                    Tiền sử cơ thể
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.BodyPrehistory)
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.TeethPrehistory)
+                    Tiển sử nha khoa
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.TeethPrehistory)
@@ -114,7 +114,7 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        Edit
+                        Chỉnh sửa
                     </button>
                     &nbsp;&nbsp;
                     
@@ -127,7 +127,7 @@
                 </div>
                 
                 &nbsp;&nbsp;
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Danh sách bệnh nhân</a>
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->

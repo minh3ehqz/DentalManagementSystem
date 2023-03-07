@@ -25,7 +25,7 @@ namespace DentalManagementSystem.DAL
 
         public override List<SystemLog> ListAll()
         {
-            return SystemLogs.ToList();
+            return SystemLogs.OrderByDescending(x => x.CreatedDate).Include(x => x.Owner).ToList();
         }
 
         public override List<SystemLog> ListAll(long OwnerId)

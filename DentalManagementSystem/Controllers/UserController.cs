@@ -15,7 +15,7 @@ namespace DentalManagementSystem.Controllers
     {
         UserDBContext DB = new UserDBContext();
         RoleDBContext RoleDB = new RoleDBContext();
-
+        SystemLogDBContext Log = new SystemLogDBContext();
 
         // GET: Users
         public IActionResult Index()
@@ -45,8 +45,18 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User user)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
 
-
+            Log.Add(new SystemLog
+            {
+                CreatedDate = DateTime.Now,
+                OwnerId = logUser.Id,
+                Content = "người dùng đã thêm mới nhân viên " +
+                    "" + user.FullName + " có sô điện thoại là " + user.Phone + " và email là " + user.Email + ""
+            });
             DB.Add(user);
             return RedirectToAction(nameof(Index));
             return View(user);
@@ -69,6 +79,11 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User editUser)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
+            
             User user = DB.Users.FirstOrDefault(s => s.Id == editUser.Id);
             if (user != null)
             {
@@ -79,6 +94,13 @@ namespace DentalManagementSystem.Controllers
                 user.Salary = editUser.Salary;
                 user.RoleId = editUser.RoleId;
             }
+            Log.Add(new SystemLog
+            {
+                CreatedDate = DateTime.Now,
+                OwnerId = logUser.Id,
+                Content = "người dùng đã thay đổi thông tin nhân viên " +
+                    "" + DB.Get(id).FullName + " có sô điện thoại là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + ""
+            });
             DB.SaveChanges();
             return RedirectToAction("Details", new { id = editUser.Id });
         }
@@ -88,9 +110,20 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
+                Log.Add(new SystemLog
+                {
+                    CreatedDate = DateTime.Now,
+                    OwnerId = logUser.Id,
+                    Content = "người dùng đã xóa nhân viên " +
+                     "" + DB.Get(id).FullName + " có sô điện thoại là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + ""
+                });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
