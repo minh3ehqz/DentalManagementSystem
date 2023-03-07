@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : AuthController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -14,8 +14,13 @@ namespace DentalManagementSystem.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
+            if(!isAuth(out User user))
+            {
+                return Redirect("/login");
+            }    
             return View();
         }
 

@@ -1,4 +1,5 @@
 ﻿using DentalManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.DAL
 {
@@ -9,12 +10,18 @@ namespace DentalManagementSystem.DAL
 			return Users.FirstOrDefault(x => x.Username == username && x.Password == password);
 		}
 
-		public User GetByEmail(string email)
-		{
-			return Users.FirstOrDefault(x => x.Email == email);
-		}
-		
-		public override void Add(User entity)
+	
+        public User GetUsersByEmail(string email)
+        {
+            return Users.FirstOrDefault(x => x.Email == email);
+        }
+        public User GetUsersByPhone(string phone)
+        {
+            return Users.FirstOrDefault(x => x.Phone == phone);
+        }
+
+
+        public override void Add(User entity)
 		{
 			Users.Add(entity);
 			SaveChanges();
@@ -22,13 +29,18 @@ namespace DentalManagementSystem.DAL
 
 		public override void Delete(long Id)
 		{
+			
 			Users.Remove(Users.First(x => x.Id == Id));
-			SaveChanges();
+			SaveChanges(); 
 		}
 
 		public override User Get(long id)
 		{
-			return Users.FirstOrDefault(x => x.Id == id);
+			return Users
+				.Include(x=>x.PatientRecords).ThenInclude(a=>a.PatientRecordServiceMaps)
+				.Include(x=>x.SystemLogs)
+				.Include(x=>x.Timekeepings)
+				.FirstOrDefault(x => x.Id == id);
 		}
 
 		public override List<User> ListAll()

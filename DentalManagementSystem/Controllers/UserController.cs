@@ -97,7 +97,10 @@ namespace DentalManagementSystem.Controllers
 
         }
 
-        //tìm service
+
+
+
+        //tìm user
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Search(long Id, String UserName, String FullName, DateTime Birthday, String Phone, int Salary, String Role, String Email, String Reset)
@@ -130,7 +133,26 @@ namespace DentalManagementSystem.Controllers
             return View("Index", users);
         }
 
-
+        public IActionResult checkEmailPhone(string email, string phone)
+        {
+            var checkEmail = DB.GetUsersByEmail(email);
+            var checkPhone = DB.GetUsersByPhone(phone);
+            if (checkEmail != null || checkPhone != null)
+            {
+                string result = "";
+                if (checkEmail != null) result += "email ";
+                if (checkPhone != null)
+                {
+                    if (!result.Equals("")) result += "và ";
+                    result += "phone ";
+                }
+                return Ok(result + "đã tồn tại");
+            }
+            else
+            {
+                return Ok("Valid");
+            }
+        }
     }
 }
 
