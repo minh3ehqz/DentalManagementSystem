@@ -19,14 +19,13 @@ namespace DentalManagementSystem.Controllers
 
 
         // GET: Schedules
-        public IActionResult Index()
+        public IActionResult Index(string textSearch, int status, int page = 1)
         {
             if (!isAuth(out User user))
             {
                 return NotFound();
             }
-            var list = DB.ListAll();
-            foreach (var item in list)
+            foreach (var item in DB.ListAll())
             {
                 if (item.Date < DateTime.Now)
                 {
@@ -34,6 +33,14 @@ namespace DentalManagementSystem.Controllers
                     DB.Update(item);
                 }
             }
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"],status).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page - 1;
+            ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"],status);
+            ViewData["wating"] = DB.ListInPage(page, (string)ViewData["searchContent"], 0); 
+            ViewData["notwaiting"] = DB.ListInPage(page, (string)ViewData["searchContent"], 1);
             return View(list);
         }
 

@@ -62,7 +62,9 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm Log">
+                    <form asp-action="Index" id="search">
+                        <input name="textSearch" type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm Log" value="@ViewData["searchContent"]">
+                    </form>
                 </div>
                 <!--end::Search-->
             </div>
@@ -203,7 +205,7 @@
         <!--begin::Card body-->
         <div class="card-body py-4">
             <!--begin::Table-->
-            @using (Html.BeginForm("Delete", "Patients", FormMethod.Post, new { id = "ListForm" }))
+            @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListForm" }))
             {
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
                     <!--begin::Table head-->
@@ -227,7 +229,7 @@
 
                     <tbody class="text-gray-600 fw-semibold">
                         @{
-                            int index = 1;
+                            int index = 1 + (int)ViewData["stt"] * 10;
                         }
                         @foreach (var item in Model)
                         {
@@ -254,6 +256,36 @@
                 </table>
             }
             <!--end::Table-->
+            <div class="row">
+                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
+                        <ul class="pagination">
+                            @for (var i = 1; i <= (int)ViewData["numberOfPage"]; i++)
+                            {
+                                @if (i == (int)ViewData["thisPage"])
+                                {
+                                    <li class="paginate_button page-item">
+                                        <form asp-action="Index">
+                                            <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
+                                            <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                        </form>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="paginate_button page-item">
+                                        <form asp-action="Index">
+                                            <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
+                                            <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                        </form>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--end::Card body-->
     </div>
