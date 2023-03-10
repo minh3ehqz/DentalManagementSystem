@@ -17,6 +17,8 @@ public partial class MaterialExport
 
     public bool IsDeleted { get; set; }
 
+    public DateTime Date { get; set; }
+
     public virtual Material Material { get; set; } = null!;
 
     public virtual PatientRecord PatientRecord { get; set; } = null!;
