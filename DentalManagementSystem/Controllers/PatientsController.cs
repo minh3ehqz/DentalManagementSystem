@@ -16,27 +16,20 @@ namespace DentalManagementSystem.Controllers
         PatientDBContext DB = new PatientDBContext();
 
         // GET: Patients
-        public IActionResult Index(long? id, String name, String Birthday, String address, String phone, String email, String gender)
+        public IActionResult Index(string textSearch, int page = 1)
         {
             if (!isAuth(out User user))
             {
-                return Redirect("/Home");
+                return NotFound();
             }
-            else
-            {
-                var checkgender = (gender ?? "");
-                TempData["id"] = (id ?? null);
-                TempData["name"] = (name ?? "");
-                TempData["Birthday"] = (Birthday ?? "");
-                TempData["address"] = (address ?? "");
-                TempData["phone"] = (phone ?? "");
-                TempData["email"] = (email ?? "");
-                TempData["gender"] = checkgender;
-                var PatientList = DB.ListAll();
-                return View(PatientList);
-            }
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"]).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page - 1;
+            ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
+            return View(list);
         }
-
         // POST: thêm mới bệnh nhân
         [HttpPost]
         [ValidateAntiForgeryToken]

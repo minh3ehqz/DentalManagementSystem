@@ -7,21 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
+using System.Collections;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.Controllers
 {
     public class SystemLogsController : AuthController
     {
         SystemLogDBContext DB = new SystemLogDBContext();
-
         // GET: SystemLogs
-        public IActionResult Index()
+        public IActionResult Index(string textSearch, int page=1)
         {
             if (!isAuth(out User user))
             {
                 return NotFound();
             }
-            var list = DB.ListAll();
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"]).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page-1;
+            ViewData["numberOfPage"]  = count%10==0?(count / 10) : (count / 10)+1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
             return View(list);
         }
 

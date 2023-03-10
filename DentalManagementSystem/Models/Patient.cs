@@ -43,6 +43,11 @@ public partial class Patient
         BodyPrehistory = BodyPrehistory?.Trim();
         TeethPrehistory = TeethPrehistory?.Trim();
     }
+
+    public override string ToString()
+    {
+        return (Id+" "+Name+" "+Birthday+" "+(Gender?"nam":"nữ")+" "+Address+" "+Phone+" "+Email).Trim();
+    }
 }
 
 
