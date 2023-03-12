@@ -1,21 +1,11 @@
 ﻿using DentalManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.DAL
 {
     public class PatientDBContext : DBContext<Patient>
     {
-        public List<Patient> GetByGender(bool gender, string name)
-        {
-            var AllPatients = Patients.Where(x => x.Gender == gender && x.Name == name).ToList();
-            int page = 10;
-            int PageSize = 10;
-            int index = (page - 1) * PageSize;
-            int ResultCount = AllPatients.Count - index >= 10 ? index + PageSize : AllPatients.Count - index;
-            AllPatients = AllPatients.GetRange(index, ResultCount);
-            return AllPatients;
-        }
-
         public Patient GetPatientsByEmail(string email)
         {
             return Patients.FirstOrDefault(x => x.Email == email);
@@ -40,8 +30,10 @@ namespace DentalManagementSystem.DAL
         public override Patient Get(long id)
         {
             return Patients
-                .Include(x => x.PatientRecords)
-                .Include(x => x.Treatments)
+                .Include(x => x.PatientRecords).ThenInclude(y => y.PatientRecordServiceMaps)
+                .Include(x => x.PatientRecords).ThenInclude(y=>y.TreatmentServiceMaps)
+                .Include(x => x.PatientRecords).ThenInclude(y => y.MaterialExports)
+                .Include(x => x.Treatments).ThenInclude(y=>y.TreatmentServiceMaps)
                 .Include(x => x.Schedules)
                 .FirstOrDefault(x => x.Id == id);
         }
@@ -50,6 +42,29 @@ namespace DentalManagementSystem.DAL
         {
             return Patients
                 .Where(x => !x.IsDeleted).ToList();
+        }
+
+        public List<Patient> ListInPage(int page, string search)
+        {
+            var AllPatients = search.IsNullOrEmpty() ? ListAll() : ListAll(search);
+            int PageSize = 10;
+            int index = (page - 1) * PageSize;
+            int Count = AllPatients.Count - index >= 10 ? PageSize : AllPatients.Count - index;
+            AllPatients = AllPatients.GetRange(index, Count);
+            return AllPatients;
+        }
+
+        public List<Patient> ListAll(string search)
+        {
+            if (search.IsNullOrEmpty()) return ListAll();
+            string[] finding = search.Split(' ');
+            var list = ListAll();
+            List<Patient> result = new List<Patient>();
+            foreach (var item in list)
+            {
+                if (finding.All(item.ToString().Contains)) result.Add(item);
+            }
+            return result;
         }
 
         public override List<Patient> ListAll(long OwnerId)

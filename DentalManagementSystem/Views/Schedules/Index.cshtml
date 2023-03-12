@@ -14,9 +14,9 @@
 }
 
 <!--header-->
-<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container">
+<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container" style="max-width:none">
     <!--begin::Page title-->
-    <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
+    <div style="padding-left:4%;padding-top:2%" class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
         <h1 class="text-dark fw-semibold my-0 fs-2">Lịch hẹn</h1>
         <!--end::Heading-->
@@ -47,7 +47,7 @@
 
 
 <!--begin::Container-->
-<div class="container-xxl" id="kt_content_container">
+<div class="container-xxl" id="kt_content_container" style="max-width:none;width:1700px">
     <!--begin::Card-->
     <div class="card">
         <!--begin::Card header-->
@@ -63,7 +63,9 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-schedules-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tra cứu lịch hẹn">
+                    <form asp-action="Index" id="search">
+                        <input name="textSearch" type="text" data-kt-schedules-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tra cứu lịch hẹn" value="@ViewData["searchContent"]">
+                    </form>
                 </div>
                 <!--end::Search-->
             </div>
@@ -202,16 +204,30 @@
         <!--end::Card header-->
         <!--begin::Card body-->
         <div class="card-body py-4">
+            @{
+                string checkActiveW = " ";
+                string checkActiveN = " ";
+                if (ViewData["watingActive"] != null)
+                {
+                    checkActiveW = "active";
+                    checkActiveN = " ";
+                }
+                else
+                {
+                    checkActiveN = "active";
+                    checkActiveW = " ";
+                }
+            }
             <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">Đang chờ</a>
+                    <a class="nav-link @checkActiveW" data-bs-toggle="tab" href="#kt_tab_pane_1">Đang chờ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">Đã tiếp nhận</a>
+                    <a class="nav-link @checkActiveN " data-bs-toggle="tab" href="#kt_tab_pane_2">Đã tiếp nhận</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+                <div class="tab-pane fade @ViewData["watingActive"]" id="kt_tab_pane_1" role="tabpanel">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_schedules">
                         <!--begin::Table head-->
                         <thead>
@@ -222,7 +238,7 @@
                                         <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_schedules .form-check-input" value="1">
                                     </div>
                                 </th>
-                                <th class="min-w-125px">STT</th>
+                                <th class="min-w-12px">STT</th>
                                 <th class="min-w-125px">Bệnh nhân</th>
                                 <th class="min-w-125px">Thời gian</th>
                                 <th class="min-w-125px">Tình trạng</th>
@@ -237,12 +253,10 @@
                             @{
                                 int index = 1;
                             }
-                            @foreach (var item in Model)
+                            @foreach (var item in (List<Schedule>)ViewData["wating"])
                             {
                                 @if (item.Status == 0)
                                 {
-
-
                                     <tr>
                                         <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -273,8 +287,42 @@
 
                         <!--end::Table body-->
                     </table>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                        <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                            <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
+                                <ul class="pagination">
+                                    @for (var i = 1; i <= (int)ViewData["numberOfPageIncoming"]; i++)
+                                    {
+                                        @if (i == (int)ViewData["thisPageComing"])
+                                        {
+                                            <li class="paginate_button page-item">
+                                                <form asp-action="Index">
+                                                    <input name="pageincoming" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
+                                                    <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                                    <input hidden value="show active" name="watingActive">
+                                                    <input hidden value=" " name="NotWatingActive">
+                                                </form>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button page-item">
+                                                <form asp-action="Index">
+                                                    <input name="pageincoming" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
+                                                    <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                                    <input hidden value="show active" name="watingActive">
+                                                    <input hidden value=" " name="NotWatingActive">
+                                                </form>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+                <div class="tab-pane fade @ViewData["notWattingActive"]" id="kt_tab_pane_2" role="tabpanel">
                     <table class="table align-middle table-row-dashed fs-6 gy-5" id="">
                         <!--begin::Table head-->
                         <thead>
@@ -285,7 +333,7 @@
                                         <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target=" .form-check-input" value="1">
                                     </div>
                                 </th>
-                                <th class="min-w-125px">STT</th>
+                                <th class="min-w-12px">STT</th>
                                 <th class="min-w-125px">Bệnh nhân</th>
                                 <th class="min-w-125px">Thời gian</th>
                                 <th class="min-w-125px">Tình trạng</th>
@@ -300,7 +348,7 @@
                             @{
                                 int ReIndex = 1;
                             }
-                            @foreach (var item in Model)
+                            @foreach (var item in (List<Schedule>)ViewData["notwaiting"])
                             {
                                 @if (item.Status == 1)
                                 {
@@ -326,6 +374,40 @@
 
                         <!--end::Table body-->
                     </table>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                        <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                            <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
+                                <ul class="pagination">
+                                    @for (var i = 1; i <= (int)ViewData["numberOfPageDone"]; i++)
+                                    {
+                                        @if (i == (int)ViewData["thisPageDone"])
+                                        {
+                                            <li class="paginate_button page-item">
+                                                <form asp-action="Index">
+                                                    <input name="pagedone" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
+                                                    <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                                    <input hidden value=" " name="watingActive">
+                                                    <input hidden value="show active" name="NotWatingActive">
+                                                </form>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="paginate_button page-item">
+                                                <form asp-action="Index">
+                                                    <input name="pagedone" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
+                                                    <input hidden value="@ViewData["searchContent"]" name="textSearch">
+                                                    <input hidden value=" " name="watingActive">
+                                                    <input hidden value="show active" name="NotWatingActive">
+                                                </form>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
