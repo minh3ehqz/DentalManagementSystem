@@ -7,6 +7,14 @@ $(document).ready(function () {
     });
 });
 
+$(document).keypress(function () {
+    $('input [name="textSearch"]').on('input', function () {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            searchform.submit();
+        }
+    });
+});
 
 
 

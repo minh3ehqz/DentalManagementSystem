@@ -1,5 +1,6 @@
 ﻿using DentalManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.DAL
 {
@@ -43,7 +44,30 @@ namespace DentalManagementSystem.DAL
 				.FirstOrDefault(x => x.Id == id);
 		}
 
-		public override List<User> ListAll()
+        public List<User> ListInPage(int page, string search)
+        {
+            var AllUsers = search.IsNullOrEmpty() ? ListAll() : ListAll(search);
+            int PageSize = 10;
+            int index = (page - 1) * PageSize;
+            int Count = AllUsers.Count - index >= 10 ? PageSize : AllUsers.Count - index;
+            AllUsers = AllUsers.GetRange(index, Count);
+            return AllUsers;
+        }
+
+        public List<User> ListAll(string search)
+        {
+            if (search.IsNullOrEmpty()) return ListAll();
+            string[] finding = search.Split(' ');
+            var list = ListAll();
+            List<User> result = new List<User>();
+            foreach (var item in list)
+            {
+                if (finding.All(item.ToString().Contains)) result.Add(item);
+            }
+            return result;
+        }
+
+        public override List<User> ListAll()
 		{
 			return Users.ToList();
 		}

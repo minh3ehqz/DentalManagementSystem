@@ -49,16 +49,16 @@ var KTUsersList = function () {
         });
 
         // Init datatable --- more info on datatables: https://datatables.net/manual/
-        datatable = $(table).DataTable({
-            "info": false,
-            'order': [],
-            "pageLength": 10,
-            "lengthChange": false,
-            'columnDefs': [
-                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)                
-            ]
-        });
+        //datatable = $(table).DataTable({
+        //    "info": false,
+        //    'order': [],
+        //    "pageLength": 10,
+        //    "lengthChange": false,
+        //    'columnDefs': [
+        //        { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
+        //        { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)                
+        //    ]
+        //});
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
         datatable.on('draw', function () {
@@ -105,12 +105,12 @@ var KTUsersList = function () {
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "Are you sure you want to delete " + userName + "?",
+                    text: "Bạn có chắc chắn muốn xóa " + userName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: "Yes, delete!",
-                    cancelButtonText: "No, cancel",
+                    confirmButtonText: "Có, Xóa!",
+                    cancelButtonText: "Không, Hủy",
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
@@ -118,10 +118,10 @@ var KTUsersList = function () {
                 }).then(function (result) {
                     if (result.value) {
                         Swal.fire({
-                            text: "You have deleted " + userName + "!.",
+                            text: "Đã xóa " + userName + "!.",
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "Ok",
                             customClass: {
                                 confirmButton: "btn fw-bold btn-primary",
                             }
@@ -137,7 +137,7 @@ var KTUsersList = function () {
                             text: customerName + " was not deleted.",
                             icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "Ok"
                             customClass: {
                                 confirmButton: "btn fw-bold btn-primary",
                             }
@@ -174,12 +174,12 @@ var KTUsersList = function () {
         deleteSelected.addEventListener('click', function () {
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "Are you sure you want to delete selected customers?",
+                text: "Bạn có chắc chắn muốn xóa",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: "Yes, delete!",
-                cancelButtonText: "No, cancel",
+                confirmButtonText: "CÓ",
+                cancelButtonText: "Không",
                 customClass: {
                     confirmButton: "btn fw-bold btn-danger",
                     cancelButton: "btn fw-bold btn-active-light-primary"
@@ -187,10 +187,10 @@ var KTUsersList = function () {
             }).then(function (result) {
                 if (result.value) {
                     Swal.fire({
-                        text: "You have deleted all selected customers!.",
+                        text: "Bạn muốn chọn tất cả
                         icon: "success",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok",
                         customClass: {
                             confirmButton: "btn fw-bold btn-primary",
                         }
@@ -199,8 +199,10 @@ var KTUsersList = function () {
                         checkboxes.forEach(c => {
                             if (c.checked) {
                                 datatable.row($(c.closest('tbody tr'))).remove().draw();
+                              
                             }
                         });
+
 
                         // Remove header checked box
                         const headerCheckbox = table.querySelectorAll('[type="checkbox"]')[0];

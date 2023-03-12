@@ -18,11 +18,24 @@ namespace DentalManagementSystem.Controllers
         SystemLogDBContext Log = new SystemLogDBContext();
 
         // GET: Users
-        public IActionResult Index()
+        public IActionResult Index(string textSearch, int page = 1)
         {
             var UserList = DB.Users.Include(u => u.Role).ToList();
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
 
-            return View(UserList);
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"]).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page - 1;
+            ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
+            return View(list);
+
+
+           
         }
 
         // thông tin chi tiết User
@@ -173,11 +186,11 @@ namespace DentalManagementSystem.Controllers
             if (checkEmail != null || checkPhone != null)
             {
                 string result = "";
-                if (checkEmail != null) result += "email ";
+                if (checkEmail != null) result += "E0mail ";
                 if (checkPhone != null)
                 {
                     if (!result.Equals("")) result += "và ";
-                    result += "phone ";
+                    result += "số điện thoại ";
                 }
                 return Ok(result + "đã tồn tại");
             }

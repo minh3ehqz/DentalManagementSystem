@@ -8,9 +8,9 @@
 }
 
 <!--header-->
-<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container">
+<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container" style="max-width:none">
     <!--begin::Page title-->
-    <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
+    <div style="padding-left:4%;padding-top:2%" class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
         <h1 class="text-dark fw-semibold my-0 fs-2">Danh sách dịch vụ</h1>
         <!--end::Heading-->
@@ -42,7 +42,7 @@
 
 <!--begin::Content-->
 <!--begin::Container-->
-<div class="container-xxl" id="kt_content_container">
+<div class="container-xxl" id="kt_content_container" style="max-width:none;width:1700px">
     <!--begin::Card-->
     <div class="card">
         <!--begin::Card header-->
@@ -220,7 +220,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Đơn vị</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="unit" value="" />
+                                            <input type="number" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="đơn vị" value="" />
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                             <!--end::Input-->
                                         </div>
@@ -231,17 +231,17 @@
                                             <label class="required fw-semibold fs-6 mb-2">Giá thị trường</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Marketprice" value="" />
+                                            <input type="number" name="" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Giá thị trường" value="" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Price</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Giá</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" name="price" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="price" value="" />
+                                            <input type="number" name="price" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="giá" value="" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -249,7 +249,7 @@
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->
                                     <div class="text-center pt-15">
-                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Hủy</button>
                                         <button id="create_submit" type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                                             <span class="indicator-label">Submit</span>
                                             <span class="indicator-progress">
@@ -288,11 +288,11 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
                                 </div>
                             </th>
-                            <th class="min-w-125px">ID</th>
-                            <th class="min-w-125px">Name</th>
-                            <th class="min-w-125px">Unit</th>
-                            <th class="min-w-125px">MarketPrice</th>
-                            <th class="min-w-125px">Price</th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Tên dịch vụ</th>
+                            <th class="min-w-125px">Đơn vị</th>
+                            <th class="min-w-125px">Giá thị trường</th>
+                            <th class="min-w-125px">Giá</th>
                         </tr>
                         <!--end::Table row-->
                     </thead>
@@ -300,6 +300,10 @@
                     <!--begin::Table body (nội dung dữ liệu)-->
 
                     <tbody class="text-gray-600 fw-semibold">
+
+                        @{
+                            int index = 1;
+                        }
                         @foreach (var item in Model)
                         {
                             <tr>
@@ -308,7 +312,10 @@
                                         <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
                                     </div>
                                 </td>
-                                <td>@item.Id</td>
+                                <td>@index</td>
+                                @{
+                                    index++;
+                                }
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
                                 </td>
