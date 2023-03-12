@@ -47,25 +47,25 @@
         <div>
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.SupplyName)
+                    Tên vật tư
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.SupplyName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Date)
+                    Ngày nhập
                 </dt>
                 <dd class="col-sm-10">
                     @Model.Date.Day/@Model.Date.Month/@Model.Date.Year @Model.Date.Hour:@Model.Date.Minute:@Model.Date.Second
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Amount)
+                    Số lượng
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Amount)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.TotalPrice)
+                    Đơn giá
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.TotalPrice)
@@ -92,12 +92,12 @@
                     <!--end::Filter-->
                     <!--begin::Add user-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        Edit
+                        Sửa
                     </button>
                     <!--end::Add user-->
                 </div>
                 &nbsp;&nbsp;
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Quay lại</a>
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->

@@ -14,38 +14,66 @@ namespace DentalManagementSystem.Controllers
     public class SchedulesController : AuthController
     {
         scheduleDBContext DB = new scheduleDBContext();
+        SystemLogDBContext Log = new SystemLogDBContext();
+        PatientDBContext patient = new PatientDBContext();
 
-        
 
         // GET: Schedules
         public IActionResult Index()
         {
-            /*if (!isAuth(out User user))
+            if (!isAuth(out User user))
             {
                 return NotFound();
             }
-            else*/
+            var list = DB.ListAll();
+            foreach (var item in list)
             {
-                var list = DB.ListAll();
-                foreach(var item in list)
+                if (item.Date < DateTime.Now)
                 {
-                    if (item.Date < DateTime.Now)
-                    {
-                        item.Status = -1;
-                    }
+                    item.Status = -1;
+                    DB.Update(item);
                 }
-                return View(list);
             }
-            
+            return View(list);
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("PatientId,Date")]Schedule schedule)
+        public IActionResult Create([Bind("PatientId,Date")] Schedule schedule)
         {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
             DB.Add(schedule);
-            return Redirect("~/Patients/Details/"+schedule.PatientId+"");
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã đặt lịch hẹn lúc " + schedule.Date + " của bênh nhân " + patient.Get(schedule.PatientId).Name + 
+                " số điện thoại là "+ patient.Get(schedule.PatientId) .Phone+ "" });
+            return Redirect("~/Patients/Details/" + schedule.PatientId + "");
         }
 
-      
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(long[] selectedValues)
+        {
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
+            TempData["Delete messenger"] = "xóa thành công";
+            foreach (long id in selectedValues)
+            {
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã hủy lịch hẹn lúc " + DB.Get(id).Date + " của bênh nhân " + patient.Get(DB.Get(id).PatientId).Name + 
+                    " số điện thoại là "+ patient.Get(DB.Get(id).PatientId).Phone+ "" });
+                DB.Delete(id);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Update([Bind("Id,Date,PatientId,Status")] Schedule schedule)
+        {
+            DB.Update(schedule);
+            return RedirectToAction("Index");
+        }
+
     }
 }
