@@ -23,7 +23,7 @@ namespace DentalManagementSystem.Controllers
         // GET: Schedules
         public IActionResult Index(string textSearch, int status, int pageincoming = 1, int pagedone = 1, string watingActive = "show active", string NotWatingActive = " ")
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Schedules/Index",out User user))
             {
                 return NotFound();
             }
@@ -57,7 +57,7 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create([Bind("PatientId,Date")] Schedule schedule)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Schedules/Create",out User user))
             {
                 return NotFound();
             }
@@ -76,7 +76,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Schedules/Delete",out User user))
             {
                 return NotFound();
             }

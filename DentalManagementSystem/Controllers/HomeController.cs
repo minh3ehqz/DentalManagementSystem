@@ -17,6 +17,10 @@ namespace DentalManagementSystem.Controllers
 
         public IActionResult Index()
         {
+            if (!isAuth("/Home/Index", out User user))
+            {
+                return Redirect("/Login");
+            }
             return View();
         }
 

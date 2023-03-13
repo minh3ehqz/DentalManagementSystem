@@ -18,7 +18,7 @@ namespace DentalManagementSystem.Controllers
         // GET: SystemLogs
         public IActionResult Index(string textSearch, int page=1)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/SystemLogs/Index",out User user))
             {
                 return NotFound();
             }
@@ -34,7 +34,7 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult CreateReportLog(String context, String url)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/SystemLogs/Create", out User user))
             {
                 return NotFound();
             }

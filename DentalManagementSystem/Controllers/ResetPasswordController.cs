@@ -8,7 +8,7 @@ namespace DentalManagementSystem.Controllers
     {
         public IActionResult Index([FromQuery] string UserId, [FromQuery] string ValidateToken)
         {
-            if (isAuth(out _))
+            if (isAuth("/Home", out _))
             {
                 return Redirect("/Home");
             }

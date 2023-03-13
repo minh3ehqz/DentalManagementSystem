@@ -18,7 +18,7 @@ namespace DentalManagementSystem.Controllers
         // GET: Patients
         public IActionResult Index(string textSearch, int page = 1)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Patients",out User user))
             {
                 return NotFound();
             }
@@ -35,7 +35,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if(isAuth(out User user))
+            if(isAuth("/Patients/",out User user))
             {
                 TempData["addsuccess"] = "thêm mới thành công";
                 patient.Trim();
@@ -49,7 +49,7 @@ namespace DentalManagementSystem.Controllers
         // thông tin chi tiết của bệnh nhân
         public IActionResult Details(long id)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Patients/Details", out User user))
             {
                 return NotFound();
             }
@@ -64,7 +64,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Patients/Edit",out User user))
             {
                 return NotFound();
             }
@@ -81,7 +81,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Patients/Delete",out User user))
             {
                 return NotFound();
             }
