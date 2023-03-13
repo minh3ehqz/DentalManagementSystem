@@ -28,6 +28,10 @@ namespace DentalManagementSystem.Controllers
         // thông tin chi tiết User
         public IActionResult Details(long id)
         {
+            if (!isAuth(u))
+            {
+
+            }
             var user = DB.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == id);
 
             return View(user);
