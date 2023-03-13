@@ -14,12 +14,9 @@ namespace DentalManagementSystem.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
-            if (!isAuth(out User user))
-            {
-                return Redirect("/Login");
-            }
             return View();
         }
 

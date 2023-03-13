@@ -22,7 +22,7 @@ namespace DentalManagementSystem.Controllers
         public IActionResult Index(string email)
         {
             UserDBContext userDBContext = new UserDBContext();
-            User user = userDBContext.GetByEmail(email.ToLower());
+            User user = userDBContext.GetUsersByEmail(email);
             if (user == null)
             {
                 ViewData["ForgotError"] = "Email không tồn tại trong hệ thống";
