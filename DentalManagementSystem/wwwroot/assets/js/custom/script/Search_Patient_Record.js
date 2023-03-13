@@ -2,7 +2,7 @@
 
 var KTUsersList = function () {
     // Define shared variables
-    var table = document.getElementById('kt_table_users');
+    var table = document.getElementById('kt_table_imports');
     var datatable;
     var toolbarBase;
     var toolbarSelected;
@@ -52,11 +52,10 @@ var KTUsersList = function () {
         datatable = $(table).DataTable({
             "info": false,
             'order': [],
-            "pageLength": 10,
+            "pageLength": 5,
             "lengthChange": false,
             'columnDefs': [
-                { orderable: false, targets: 0 }, // Disable ordering on column 0 (checkbox)
-                { orderable: false, targets: 6 }, // Disable ordering on column 6 (actions)                
+             
             ]
         });
 
