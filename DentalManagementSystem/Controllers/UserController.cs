@@ -186,7 +186,7 @@ namespace DentalManagementSystem.Controllers
             if (checkEmail != null || checkPhone != null)
             {
                 string result = "";
-                if (checkEmail != null) result += "E0mail ";
+                if (checkEmail != null) result += "Email ";
                 if (checkPhone != null)
                 {
                     if (!result.Equals("")) result += "và ";
