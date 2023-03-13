@@ -141,7 +141,7 @@ var KTSigninGeneral = function () {
                             text: "Tạo mới thành công!",
                             icon: "Thành công",
                             buttonsStyling: false,
-                            confirmButtonText: "OK",
+                            confirmButtonText: "Đồng ý",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
