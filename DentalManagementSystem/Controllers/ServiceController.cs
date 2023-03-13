@@ -51,7 +51,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Name,Unit,MarketPrice,Price")] Service service)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Service/Create",out User user))
             {
                 return NotFound();
             }
@@ -78,7 +78,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Unit,MarketPrice,Price")] Service editService)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Service/Edit",out User user))
             {
                 return NotFound();
             }
@@ -105,7 +105,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Service/Delete",out User user))
             {
                 return NotFound();
             }

@@ -10,9 +10,9 @@ namespace DentalManagementSystem.Controllers
     {        
         public IActionResult Index()
         {
-            if (isAuth(out _))
+            if (isAuth("/Home",out _))
             {
-                return Redirect("/Home");
+               return Redirect("/Home");
             }
             ViewData["ForgotError"] = "";
             return View();

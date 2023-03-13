@@ -7,7 +7,7 @@ namespace DentalManagementSystem.Controllers
     {
         public IActionResult Index()
         {
-            if (isAuth(out _))
+            if (isAuth("/Home", out _))
             {
                 return Redirect("/Home");
             }
@@ -18,7 +18,7 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Index(string username, string password)
         {
-            if (isAuth(out _))
+            if (isAuth("/Home", out _))
             {
                 return Redirect("/Home");
             }

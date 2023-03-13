@@ -21,7 +21,7 @@ namespace DentalManagementSystem.Controllers
         public IActionResult Index(string textSearch, int page = 1)
         {
             var UserList = DB.Users.Include(u => u.Role).ToList();
-            if (!isAuth(out User user))
+            if (!isAuth("/User/Index",out User user))
             {
                 return NotFound();
             }
@@ -58,7 +58,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User user)
         {
-            if (!isAuth(out User logUser))
+            if (!isAuth("/User/Create",out User logUser))
             {
                 return NotFound();
             }
@@ -92,7 +92,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User editUser)
         {
-            if (!isAuth(out User logUser))
+            if (!isAuth("/User/Edit",out User logUser))
             {
                 return NotFound();
             }
@@ -123,7 +123,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
-            if (!isAuth(out User logUser))
+            if (!isAuth("/User/Delete",out User logUser))
             {
                 return NotFound();
             }
