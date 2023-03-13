@@ -24,7 +24,7 @@ var KTSigninGeneral = function () {
                                 callback: function (input) {
                                     var currentDate = new Date();
                                     var date = new Date(input.value);
-                                    return (currentDate <= date);
+                                    return (currentDate <= date && date.getFullYear() - currentDate.getFullYear()<=1);
                                 }
                             },
                         }
@@ -81,7 +81,7 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Đã có lỗi xảy ra vui lòng thử lại.",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
