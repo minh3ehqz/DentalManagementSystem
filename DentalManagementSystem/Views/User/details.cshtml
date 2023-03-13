@@ -1,8 +1,15 @@
-﻿@model User
+﻿@using DentalManagementSystem.DAL;
+@using DentalManagementSystem.Models;
+@model User
+
 
 @{
     ViewData["Title"] = "Details";
+    RoleDBContext roleDB = new RoleDBContext();
+    var RoleList = roleDB.ListAll();
+    
 }
+
 
 <div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container">
     <!--begin::Page title-->
@@ -176,14 +183,13 @@
                                         <div class="mb-10">
                                             <label class="form-label fs-5 fw-semibold">Chức vụ:</label>
                                             <select name="RoleId" class="form-select form-select-solid fw-bold" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-hide-search="true">
-                                                <option></option>
-                                                <option value="1">Giám đốc</option>
-                                                <option value="2">Quản lí</option>
-                                                <option value="3">Quản trị viên hệ thống</option>
-                                                <option value="4">Y tá</option>
-                                                <option value="5">Bác sĩ</option>
-                                                <option value="6">Tiếp tân</option>
-                                                <option value="7">Kế toán</option>
+
+                                                @foreach (Role r in RoleList)
+                                                {
+                                                    <option value="@r.Id">
+                                                        @r.Name
+                                                    </option>
+                                                }
                                             </select>
                                         </div>
                                         <!--begin::Input group-->
@@ -236,7 +242,7 @@
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->
                                     <div class="text-center pt-15">
-                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Hủy</button>
                                         <button type="submit" class="btn btn-primary" id="create_submit" form="add_employee_form">
                                             <span class="indicator-label">Thay đổi</span>
                                             <span class="indicator-progress">

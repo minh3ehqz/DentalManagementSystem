@@ -1,4 +1,5 @@
 ﻿using DentalManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.DAL
 {
@@ -10,22 +11,24 @@ namespace DentalManagementSystem.DAL
 
 		public override void Add(Role entity)
 		{
-			throw new NotImplementedException();
-		}
+            Roles.Add(entity);
+            SaveChanges();
+        }
 
 		public override void Delete(long Id)
 		{
-			throw new NotImplementedException();
+            Roles.Remove(Roles.FirstOrDefault(x => x.Id == Id));
+            SaveChanges(); ;
 		}
 
 		public override Role Get(long id)
 		{
-			throw new NotImplementedException();
+            return Roles.FirstOrDefault(x => x.Id == id); ;
 		}
 
 		public override List<Role> ListAll()
-		{
-			throw new NotImplementedException();
+        {
+            return Roles.ToList(); ;
 		}
 
 		public override List<Role> ListAll(long OwnerId)
@@ -35,7 +38,9 @@ namespace DentalManagementSystem.DAL
 
 		public override void Update(Role entity)
 		{
-			throw new NotImplementedException();
+
+            Roles.Update(entity);
+            SaveChanges(); ;
 		}
 	}
 }

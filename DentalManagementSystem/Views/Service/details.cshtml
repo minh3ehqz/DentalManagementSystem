@@ -8,7 +8,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="text-dark fw-semibold my-0 fs-2">View details Services</h1>
+        <h1 class="text-dark fw-semibold my-0 fs-2">Thông tin chi tiết dịch vụ</h1>
         <!--end::Heading-->
     </div>
     <!--end::Page title=-->
@@ -73,12 +73,12 @@
                 <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        Edit
+                        Chỉnh sửa
                     </button>
                     <!--end::Add user-->
                 </div>
                 &nbsp;&nbsp;
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Index">Quay trở lại</a>
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
@@ -88,7 +88,7 @@
                             <!--begin::Modal header-->
                             <div class="modal-header" id="kt_modal_add_user_header">
                                 <!--begin::Modal title-->
-                                <h2 class="fw-bold">Edit Service</h2>
+                                <h2 class="fw-bold">Chỉnh sửa dịch vụ</h2>
                                 <!--end::Modal title-->
                                 <!--begin::Close-->
                                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -114,7 +114,7 @@
                                         <input type="hidden" name="Id" value="@Model.Id"/>
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Name</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Tên dịch vụ</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="name" maxlength="250" required value="@Model.Name"/>
@@ -125,7 +125,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Unit</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Đơn vị</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" name="unit" class="form-control form-control-solid mb-3 mb-lg-0" required value="@Model.Unit"/>
@@ -136,7 +136,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Market Price</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Giá thị trường</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" name="marketprice" class="form-control form-control-solid mb-3 mb-lg-0"  required value="@Model.MarketPrice"/>
@@ -147,7 +147,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Price</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Giá</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" name="price" class="form-control form-control-solid mb-3 mb-lg-0"  required value="@Model.Price"/>
@@ -158,9 +158,9 @@
                                     <!--end::Scroll-->
                                     <!--begin::Actions-->
                                     <div class="text-center pt-15">
-                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                                        <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Hủy</button>
                                         <button type="submit" class="btn btn-primary" id="create_submit" form="kt_modal_add_service_form">
-                                            <span class="indicator-label">Submit</span>
+                                            <span class="indicator-label">Chỉnh sửa</span>
                                             <span class="indicator-progress">
                                                 Please wait...
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

@@ -21,7 +21,7 @@ var KTSigninGeneral = function () {
                                 message: 'Email không hợp lệ',
                             },
                             notEmpty: {
-                                message: 'Email address is required',
+                                message: 'Email là bắt buộc',
                             }
                         }
                     },
@@ -32,7 +32,7 @@ var KTSigninGeneral = function () {
                                 message: 'số điện thoại không hợp lệ',
                             },
                             notEmpty: {
-                                message: 'Phone is required',
+                                message: 'Số điện thoại là bắt buộc',
                             },
                         }
                     },
@@ -57,10 +57,10 @@ var KTSigninGeneral = function () {
                     'Birthday': {
                         validators: {
                             notEmpty: {
-                                message: 'Birthday is required'
+                                message: 'Ngày tháng năm sinh là bắt buộc'
                             },
                             callback: {
-                                message: 'Tuổi phải lớn hơn 0',
+                                message: 'Ngày tháng năm sinh không hợp lệ',
                                 callback: function (input) {
                                     var currentDate = new Date();
                                     var birthday = new Date(input.value);
@@ -152,7 +152,7 @@ var KTSigninGeneral = function () {
                     if (valid === 'Valid') {
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Tạo mới thành công!",
+                            text: "Thao tác thành công!",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -179,7 +179,7 @@ var KTSigninGeneral = function () {
                 }else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Đã có lỗi xảy ra vui lòng thử lại",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",

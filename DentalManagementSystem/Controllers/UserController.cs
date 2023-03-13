@@ -15,14 +15,27 @@ namespace DentalManagementSystem.Controllers
     {
         UserDBContext DB = new UserDBContext();
         RoleDBContext RoleDB = new RoleDBContext();
-
+        SystemLogDBContext Log = new SystemLogDBContext();
 
         // GET: Users
-        public IActionResult Index()
+        public IActionResult Index(string textSearch, int page = 1)
         {
             var UserList = DB.Users.Include(u => u.Role).ToList();
+            if (!isAuth(out User user))
+            {
+                return NotFound();
+            }
 
-            return View(UserList);
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"]).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page - 1;
+            ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
+            return View(list);
+
+
+           
         }
 
         // thông tin chi tiết User
@@ -45,8 +58,18 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User user)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
 
-
+            Log.Add(new SystemLog
+            {
+                CreatedDate = DateTime.Now,
+                OwnerId = logUser.Id,
+                Content = "người dùng đã thêm mới nhân viên " +
+                    "" + user.FullName + " có sô điện thoại là " + user.Phone + " và email là " + user.Email + ""
+            });
             DB.Add(user);
             return RedirectToAction(nameof(Index));
             return View(user);
@@ -69,6 +92,11 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Username,FullName,Password,Birthday,Phone,Salary,RoleId,Enable,Email")] User editUser)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
+            
             User user = DB.Users.FirstOrDefault(s => s.Id == editUser.Id);
             if (user != null)
             {
@@ -79,6 +107,13 @@ namespace DentalManagementSystem.Controllers
                 user.Salary = editUser.Salary;
                 user.RoleId = editUser.RoleId;
             }
+            Log.Add(new SystemLog
+            {
+                CreatedDate = DateTime.Now,
+                OwnerId = logUser.Id,
+                Content = "người dùng đã thay đổi thông tin nhân viên " +
+                    "" + DB.Get(id).FullName + " có sô điện thoại là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + ""
+            });
             DB.SaveChanges();
             return RedirectToAction("Details", new { id = editUser.Id });
         }
@@ -88,16 +123,30 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long[] selectedValues)
         {
+            if (!isAuth(out User logUser))
+            {
+                return NotFound();
+            }
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
+                Log.Add(new SystemLog
+                {
+                    CreatedDate = DateTime.Now,
+                    OwnerId = logUser.Id,
+                    Content = "người dùng đã xóa nhân viên " +
+                     "" + DB.Get(id).FullName + " có sô điện thoại là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + ""
+                });
                 DB.Delete(id);
             }
             return RedirectToAction(nameof(Index));
 
         }
 
-        //tìm service
+
+
+
+        //tìm user
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Search(long Id, String UserName, String FullName, DateTime Birthday, String Phone, int Salary, String Role, String Email, String Reset)
@@ -130,7 +179,26 @@ namespace DentalManagementSystem.Controllers
             return View("Index", users);
         }
 
-
+        public IActionResult checkEmailPhone(string email, string phone)
+        {
+            var checkEmail = DB.GetUsersByEmail(email);
+            var checkPhone = DB.GetUsersByPhone(phone);
+            if (checkEmail != null || checkPhone != null)
+            {
+                string result = "";
+                if (checkEmail != null) result += "E0mail ";
+                if (checkPhone != null)
+                {
+                    if (!result.Equals("")) result += "và ";
+                    result += "số điện thoại ";
+                }
+                return Ok(result + "đã tồn tại");
+            }
+            else
+            {
+                return Ok("Valid");
+            }
+        }
     }
 }
 
