@@ -85,5 +85,6 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
     }
 }
