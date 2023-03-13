@@ -64,7 +64,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if (!isAuth("/Patients/Edit",out User user))
+            if (!isAuth("/Patients/Edit", out User user))
             {
                 return NotFound();
             }
