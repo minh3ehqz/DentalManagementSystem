@@ -19,7 +19,7 @@ namespace DentalManagementSystem.Controllers
         public IActionResult Index(string search, int page = 1, int pageSize = 10)
         {
             
-            if (!isAuth("/U/Index", out User user))
+            if (!isAuth("/ImportMaterial", out User user))
             {
                 return NotFound();
             }
@@ -30,7 +30,7 @@ namespace DentalManagementSystem.Controllers
             {
                 query = query.Where(u => u.SupplyName.Contains(search) || u.Amount.ToString().Contains(search) || u.Date.ToString().Contains(search) || u.TotalPrice.ToString().Contains(search));
             }
-
+            ViewData["stt"] = page - 1;
             var totalItems = query.Count();
             var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
             var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();

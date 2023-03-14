@@ -6,7 +6,7 @@
 
 }
 @section Patientscript{
-    <script src="~/assets/js/custom/script/Search_Import.js"></script>
+    @*<script src="~/assets/js/custom/script/Search_Import.js"></script>*@
     <script src="~/assets/js/custom/script/Import-Validate.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
 }
@@ -62,7 +62,9 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm phiếu nhập">
+                    <form asp-action="Index" id="search">
+                        <input type="text" name="search" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm" value="@ViewBag.Search">
+                    </form>
                 </div>
                 <!--end::Search-->
             </div>
@@ -299,14 +301,12 @@
                     <!--begin::Table body (nội dung dữ liệu)-->
 
                     <tbody class="text-gray-600 fw-semibold">
+                        @{
+                            int index = 1 + (int)ViewData["stt"] * 10;
+                        }
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>
-                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                        <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
-                                    </div>
-                                </td>
                                 <td>@(Model.IndexOf(item)+1)</td>
                                 <td>@item.MaterialId</td>
                                 <td>
@@ -328,6 +328,36 @@
                     <!--end::Table body-->
                 </table>
             }
+        <div class="row">
+            <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+            <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
+                    <ul class="pagination">
+                        @for (var i = 1; i <= (int)ViewBag.TotalPages; i++)
+                        {
+                            @if (i == (int)ViewBag.Page)
+                            {
+                                <li class="paginate_button page-item">
+                                    <form asp-action="Index">
+                                        <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
+                                        <input hidden value="@ViewBag.Search" name="search">
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="paginate_button page-item">
+                                    <form asp-action="Index">
+                                        <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
+                                        <input hidden value="@ViewBag.Search" name="search">
+                                    </form>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
             <!--end::Table-->
         </div>
         <!--end::Card body-->
