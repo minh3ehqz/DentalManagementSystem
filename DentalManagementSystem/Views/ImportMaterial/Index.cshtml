@@ -301,13 +301,22 @@
                     <!--begin::Table body (nội dung dữ liệu)-->
 
                     <tbody class="text-gray-600 fw-semibold">
-                        @{
-                            int index = 1 + (int)ViewData["stt"] * 10;
-                        }
+                    @{
+                        int index = 1 + (int)ViewData["stt"] * 10;
+                    }
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@(Model.IndexOf(item)+1)</td>
+                                <td>
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>@index</p>
+                                    @{
+                                        index++;
+                                    }</td>
                                 <td>@item.MaterialId</td>
                                 <td>
                                     <a asp-action="Details" asp-route-id="@item.Id">@item.SupplyName</a>
