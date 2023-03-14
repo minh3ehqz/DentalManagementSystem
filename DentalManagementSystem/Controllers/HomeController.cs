@@ -1,5 +1,6 @@
 ﻿using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
+using DentalManagementSystem.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -21,7 +22,13 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Login");
             }
-            return View();
+
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+
+
+            return View(user);
         }
 
         public IActionResult Privacy()

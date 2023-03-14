@@ -8187,7 +8187,7 @@ var KTChartsWidget24 = (function () {
 					"female": 166514
 				}
 			],
-			"OK": [{
+			"Đồng ý": [{
 					"age": "0 to 5",
 					"male": 135423,
 					"female": 130297
