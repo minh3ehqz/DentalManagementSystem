@@ -14,4 +14,8 @@ public partial class SystemLog
     public long OwnerId { get; set; }
 
     public virtual User Owner { get; set; } = null!;
+    public override string ToString()
+    {
+        return (Id + " " + CreatedDate + " " + Content + " " + OwnerId).Trim();
+    }
 }

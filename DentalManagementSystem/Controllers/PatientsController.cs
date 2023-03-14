@@ -22,6 +22,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             ViewData["searchContent"] = textSearch;
             int count = DB.ListAll((string)ViewData["searchContent"]).Count();
             ViewData["thisPage"] = page;
@@ -37,8 +40,11 @@ namespace DentalManagementSystem.Controllers
         {
             if(isAuth("/Patients/",out User user))
             {
+                ViewData["FullName"] = user.FullName;
+                ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+                ViewData["Email"] = user.Email;
                 TempData["addsuccess"] = "thêm mới thành công";
-                //patient.Trim();
+                patient.Trim();
                 DB.Add(patient);
                 Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân " +
                     patient.Name+" có sô điện thoại là "+patient.Phone+" và email là "+patient.Email });
@@ -53,6 +59,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             var patient = DB.Get(id);
             return View(patient);
         }
@@ -68,8 +77,11 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+ " có sđt là " + patient.Phone + " và email là " + patient.Email + "" });
-            //patient.Trim();
+            patient.Trim();
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patient.Id });
@@ -85,6 +97,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {

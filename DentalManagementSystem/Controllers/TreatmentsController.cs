@@ -1,5 +1,6 @@
 ﻿using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
+using DentalManagementSystem.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalManagementSystem.Controllers
@@ -16,6 +17,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             DB.Add(treatment);
             Log.Add(new SystemLog
             {
