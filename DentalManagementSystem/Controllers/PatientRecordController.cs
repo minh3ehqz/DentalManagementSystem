@@ -17,7 +17,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName,MarrowRecord,Debit,Note,TreatmentId,UserId,PatientId,Prescription")] PatientRecord patientRecord)
         {
-            if (isAuth("/PatientRecord/Create", out User user))
+            if (isAuth("/PatientsRecord/Create", out User user))
             {
                 TempData["addsuccess"] = "thêm mới thành công";
                 //patient.Trim();
