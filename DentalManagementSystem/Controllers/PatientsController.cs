@@ -38,7 +38,7 @@ namespace DentalManagementSystem.Controllers
             if(isAuth("/Patients/",out User user))
             {
                 TempData["addsuccess"] = "thêm mới thành công";
-                //patient.Trim();
+                patient.Trim();
                 DB.Add(patient);
                 Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân " +
                     patient.Name+" có sô điện thoại là "+patient.Phone+" và email là "+patient.Email });
@@ -69,7 +69,7 @@ namespace DentalManagementSystem.Controllers
                 return NotFound();
             }
             Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+ " có sđt là " + patient.Phone + " và email là " + patient.Email + "" });
-            //patient.Trim();
+            patient.Trim();
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patient.Id });
