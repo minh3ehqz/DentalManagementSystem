@@ -18,46 +18,34 @@ namespace DentalManagementSystem.Controllers
         SystemLogDBContext Log = new SystemLogDBContext();
 
         // GET: Users
-        public IActionResult Index(string textSearch, int page = 1)
-        {
-            //var UserList = DB.Users.Include(u => u.Role).ToList();
-            //if (!isAuth("/User/Index",out User user))
-            //{
-            //    return NotFound();
-            //}
-
-            //ViewData["searchContent"] = textSearch;
-            //int count = DB.ListAll((string)ViewData["searchContent"]).Count();
-            //ViewData["thisPage"] = page;
-            //ViewData["stt"] = page - 1;
-            //ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
-            //var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
-            return View(/*list*/);
-        }
-
-        [HttpGet]
-        public IActionResult Details(long id)
-        {
-            if (!isAuth("/User/Details", out User user))
+         public IActionResult Index(string search, int page = 1, int pageSize = 10)
             {
-                return NotFound();
+            var UserList = DB.Users.Include(u => u.Role).ToList();
+            if (!isAuth("/User/Index", out User user))
+                {
+                    return NotFound();
+                }
+
+                var query = DB.Users.Include(u => u.Role).AsQueryable();
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query = query.Where(u => u.Username.Contains(search) || u.FullName.Contains(search) || u.Phone.Contains(search) || u.Email.Contains(search));
+                }
+
+                var totalItems = query.Count();
+                var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+
+                var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+                ViewBag.Search = search;
+                ViewBag.Page = page;
+                ViewBag.PageSize = pageSize;
+                ViewBag.TotalPages = totalPages;
+
+                return View(users);
+
             }
-
-
-
-            return View(user);
-        }
-
-        // thông tin chi tiết User
-        public IActionResult ViewProfile()
-        {
-            if (!isAuth("/User/ViewProfile", out User user))
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
         
         // Chỉnh sửa profile
         public IActionResult EditProfile()
@@ -229,7 +217,7 @@ namespace DentalManagementSystem.Controllers
             if (checkEmail != null || checkPhone != null)
             {
                 string result = "";
-                if (checkEmail != null) result += "Email ";
+                if (checkEmail != null) result += "E0mail ";
                 if (checkPhone != null)
                 {
                     if (!result.Equals("")) result += "và ";
