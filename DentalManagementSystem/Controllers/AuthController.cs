@@ -15,7 +15,7 @@ namespace DentalManagementSystem.Controllers
             {
                 user = db.Get(long.Parse(HttpContext.Session.GetString("UserId")));
                 var TempUser = user;
-                if (!PermissionList.Any(x => x.Permission.Name == UrlPath && x.RoleId == TempUser.RoleId))
+                if (UrlPath != "" && !PermissionList.Any(x => x.Permission.Name == UrlPath && x.RoleId == TempUser.RoleId))
                 {
                     return false;
                 }
