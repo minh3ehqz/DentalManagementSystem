@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
+using System.Drawing.Printing;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -15,10 +16,31 @@ namespace DentalManagementSystem.Controllers
         ImportMaterialDBContext DB = new ImportMaterialDBContext();
 
         // GET: MaterialImport
-        public IActionResult Index(long id, long MaterialId, DateTime Date, int Amount, String name, int totalPrice)
+        public IActionResult Index(string search, int page = 1, int pageSize = 10)
         {
-            var materialImportList = DB.ListAll();
-            return View(materialImportList);
+            
+            if (!isAuth("/U/Index", out User user))
+            {
+                return NotFound();
+            }
+
+            var query = DB.MaterialImports.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.SupplyName.Contains(search) || u.Amount.ToString().Contains(search) || u.Date.ToString().Contains(search) || u.TotalPrice.ToString().Contains(search));
+            }
+
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+            var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+
+            return View(users);
         }
 
 
