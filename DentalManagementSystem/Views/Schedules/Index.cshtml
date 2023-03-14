@@ -251,7 +251,7 @@
 
                         <tbody class="text-gray-600 fw-semibold">
                             @{
-                                int index = 1;
+                                int index = 1 + (int)ViewData["sttIcoming"] * 10;
                             }
                             @foreach (var item in (List<Schedule>)ViewData["wating"])
                             {
@@ -346,7 +346,7 @@
 
                         <tbody class="text-gray-600 fw-semibold">
                             @{
-                                int ReIndex = 1;
+                                int ReIndex = 1 + (int)ViewData["sttDone"] * 10;
                             }
                             @foreach (var item in (List<Schedule>)ViewData["notwaiting"])
                             {

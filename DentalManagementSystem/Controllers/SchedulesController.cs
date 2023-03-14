@@ -9,7 +9,7 @@ using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using System.Net;
 using System.Data;
-
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -27,6 +27,7 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+
             foreach (var item in DB.ListAll())
             {
                 if (item.Date < DateTime.Now)
@@ -35,6 +36,9 @@ namespace DentalManagementSystem.Controllers
                     DB.Update(item);
                 }
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             ViewData["searchContent"] = textSearch;
             ViewData["watingActive"] = watingActive;
             ViewData["notWattingActive"] = NotWatingActive;
@@ -61,6 +65,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             DB.Add(schedule);
             Log.Add(new SystemLog
             {
@@ -81,6 +88,9 @@ namespace DentalManagementSystem.Controllers
                 return NotFound();
             }
             TempData["Delete messenger"] = "xóa thành công";
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             foreach (long id in selectedValues)
             {
                 Log.Add(new SystemLog
@@ -98,6 +108,13 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Update([Bind("Id,Date,PatientId,Status")] Schedule schedule)
         {
+            if (!isAuth("/Schedules/Delete", out User user))
+            {
+                return NotFound();
+            }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             if (schedule.Date.Day == DateTime.Now.Day && schedule.Date.Month == DateTime.Now.Month)
                 DB.Update(schedule);
             return RedirectToAction("Index");

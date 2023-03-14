@@ -61,11 +61,11 @@ var KTUsersList = function () {
         //});
 
         // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-        datatable.on('draw', function () {
-            initToggleToolbar();
-            handleDeleteRows();
-            toggleToolbars();
-        });
+        //datatable.on('draw', function () {
+        //    initToggleToolbar();
+        //    handleDeleteRows();
+        //    toggleToolbars();
+        //});
     }
 
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()

@@ -61,7 +61,7 @@ var KTSigninGeneral = function () {
                     'phone': {
                         validators: {
                             regexp: {
-                                regexp: /^(0|\+84)(\d{9})$/,
+                                regexp: /^(0|\+84)(?!(?:0{10}|\d{1,9}0{1,9}))(?:\d){9}$/,
                                 message: 'Số điện thoại nhập chưa hợp lệ '
                             },
                             notEmpty: {
