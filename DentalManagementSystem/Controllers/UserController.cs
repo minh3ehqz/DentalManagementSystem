@@ -46,9 +46,6 @@ namespace DentalManagementSystem.Controllers
                 return View(users);
 
             }
-
-            return View(user);
-        }
         
         // Chỉnh sửa profile
         public IActionResult EditProfile()
