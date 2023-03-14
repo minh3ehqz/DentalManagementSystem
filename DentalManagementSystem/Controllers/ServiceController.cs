@@ -18,19 +18,33 @@ namespace DentalManagementSystem.Controllers
         SystemLogDBContext Log = new SystemLogDBContext();
 
         // GET: Services
-        public IActionResult Index(long? id, string name, int unit, int marketprice, int price)
+      
+        public IActionResult Index(string search, int page = 1, int pageSize = 2)
         {
-            if (id != 0 && name != null && unit != null && marketprice != null && price != null)
+           
+            if (!isAuth("/Service", out User user))
             {
-                var result = DB.Services.Where(s => id != 0 && s.Id == id
-            && (name != null && s.Name.Contains(name))
-            && (marketprice != null && !s.MarketPrice.Equals(marketprice))
-            && (price != null && !s.Price.Equals(price))).ToList();
-
-                return View(result);
+                return NotFound();
             }
-            var ServiceList = DB.ListAll();
-            return View(ServiceList);
+
+            var query = DB.Services.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.Name.Contains(search));
+            }
+
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+
+            var services = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+
+            return View(services);
         }
 
         //thông tin chi tiết service
