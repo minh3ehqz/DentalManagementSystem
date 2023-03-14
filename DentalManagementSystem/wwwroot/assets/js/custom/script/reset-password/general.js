@@ -17,7 +17,7 @@ var KTSigninGeneral = function() {
                     'password': {
                         validators: {
                             notEmpty: {
-                                message: 'Bạn chưa nhập password'
+                                message: 'Bạn chưa nhập mật khẩu'
                             }
                         }
                     },
@@ -77,7 +77,7 @@ var KTSigninGeneral = function() {
                         text: "Bạn đã nhập thiếu Email",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "OK",
+                        confirmButtonText: "Đồng ý",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -110,7 +110,7 @@ KTUtil.onDOMContentLoaded(function () {
             text: errorMessage,
             icon: "error",
             buttonsStyling: false,
-            confirmButtonText: "OK",
+            confirmButtonText: "Đồng ý",
             customClass: {
                 confirmButton: "btn btn-primary"
             }
@@ -124,7 +124,7 @@ KTUtil.onDOMContentLoaded(function () {
             text: successMessage,
             icon: "success",
             buttonsStyling: false,
-            confirmButtonText: "OK",
+            confirmButtonText: "Đồng ý",
             customClass: {
                 confirmButton: "btn btn-primary"
             }

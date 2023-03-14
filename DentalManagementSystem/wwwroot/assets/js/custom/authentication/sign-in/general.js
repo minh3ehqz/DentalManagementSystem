@@ -68,7 +68,7 @@ var KTSigninGeneral = function() {
                             text: "Đã gửi yêu cầu đăng nhập",
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "OK",
+                            confirmButtonText: "Đồng ý",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -85,7 +85,7 @@ var KTSigninGeneral = function() {
                         text: "Bạn đã nhập thiếu Username hoặc Password",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "OK",
+                        confirmButtonText: "Đồng ý",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -118,7 +118,7 @@ KTUtil.onDOMContentLoaded(function () {
             text: errorMessage,
             icon: "error",
             buttonsStyling: false,
-            confirmButtonText: "OK",
+            confirmButtonText: "Đồng ý",
             customClass: {
                 confirmButton: "btn btn-primary"
             }

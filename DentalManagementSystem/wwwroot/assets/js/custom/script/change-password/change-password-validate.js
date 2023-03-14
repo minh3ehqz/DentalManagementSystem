@@ -1,42 +1,57 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function() {
+var KTSigninGeneral = function () {
     // Elements
     var form;
     var submitButton;
     var validator;
 
-    // Handle form
-    var handleForm = function(e) {
+    // Handle
+    var handleForm = function (e) {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
-			form,
-			{
-				fields: {					
-					'email': {
+            form,
+            {
+                fields: {
+                    'OldPassword': {
                         validators: {
-                            regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'Bạn cần nhập đúng định dạng email',
+                            notEmpty: {
+                                message: 'Bạn chưa nhập mật khẩu'
+                            }
+                        }
+                    },
+                    'NewPassword': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Bạn chưa nhập mật khẩu'
+                            }
+                        }
+                    },
+                    'ConfirmPassword': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vui lòng nhập lại mật khẩu'
                             },
-							notEmpty: {
-								message: 'Bạn chưa nhập email'
-							}
-						}
-					},
-
-				},
-				plugins: {
-					trigger: new FormValidation.plugins.Trigger(),
-					bootstrap: new FormValidation.plugins.Bootstrap5({
+                            identical: {
+                                compare: function () {
+                                    return form.querySelector('[name="NewPassword"]').value;
+                                },
+                                message: 'Mật khẩu mới không trùng khớp'
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    trigger: new FormValidation.plugins.Trigger(),
+                    bootstrap: new FormValidation.plugins.Bootstrap5({
                         rowSelector: '.fv-row',
                         eleInvalidClass: '',  // comment to enable invalid state icons
                         eleValidClass: '' // comment to enable valid state icons
                     })
-				}
-			}
-		);		
+                }
+            }
+        );
 
         // Handle form submit
         submitButton.addEventListener('click', function (e) {
@@ -51,55 +66,32 @@ var KTSigninGeneral = function() {
 
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
-                    
+
 
                     // Simulate ajax request
-                    setTimeout(function() {
+                    setTimeout(function () {
                         // Hide loading indication
                         submitButton.removeAttribute('data-kt-indicator');
 
                         // Enable button
                         submitButton.disabled = false;
 
-                        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                        Swal.fire({
-                            text: "Đã gửi yêu cầu đăng nhập",
-                            icon: "success",
-                            buttonsStyling: false,
-                            confirmButtonText: "Đồng ý",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        }).then(function (result) {
-                            if (result.isConfirmed) { 
-                                                             
-                                form.submit(); // submit form
-                            }
-                        });
-                    }, 2000);   						
+                        form.submit(); // submit form
+                    }, 2000);
                 } else {
-                    // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
-                    Swal.fire({
-                        text: "Bạn đã nhập thiếu Username hoặc Password",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Đồng ý",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    });
+
                 }
             });
-		});
+        });
     }
 
     // Public functions
     return {
         // Initialization
-        init: function() {
-            form = document.querySelector('#kt_sign_in_form');
-            submitButton = document.querySelector('#kt_sign_in_submit');
-            
+        init: function () {
+            form = document.querySelector('#change-password-form');
+            submitButton = document.querySelector('#submit-btn');
+
             handleForm();
         }
     };
@@ -108,9 +100,8 @@ var KTSigninGeneral = function() {
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
     KTSigninGeneral.init();
-    let form = document.querySelector('#kt_sign_in_form');
+    let form = document.querySelector('#change-password-form');
     if (form.getAttribute('error-message') !== '' && form.getAttribute('error-message') != null) {
-        console.log(form.getAttribute('error-message'));
         let errorMessage = form.getAttribute('error-message');
         Swal.fire({
             text: errorMessage,
@@ -122,15 +113,22 @@ KTUtil.onDOMContentLoaded(function () {
             }
         });
     }
+
     if (form.getAttribute('success-message') !== '' && form.getAttribute('success-message') != null) {
-        let errorMessage = form.getAttribute('success-message');
+        let successMessage = form.getAttribute('success-message');
         Swal.fire({
-            text: errorMessage,
+            text: successMessage,
             icon: "success",
             buttonsStyling: false,
             confirmButtonText: "Đồng ý",
             customClass: {
                 confirmButton: "btn btn-primary"
+            }
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                setTimeout(function () {
+                    window.location.href = "/Home";
+                }, 500);
             }
         });
     }

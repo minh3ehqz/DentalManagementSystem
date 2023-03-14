@@ -47,13 +47,41 @@ namespace DentalManagementSystem.Controllers
 
             }
 
-        // thông tin chi tiết User
-        public IActionResult Details(long id)
+            return View(user);
+        }
+        
+        // Chỉnh sửa profile
+        public IActionResult EditProfile()
         {
-            var user = DB.Users.Include(u => u.Role).FirstOrDefault(u => u.Id == id);
+            if (!isAuth("/User/EditProfile", out User user))
+            {
+                return NotFound();
+            }
 
             return View(user);
         }
+
+        [HttpPost]
+        public IActionResult ChangePassword(string OldPassword, string NewPassword)
+		{
+			if (!isAuth("/User/EditProfile", out User user))
+			{
+				return NotFound();
+			}
+
+            if (user.Password != OldPassword.Trim())
+            {
+                ViewData["error-message"] = "Bạn nhập mật khẩu cũ không đúng";
+				return View("EditProfile", user);
+			}
+
+            user.Password = NewPassword;
+            UserDBContext UserDbContext = new UserDBContext();
+            UserDbContext.Update(user);
+            ViewData["success-message"] = "Bạn đã đổi mật khẩu thành công";
+
+			return View("EditProfile", user);
+		}
 
         // GET: thêm mới user
         public IActionResult Create()
@@ -151,10 +179,7 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-
-
-
-
+        
         //tìm user
         [HttpPost]
         [ValidateAntiForgeryToken]

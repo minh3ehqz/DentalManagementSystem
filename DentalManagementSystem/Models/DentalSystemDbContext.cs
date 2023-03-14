@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DentalManagementSystem.Config;
 using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.Models;
@@ -49,7 +50,7 @@ public partial class DentalSystemDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("server =DESKTOP-2QNQ58T; database = DentalSystemDB;uid=sa;pwd=sa;encrypt=true;trustServerCertificate=true;\n");
+        => optionsBuilder.UseSqlServer(SQLConfig.ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -171,7 +172,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<PatientRecordServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83F91E72DD4");
+            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83F93FDC4EC");
 
             entity.ToTable("patient_record_service_map");
 
@@ -193,7 +194,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Permission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83F0B320D46");
+            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83F306ED099");
 
             entity.ToTable("permission");
 
@@ -203,7 +204,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FD548A6A3");
+            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FED698E48");
 
             entity.ToTable("roles");
 
@@ -213,7 +214,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<RolePermissionMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83F373F6FCE");
+            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83FF2AB472D");
 
             entity.ToTable("role_permission_map");
 
@@ -234,7 +235,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83FF8624190");
+            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83FD3179DFA");
 
             entity.ToTable("schedule");
 
@@ -254,7 +255,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__services__3213E83F599DB402");
+            entity.HasKey(e => e.Id).HasName("PK__services__3213E83F1C810966");
 
             entity.ToTable("services");
 
@@ -281,7 +282,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Timekeeping>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83F348BECFC");
+            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83F8BA3CAD2");
 
             entity.ToTable("timekeeping");
 
@@ -302,7 +303,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Treatment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F3BD90EEF");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83FB68B38C7");
 
             entity.ToTable("treatments");
 
@@ -318,7 +319,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<TreatmentServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F69D09C42");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F74FDA6A9");
 
             entity.ToTable("treatment_service_map");
 

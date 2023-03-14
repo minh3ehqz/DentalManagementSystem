@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace DentalManagementSystem.Models;
 
@@ -33,9 +32,4 @@ public partial class User
     public virtual ICollection<SystemLog> SystemLogs { get; } = new List<SystemLog>();
 
     public virtual ICollection<Timekeeping> Timekeepings { get; } = new List<Timekeeping>();
-    public override string ToString()
-    {
-        return (Id + " " + Username + " " + FullName + " " + Birthday + " " + RoleId + " " + Phone + " " + Phone + " " + Salary + " " + Email).Trim();
-    }
-
 }
