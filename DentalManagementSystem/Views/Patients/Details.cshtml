@@ -708,7 +708,7 @@
                                         @if (i == (int)ViewBag.Page)
                                         {
                                             <li class="paginate_button page-item">
-                                                <form asp-action="Index">
+                                                <form asp-action="Details">
                                                     <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
                                                     <input hidden value="@ViewBag.Search" name="search">
                                                 </form>
@@ -717,7 +717,7 @@
                                         else
                                         {
                                             <li class="paginate_button page-item">
-                                                <form asp-action="Index">
+                                                <form asp-action="Details">
                                                     <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
                                                     <input hidden value="@ViewBag.Search" name="search">
                                                 </form>
