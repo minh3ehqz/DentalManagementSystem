@@ -215,64 +215,6 @@ License: For each use you must have a valid license purchased only from above li
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid Container" id="kt_content">
                     <!--cửa sô báo lỗi -->
-                    <div class="modal fade" id="kt_modal_add_user_error" tabindex="-1" aria-hidden="true">
-                        <!--begin::Modal dialog-->
-                        <div class="modal-dialog modal-dialog-centered mw-650px">
-                            <!--begin::Modal content-->
-                            <div class="modal-content">
-                                <!--begin::Modal header-->
-                                <div class="modal-header" id="kt_modal_add_user_header">
-                                    <!--begin::Modal title-->
-                                    <h2 class="fw-bold">Hãy mô tả vấn đề của bạn</h2>
-                                    <!--end::Modal title-->
-                                    <!--begin::Close-->
-                                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
-                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                        <span class="svg-icon svg-icon-1">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
-                                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
-                                            </svg>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                    </div>
-                                    <!--end::Close-->
-                                </div>
-                                <!--end::Modal header-->
-                                <!--begin::Modal body-->
-                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                                    <!--begin::Form add new-->
-                                    <form id="add_error_report" asp-controller="SystemLogs" asp-action="CreateReportLog" class="form" method="post">
-                                        <!--begin::Scroll-->
-                                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll">
-                                           <textarea maxlength="250" style="height:500px" name="context"></textarea>
-                                           <input type="hidden" value="" id="getURl" name="url">
-                                           <script>
-                                                document.getElementById("getURl").setAttribute('value', window.location.href);
-                                           </script>
-                                        </div>
-                                        <!--end::Scroll-->
-                                        <!--begin::Actions-->
-                                        <div class="text-center pt-15">
-                                            <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
-                                            <button type="submit" class="btn btn-primary" id="" form="add_error_report">
-                                                <span class="indicator-label">Submit</span>
-                                                <span class="indicator-progress">
-                                                    Please wait...
-                                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <!--end::Actions-->
-                                    </form>
-                                    <!--end::Form-->
-                                </div>
-                                <!--end::Modal body-->
-                            </div>
-                            <!--end::Modal content-->
-                        </div>
-                        <!--end::Modal dialog-->
-                    </div>
                     @RenderBody()
                 </div>
                 <!--end::Content-->
@@ -283,6 +225,65 @@ License: For each use you must have a valid license purchased only from above li
         <!--end::Page-->
     </div>
     <!--end::Root-->
+    <div class="modal fade" id="kt_modal_add_user_error" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Modal header-->
+                <div class="modal-header" id="kt_modal_add_user_header">
+                    <!--begin::Modal title-->
+                    <h2 class="fw-bold">Hãy mô tả vấn đề của bạn</h2>
+                    <!--end::Modal title-->
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
+                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                        <span class="svg-icon svg-icon-1">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Close-->
+                </div>
+                <!--end::Modal header-->
+                <!--begin::Modal body-->
+                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                    <!--begin::Form add new-->
+                    <form id="add_error_report" asp-controller="SystemLogs" asp-action="CreateReportLog" class="form" method="post">
+                        <!--begin::Scroll-->
+                        <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll">
+                            <textarea maxlength="250" style="height:500px" name="context"></textarea>
+                            <input type="hidden" value="" id="getURl" name="url">
+                            <script>
+                                document.getElementById("getURl").setAttribute('value', window.location.href);
+                            </script>
+                        </div>
+                        <!--end::Scroll-->
+                        <!--begin::Actions-->
+                        <div class="text-center pt-15">
+                            <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+                            <button type="submit" class="btn btn-primary" id="" form="add_error_report">
+                                <span class="indicator-label">Submit</span>
+                                <span class="indicator-progress">
+                                    Please wait...
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                            </button>
+                        </div>
+                        <!--end::Actions-->
+                    </form>
+                    <!--end::Form-->
+                </div>
+                <!--end::Modal body-->
+            </div>
+            <!--end::Modal content-->
+        </div>
+        <!--end::Modal dialog-->
+    </div>
+
     <!--layout-partial:partials/_drawers.html-->
     <!--end::Main-->
     <!--layout-partial:partials/_scrolltop.html-->
