@@ -4,6 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
+
 @section Patientscript{
     <script src="~/assets/js/custom/script/searchPatient.js"></script>
     <script src="~/assets/js/custom/script/PatientValidate.js"></script>
@@ -362,7 +363,7 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <form asp-action="Index" id="search">
+                            <form asp-action="Details" id="search">
                                 <input type="text" name="search" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm" value="@ViewBag.Search">
                             </form>
                         </div>
@@ -513,7 +514,7 @@
                                                     <label class="required fw-semibold fs-6 mb-2">Note</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Note" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Note" maxlength="250" required />
+                                                    <textarea type="text" name="Note" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Note" maxlength="250" required></textarea>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -656,7 +657,7 @@
                             @{
                             int index = 1 + (int)ViewData["stt"] * 10;
                             }
-                                @foreach (var item in Model.PatientRecords)
+                                @foreach (var item in (List<PatientRecord>)ViewData["records"])
                                 {
                                     <tr>
                                         <td>

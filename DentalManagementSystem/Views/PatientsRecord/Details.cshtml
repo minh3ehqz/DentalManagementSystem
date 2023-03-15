@@ -47,28 +47,46 @@
         <div>
             <dl class="row">
                 <dt class="col-sm-2">
-                    Tên vật tư
+                    Lí do đến khám
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Causal)
+                    @Html.DisplayFor(model => model.Reason)
                 </dd>
                 <dt class="col-sm-2">
-                    Ngày nhập
+                    Ngày đến khám
                 </dt>
                 <dd class="col-sm-10">
                     @Model.Date.Day/@Model.Date.Month/@Model.Date.Year
                 </dd>
                 <dt class="col-sm-2">
-                    Số lượng
+                    Tiền sử tủy
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Debit)
+                    @Html.DisplayFor(model => model.MarrowRecord)
                 </dd>
                 <dt class="col-sm-2">
-                    Đơn giá
+                    Chẩn đoán
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Diagnostic)
+                </dd>
+                <dt class="col-sm-2">
+                    Chẩn đoán
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Causal)
+                </dd>
+                <dt class="col-sm-2">
+                    Phác đồ điều trị
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.TreatmentName)
+                </dd>
+                <dt class="col-sm-2">
+                    Ghi chú
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Note)
                 </dd>
             </dl>
         </div>
@@ -98,7 +116,6 @@
                 </div>
                 &nbsp;&nbsp;
                 <a asp-action="Details" asp-controller="Patients" asp-route-id="@Model.PatientId">Quay lại</a>
-                <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
                     <div class="modal-dialog modal-dialog-centered mw-650px">
@@ -126,47 +143,80 @@
                             <!--begin::Modal body-->
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form add new-->
-                                <form id="import_material_form" asp-action="Edit" class="form" method="post">
+                                <form id="edit-patient-record" asp-action="Edit" class="form" method="post">
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                         <!--begin::Input group-->
-                                        <input type="hidden" name="Id" value="" />
-                                        <input type="hidden" name="MaterialId" value="" />
-                                        <input type="hidden" name="Date" value="" />
+                                        <input type="hidden" name="PatientId" value="@Model.PatientId">
+                                        <input type="hidden" name="UserId" value="@Model.UserId">
+                                        <input type="hidden" name="Date" value="@Model.Date">
+                                        <input type="hidden" name="Debit" value="@Model.Debit">
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Tên vật tư</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Lí do đến khám</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="SupplyName" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="" />
+                                            <input type="text" name="Reason" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.Diagnostic" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Số lượng</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Tiền sử tủy</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="Amount" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="" />
+                                            <input type="text" name="MarrowRecord" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.Diagnostic" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Đơn giá</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Chẩn đoán</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="TotalPrice" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="\" />
+                                            <input type="text" name="Diagnostic" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.Diagnostic" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Nguyên nhân</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="Causal" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.Causal" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Phác đồ điều trị</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="TreatmentName" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.TreatmentName" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Ghi chú</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="Note" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.Note" />
+                                            <!--end::Input-->
+                                        </div>
+                                        <div class="fv-row mb-7">
+                                            <!--begin::Label-->
+                                            <label class="required fw-semibold fs-6 mb-2">Prescription</label>
+                                            <!--end::Label-->
+                                            <!--begin::Input-->
+                                            <input type="text" name="Prescription" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.Prescription" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Scroll-->
                                         <!--begin::Actions-->
                                         <div class="text-center pt-15">
                                             <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
-                                            <button type="submit" class="btn btn-primary" id="import_submit" form="import_material_form">
+                                            <button type="submit" class="btn btn-primary" id="edit-patient-record_submit" form="edit-patient-record">
                                                 <span class="indicator-label">Submit</span>
                                                 <span class="indicator-progress">
                                                     Please wait...

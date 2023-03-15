@@ -67,7 +67,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
 
-            var query = DB.PatientRecords.AsQueryable();
+            var query = DB.PatientRecords.Where(x => x.PatientId==id).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 query = query.Where(u => u.Causal.Contains(search) || u.Debit.Contains(search) || u.Date.ToString().Contains(search) || u.Diagnostic.Contains(search));
@@ -76,8 +76,9 @@ namespace DentalManagementSystem.Controllers
             ViewData["stt"] = page - 1;
             var totalItems = query.Count();
             var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
-            var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var records = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
+            ViewData["records"] = records;
             ViewBag.Search = search;
             ViewBag.Page = page;
             ViewBag.PageSize = pageSize;
@@ -117,7 +118,7 @@ namespace DentalManagementSystem.Controllers
                 TempData["addsuccess"] = "thêm mới thành công";
                 patientRecord.PatientId = PatientId;
                 patientRecord.UserId = user.Id;
-                DB.Add(patientRecord);
+                DBRecord.Add(patientRecord);
                 Log.Add(new SystemLog
                 {
                     CreatedDate = DateTime.Now,
