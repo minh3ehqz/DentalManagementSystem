@@ -51,9 +51,9 @@ namespace DentalManagementSystem.Controllers
             else return NotFound();
 
         }
-        public IActionResult Details(long id)
+        public IActionResult Index(long id)
         {
-            if (!isAuth("/PatientsRecord/Details", out User user))
+            if (!isAuth("/PatientsRecord/Index", out User user))
             {
                 return NotFound();
             }

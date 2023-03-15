@@ -19,7 +19,10 @@ namespace DentalManagementSystem.DAL
 
         public override PatientRecord Get(long id)
         {
-            return PatientRecords.FirstOrDefault(x => x.Id == id);
+            return PatientRecords.Include(y => y.PatientRecordServiceMaps)
+                .Include(y => y.TreatmentServiceMaps)
+                .Include(y => y.MaterialExports)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public override List<PatientRecord> ListAll()

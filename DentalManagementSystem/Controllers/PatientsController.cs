@@ -8,13 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using DentalManagementSystem.Utils;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Drawing.Printing;
+
 namespace DentalManagementSystem.Controllers
 {
     public class PatientsController : AuthController
     {
         SystemLogDBContext Log = new SystemLogDBContext();
         PatientDBContext DB = new PatientDBContext();
-
+        PatientRecordDBContext DBRecord = new PatientRecordDBContext();
         // GET: Patients
         public IActionResult Index(string textSearch, int page = 1)
         {
@@ -44,6 +47,7 @@ namespace DentalManagementSystem.Controllers
                 ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
                 ViewData["Email"] = user.Email;
                 TempData["addsuccess"] = "thêm mới thành công";
+
                 patient.Trim();
                 DB.Add(patient);
                 Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân " +
@@ -53,7 +57,7 @@ namespace DentalManagementSystem.Controllers
             
         }
         // thông tin chi tiết của bệnh nhân
-        public IActionResult Details(long id)
+        public IActionResult Details(long id, string search, int page = 1, int pageSize = 10)
         {
             if (!isAuth("/Patients/Details", out User user))
             {
@@ -62,6 +66,23 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
+
+            var query = DB.PatientRecords.AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.Causal.Contains(search) || u.Debit.Contains(search) || u.Date.ToString().Contains(search) || u.Diagnostic.Contains(search));
+            }
+
+            ViewData["stt"] = page - 1;
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+            var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+
             var patient = DB.Get(id);
             return View(patient);
         }
