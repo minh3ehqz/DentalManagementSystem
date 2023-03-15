@@ -81,7 +81,7 @@ namespace DentalManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long[] selectedValues)
+        public IActionResult Delete(long[] idD)
         {
             if (!isAuth("/Schedules/Delete",out User user))
             {
@@ -91,7 +91,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
-            foreach (long id in selectedValues)
+            foreach (long id in idD)
             {
                 Log.Add(new SystemLog
                 {
@@ -108,15 +108,19 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Update([Bind("Id,Date,PatientId,Status")] Schedule schedule)
         {
-            if (!isAuth("/Schedules/Delete", out User user))
+            if (!isAuth("/Schedules/Update", out User user))
             {
                 return NotFound();
             }
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
-            if (schedule.Date.Day == DateTime.Now.Day && schedule.Date.Month == DateTime.Now.Month)
+
+            TimeSpan timeDiff = schedule.Date - DateTime.Now;
+            if (timeDiff.TotalHours < 1)
+            {
                 DB.Update(schedule);
+            }
             return RedirectToAction("Index");
         }
 
