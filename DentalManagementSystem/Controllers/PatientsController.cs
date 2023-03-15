@@ -118,6 +118,7 @@ namespace DentalManagementSystem.Controllers
                 TempData["addsuccess"] = "thêm mới thành công";
                 patientRecord.PatientId = PatientId;
                 patientRecord.UserId = user.Id;
+                patientRecord.Date = DateTime.Now;  
                 DBRecord.Add(patientRecord);
                 Log.Add(new SystemLog
                 {

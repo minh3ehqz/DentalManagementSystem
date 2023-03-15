@@ -88,6 +88,12 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Note)
                 </dd>
+                <dt class="col-sm-2">
+                    Kê đơn
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Prescription)
+                </dd>
             </dl>
         </div>
         <div class="card-header border-0 pt-6">
@@ -206,7 +212,7 @@
                                         </div>
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Prescription</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Kê đơn</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="Prescription" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.Prescription" />
