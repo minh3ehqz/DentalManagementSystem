@@ -1,4 +1,5 @@
 ﻿using DentalManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentalManagementSystem.DAL
 {
@@ -12,12 +13,13 @@ namespace DentalManagementSystem.DAL
 
         public override void Delete(long Id)
         {
-            throw new NotImplementedException();
+            Treatments.Remove(Get(Id));
+            SaveChanges();
         }
 
         public override Treatment Get(long id)
         {
-            throw new NotImplementedException();
+            return Treatments.Include(x=>x.TreatmentServiceMaps).FirstOrDefault(x => x.Id == id);
         }
 
         public override List<Treatment> ListAll()
