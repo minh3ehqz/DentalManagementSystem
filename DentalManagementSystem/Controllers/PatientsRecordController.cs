@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DentalManagementSystem.Controllers
 {
-    public class PatientRecordController : AuthController
+    public class PatientsRecordController : AuthController
     {
         SystemLogDBContext Log = new SystemLogDBContext();
         PatientRecordDBContext DB = new PatientRecordDBContext();
@@ -27,33 +27,10 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName,MarrowRecord,Debit,Note,TreatmentId,UserId,Prescription")] PatientRecord patientRecord, int PatientId, string PatientName, string PatientPhone, string PatientEmail)
+        
+        public IActionResult Details(long id)
         {
-            if (isAuth("/PatientsRecord/Create", out User user))
-            {
-                TempData["addsuccess"] = "thêm mới thành công";
-                //patient.Trim();
-                patientRecord.Date= DateTime.Now;
-                patientRecord.PatientId = PatientId;
-                patientRecord.UserId= user.Id;
-                DB.Add(patientRecord);
-                Log.Add(new SystemLog
-                {
-                    CreatedDate = DateTime.Now,
-                    OwnerId = user.Id,
-                    Content = "người dùng đã thêm mới bệnh án " +
-                    PatientName + " có sô điện thoại là " + PatientPhone + " và email là " + PatientEmail
-                });
-                return RedirectToAction(nameof(PatientsController.Details));
-            }
-            else return NotFound();
-
-        }
-        public IActionResult Index(long id)
-        {
-            if (!isAuth("/PatientsRecord/Index", out User user))
+            if (!isAuth("/PatientsRecord/Details", out User user))
             {
                 return NotFound();
             }

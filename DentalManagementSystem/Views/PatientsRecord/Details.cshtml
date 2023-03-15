@@ -124,15 +124,15 @@
                             </div>
                             <!--end::Modal header-->
                             <!--begin::Modal body-->
-                            @*<div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                            <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form add new-->
                                 <form id="import_material_form" asp-action="Edit" class="form" method="post">
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                         <!--begin::Input group-->
-                                        <input type="hidden" name="Id" value="@Model.Id" />
-                                        <input type="hidden" name="MaterialId" value="@Model.MaterialId" />
-                                        <input type="hidden" name="Date" value="@Model.Date" />
+                                        <input type="hidden" name="Id" value="" />
+                                        <input type="hidden" name="MaterialId" value="" />
+                                        <input type="hidden" name="Date" value="" />
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
@@ -140,7 +140,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Tên vật tư</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="SupplyName" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.SupplyName" />
+                                            <input type="text" name="SupplyName" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -150,7 +150,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Số lượng</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="Amount" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="@Model.Amount" />
+                                            <input type="text" name="Amount" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="250" required value="" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Input group-->
@@ -159,7 +159,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Đơn giá</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="TotalPrice" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="@Model.TotalPrice" />
+                                            <input type="text" name="TotalPrice" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required value="\" />
                                             <!--end::Input-->
                                         </div>
                                         <!--end::Scroll-->
@@ -177,7 +177,7 @@
                                         <!--end::Actions-->
                                 </form>
                                 <!--end::Form-->
-                            </div>*@
+                            </div>
                             <!--end::Modal body-->
                         </div>
                         <!--end::Modal content-->

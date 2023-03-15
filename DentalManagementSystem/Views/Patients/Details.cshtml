@@ -435,7 +435,7 @@
                                     <!--begin::Modal body-->
                                     <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                         <!--begin::Form add new-->
-                                        <form id="add_patient_record_form" asp-action="Create" asp-controller="PatientRecord" class="form" method="post">
+                                        <form id="add_patient_record_form" asp-action="CreateRecord" asp-controller="Patients" class="form" method="post">
                                             <!--begin::Scroll-->
                                             <input type="hidden" name="PatientId" value="@Model.Id">
                                             <input type="hidden" name="PatientName" value="@Model.Name">
@@ -689,7 +689,7 @@
                                             @item.Prescription
                                         </td>
                                         <td>
-                                            <a asp-action="Index" asp-controller="PatientsRecord" asp-route-id="@item.Id">Details</a>
+                                            <a asp-action="Details" asp-controller="PatientsRecord" asp-route-id="@item.Id">Details</a>
                                         </td>
                                     </tr>
                                 }

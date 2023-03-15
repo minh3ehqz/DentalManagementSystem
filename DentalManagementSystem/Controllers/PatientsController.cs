@@ -108,6 +108,28 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction("Details", new { id = patient.Id });
         }
 
+        //Thêm bệnh án
+        [HttpPost]
+        public IActionResult CreateRecord([Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName,MarrowRecord,Debit,Note,TreatmentId,UserId,Prescription")] PatientRecord patientRecord, int PatientId, string PatientName, string PatientPhone, string PatientEmail)
+        {
+            if (isAuth("/PatientsRecord/Create", out User user))
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                patientRecord.PatientId = PatientId;
+                patientRecord.UserId = user.Id;
+                DB.Add(patientRecord);
+                Log.Add(new SystemLog
+                {
+                    CreatedDate = DateTime.Now,
+                    OwnerId = user.Id,
+                    Content = "người dùng đã thêm mới bệnh án " +
+                    PatientName + " có sô điện thoại là " + PatientPhone + " và email là " + PatientEmail
+                });
+                return Redirect("Details/" + PatientId);
+            }
+            else return NotFound();
+
+        }
 
         // xóa bệnh nhân
         [HttpPost]
