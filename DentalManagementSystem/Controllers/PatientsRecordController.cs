@@ -10,6 +10,7 @@ namespace DentalManagementSystem.Controllers
         SystemLogDBContext Log = new SystemLogDBContext();
         PatientRecordDBContext DB = new PatientRecordDBContext();
         PatientRecordServiceMapDBContext SDB = new PatientRecordServiceMapDBContext();    
+        ServiceDBContext ServiceDB = new ServiceDBContext();
         public IActionResult Delete(long[] selectedValues)
         {
             if (!isAuth("/PatientsRecord/Delete", out User user))
@@ -38,11 +39,20 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
+            var s= SDB.ListAll(id);
             
-            ViewData["listService"] = SDB.ListAll(id);
             var patientRecord = DB.Get(id);
+            var list = SDB.ListAll(id);
+            List<Service> tablecheck = new List<Service>();
+            foreach(var item in list)
+            {
+                tablecheck.Add(ServiceDB.Get(item.ServiceId));
+            }
+            ViewData["Allservice"] = ServiceDB.ListAll();
+            ViewData["listService"] = tablecheck;
             return View(patientRecord);
         }
+
 
         [HttpPost]
         public IActionResult Edit(long id, [Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName, PatientId,MarrowRecord,Debit,Note,TreatmentId,UserId,Prescription")] PatientRecord patientRecord, int PatientId, string PatientName, string PatientPhone, string PatientEmail)
