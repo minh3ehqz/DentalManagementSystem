@@ -686,7 +686,7 @@
                                             <a asp-action="Details" asp-controller="PatientsRecord" asp-route-id="@item.Id">Details</a>
                                         </td>
                                         <td>
-                                                <form asp-action="Delete" id="recordDelete">
+                                                <form asp-action="DeleteRecord" id="recordDelete">
                                                 <input hidden value="@item.Id" name="id">
                                                 <input hidden value="@item.PatientId" name="patientId">
                                                 <button type="submit" class="btn btn-outline-danger" form="recordDelete">
