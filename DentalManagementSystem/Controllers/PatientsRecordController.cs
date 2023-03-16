@@ -56,7 +56,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
             Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin bệnh án của bệnh nhân " + PatientName + " có sđt là " + PatientPhone + " và email là " + PatientEmail + "" });
-            //patientRecord.Trim();
+            patientRecord.Trim();
             DB.Update(patientRecord);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patientRecord.Id });
