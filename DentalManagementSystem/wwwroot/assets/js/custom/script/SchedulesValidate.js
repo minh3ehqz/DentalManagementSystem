@@ -8,7 +8,7 @@ var KTSigninGeneral = function () {
     var validator;
 
     // Handle form
-    var handleForm = function (e) {
+    var SchecduleshandleForm = function (e) {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
             form,
@@ -104,7 +104,7 @@ var KTSigninGeneral = function () {
         init: function () {
             form = document.querySelector('#booking_form');
             submitButton = document.querySelector('#booking-btn');
-            handleForm();
+            SchecduleshandleForm();
         }
     };
 }();
