@@ -4,12 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
+
 @section Patientscript{
     <script src="~/assets/js/custom/script/searchPatient.js"></script>
     <script src="~/assets/js/custom/script/PatientValidate.js"></script>
     <script src="~/assets/js/custom/script/Search_Patient_Record.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
     <script src="~/assets//js/custom/script/SchedulesValidate.js"></script>
+    <script src="~/assets//js/custom/script/Patient_Record_Validate.js"></script>
 }
 
 
@@ -362,7 +364,7 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <form asp-action="Index" id="search">
+                            <form asp-action="Details" id="search">
                                 <input type="text" name="search" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm" value="@ViewBag.Search">
                             </form>
                         </div>
@@ -445,85 +447,77 @@
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Reason</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Lí do đến khám</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Reason" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Reason" maxlength="250" required />
+                                                    <input type="text" name="Reason" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Lí do đến khám" maxlength="250" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Diagnostic</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Chẩn đoán</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Diagnostic" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Diagnostic" maxlength="250" required />
+                                                    <input type="text" name="Diagnostic" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Chẩn đoán" maxlength="250" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Causal</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Nguyên nhân</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Causal" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Causal" maxlength="250" required />
+                                                    <input type="text" name="Causal" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nguyên nhân" maxlength="250" required />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->                                               
+                                                <!--end::Input group-->
+                                                <!--begin::Input group-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-semibold fs-6 mb-2">Phác đồ điều trị</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="TreatmentName" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Phác đồ điều trị" maxlength="250" required />
+                                                    <!--end::Input-->
+                                                </div>
+                                                <!--end::Input group-->
+                                                <div class="fv-row mb-7">
+                                                    <!--begin::Label-->
+                                                    <label class="required fw-semibold fs-6 mb-2">Tiền sử về tủy</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="text" name="MarrowRecord" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Tiền sử về tủy" maxlength="10" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Date</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Thẻ ghi nợ</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="date" name="Date" class="form-control form-control-solid mb-3 mb-lg-0" required />
+                                                    <input type="text" name="Debit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Thẻ ghi nợ" maxlength="250" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Treatment Name</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Ghi chú</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="TreatmentName" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Treatment Name" maxlength="250" required />
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Marrow Record</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" name="MarrowRecord" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Marrow Record" maxlength="10" required />
+                                                    <textarea type="text" name="Note" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Ghi chú" maxlength="250" required></textarea>
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
                                                 <!--begin::Input group-->
                                                 <div class="fv-row mb-7">
                                                     <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Debit</label>
+                                                    <label class="required fw-semibold fs-6 mb-2">Kê đơn</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Debit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Debit" maxlength="250" required />
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Note</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" name="Note" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Note" maxlength="250" required />
-                                                    <!--end::Input-->
-                                                </div>
-                                                <!--end::Input group-->
-                                                <!--begin::Input group-->
-                                                <div class="fv-row mb-7">
-                                                    <!--begin::Label-->
-                                                    <label class="required fw-semibold fs-6 mb-2">Prescription</label>
-                                                    <!--end::Label-->
-                                                    <!--begin::Input-->
-                                                    <input type="text" name="Prescription" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Prescription" maxlength="250" required />
+                                                    <input type="text" name="Prescription" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Kê đơn" maxlength="250" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -653,10 +647,10 @@
                             <!--begin::Table body (nội dung dữ liệu)-->
 
                             <tbody class="text-gray-600 fw-semibold">
-                                @{
-                                    int index = 1 + (int)ViewData["stt"] * 10;
-                                }
-                                @foreach (var item in Model.PatientRecords)
+                            @{
+                            int index = 1 + (int)ViewData["stt"] * 10;
+                            }
+                                @foreach (var item in (List<PatientRecord>)ViewData["records"])
                                 {
                                     <tr>
                                         <td>

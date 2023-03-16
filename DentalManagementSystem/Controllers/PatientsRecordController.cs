@@ -43,5 +43,23 @@ namespace DentalManagementSystem.Controllers
             var patientRecord = DB.Get(id);
             return View(patientRecord);
         }
+
+        [HttpPost]
+        public IActionResult Edit(long id, [Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName, PatientId,MarrowRecord,Debit,Note,TreatmentId,UserId,Prescription")] PatientRecord patientRecord, int PatientId, string PatientName, string PatientPhone, string PatientEmail)
+        {
+            if (!isAuth("/PatientsRecord/Edit", out User user))
+            {
+                return NotFound();
+            }
+            patientRecord.PatientId = PatientId;
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin bệnh án của bệnh nhân " + PatientName + " có sđt là " + PatientPhone + " và email là " + PatientEmail + "" });
+            //patientRecord.Trim();
+            DB.Update(patientRecord);
+            TempData["editsuccess"] = "edit thành công";
+            return RedirectToAction("Details", new { id = patientRecord.Id });
+        }
     }
 }
