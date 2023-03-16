@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var KTSigninGeneral2 = function () {
     // Elements
     var form;
     var submitButton;
@@ -17,8 +17,8 @@ var KTSigninGeneral = function () {
                     'Reason': {
                         validators: {
                             regexp: {
-                                regexp: /^[\p{L}\p{N}\s]+$ /,
-                                message: 'Mã vật tư chưa đúng',
+                                regexp: /^[^0-9]*$/,
+                                message: 'dsa',
                             },
                         }
                     },
