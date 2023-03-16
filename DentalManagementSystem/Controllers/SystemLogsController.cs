@@ -9,6 +9,7 @@ using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using System.Collections;
 using Microsoft.IdentityModel.Tokens;
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -22,6 +23,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             ViewData["searchContent"] = textSearch;
             int count = DB.ListAll((string)ViewData["searchContent"]).Count();
             ViewData["thisPage"] = page;
@@ -38,6 +42,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             DB.Add(new SystemLog
             {
                 Content = context,

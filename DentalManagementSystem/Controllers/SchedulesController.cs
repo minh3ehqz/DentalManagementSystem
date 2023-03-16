@@ -9,7 +9,7 @@ using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using System.Net;
 using System.Data;
-
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -27,6 +27,7 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+
             foreach (var item in DB.ListAll())
             {
                 if (item.Date < DateTime.Now)
@@ -35,6 +36,9 @@ namespace DentalManagementSystem.Controllers
                     DB.Update(item);
                 }
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             ViewData["searchContent"] = textSearch;
             ViewData["watingActive"] = watingActive;
             ViewData["notWattingActive"] = NotWatingActive;
@@ -61,6 +65,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             DB.Add(schedule);
             Log.Add(new SystemLog
             {
@@ -74,14 +81,17 @@ namespace DentalManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long[] selectedValues)
+        public IActionResult Delete(long[] idD)
         {
             if (!isAuth("/Schedules/Delete",out User user))
             {
                 return NotFound();
             }
             TempData["Delete messenger"] = "xóa thành công";
-            foreach (long id in selectedValues)
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+            foreach (long id in idD)
             {
                 Log.Add(new SystemLog
                 {
@@ -98,8 +108,19 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Update([Bind("Id,Date,PatientId,Status")] Schedule schedule)
         {
-            if (schedule.Date.Day == DateTime.Now.Day && schedule.Date.Month == DateTime.Now.Month)
+            if (!isAuth("/Schedules/Update", out User user))
+            {
+                return NotFound();
+            }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+
+            TimeSpan timeDiff = schedule.Date - DateTime.Now;
+            if (timeDiff.TotalHours < 1)
+            {
                 DB.Update(schedule);
+            }
             return RedirectToAction("Index");
         }
 

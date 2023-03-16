@@ -22,7 +22,11 @@ namespace DentalManagementSystem.Controllers
             {
                 return Redirect("/Login");
             }
-
+            if (user.RoleId == 3) return Redirect("/SystemLogs");
+            if (user.RoleId == 4) return Redirect("/Patients");
+            if (user.RoleId == 5) return Redirect("/Patients");
+            if (user.RoleId == 6) return Redirect("/Patients");
+            if (user.RoleId == 7) return Redirect("/Material");
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;

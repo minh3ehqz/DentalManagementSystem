@@ -373,7 +373,7 @@
 
                     <tbody class="text-gray-600 fw-semibold">
                         @{
-                            int index = 1;
+                            int index = 1 +(int) ViewData["stt"]*10;
                         }
 
                         @foreach (var item in Model)
@@ -422,7 +422,7 @@
                     <!--end::Table body-->
                 </table>
             }
-            <div class="row">
+             <div class="row">
                 <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
                 <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
                     <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">

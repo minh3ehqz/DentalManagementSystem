@@ -8,13 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using DentalManagementSystem.Utils;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Drawing.Printing;
+
 namespace DentalManagementSystem.Controllers
 {
     public class PatientsController : AuthController
     {
         SystemLogDBContext Log = new SystemLogDBContext();
         PatientDBContext DB = new PatientDBContext();
-
+        PatientRecordDBContext DBRecord = new PatientRecordDBContext();
         // GET: Patients
         public IActionResult Index(string textSearch, int page = 1)
         {
@@ -22,6 +25,10 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+
             ViewData["searchContent"] = textSearch;
             int count = DB.ListAll((string)ViewData["searchContent"]).Count();
             ViewData["thisPage"] = page;
@@ -37,8 +44,12 @@ namespace DentalManagementSystem.Controllers
         {
             if(isAuth("/Patients/",out User user))
             {
+                ViewData["FullName"] = user.FullName;
+                ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+                ViewData["Email"] = user.Email;
                 TempData["addsuccess"] = "thêm mới thành công";
-                //patient.Trim();
+
+                patient.Trim();
                 DB.Add(patient);
                 Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thêm mới bệnh nhân " +
                     patient.Name+" có sô điện thoại là "+patient.Phone+" và email là "+patient.Email });
@@ -47,12 +58,33 @@ namespace DentalManagementSystem.Controllers
             
         }
         // thông tin chi tiết của bệnh nhân
-        public IActionResult Details(long id)
+        public IActionResult Details(long id, string search, int page = 1, int pageSize = 10)
         {
             if (!isAuth("/Patients/Details", out User user))
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+
+            var query = DB.PatientRecords.Where(x => x.PatientId==id).AsQueryable();
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(u => u.Causal.Contains(search) || u.Debit.Contains(search) || u.Date.ToString().Contains(search) || u.Diagnostic.Contains(search));
+            }
+
+            ViewData["stt"] = page - 1;
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+            var records = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewData["records"] = records;
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+
             var patient = DB.Get(id);
             return View(patient);
         }
@@ -68,13 +100,39 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân "+patient.Name+ " có sđt là " + patient.Phone + " và email là " + patient.Email + "" });
-            //patient.Trim();
+            patient.Trim();
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patient.Id });
         }
 
+        //Thêm bệnh án
+        [HttpPost]
+        public IActionResult CreateRecord([Bind("Id,Reason,Diagnostic,Causal,Date,TreatmentName,MarrowRecord,Debit,Note,TreatmentId,UserId,Prescription")] PatientRecord patientRecord, int PatientId, string PatientName, string PatientPhone, string PatientEmail)
+        {
+            if (isAuth("/PatientsRecord/Create", out User user))
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                patientRecord.PatientId = PatientId;
+                patientRecord.UserId = user.Id;
+                patientRecord.Date = DateTime.Now;  
+                DBRecord.Add(patientRecord);
+                Log.Add(new SystemLog
+                {
+                    CreatedDate = DateTime.Now,
+                    OwnerId = user.Id,
+                    Content = "người dùng đã thêm mới bệnh án " +
+                    PatientName + " có sô điện thoại là " + PatientPhone + " và email là " + PatientEmail
+                });
+                return Redirect("Details/" + PatientId);
+            }
+            else return NotFound();
+
+        }
 
         // xóa bệnh nhân
         [HttpPost]
@@ -85,6 +143,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {

@@ -16,4 +16,8 @@ public partial class Schedule
     public bool Booked { get; set; }
 
     public virtual Patient Patient { get; set; } = null!;
+    public override string ToString()
+    {
+        return (Id + " " + Patient.Name + " " + Date).Trim();
+    }
 }

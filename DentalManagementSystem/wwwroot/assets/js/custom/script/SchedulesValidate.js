@@ -16,15 +16,18 @@ var KTSigninGeneral = function () {
                 fields: {
                     'Date': {
                         validators: {
-                            notEmpty: {
-                                message: 'Schedule is required'
-                            },
                             callback: {
                                 message: 'lịch hẹn không hợp lệ',
                                 callback: function (input) {
                                     var currentDate = new Date();
                                     var date = new Date(input.value);
-                                    return (currentDate <= date && date.getFullYear() - currentDate.getFullYear()<=1);
+                                    var dayOfWeek = date.getDay();
+                                    var hours = date.getHours();
+
+                                    var isValidDay = dayOfWeek >= 1 && dayOfWeek <= 5; 
+                                    var isValidTime = hours >= 8 && hours < 17; 
+                                    var isValidDate = currentDate <= date && date.getFullYear() - currentDate.getFullYear() <= 1; 
+                                    return isValidDay && isValidTime  && isValidDate;
                                 }
                             },
                         }
