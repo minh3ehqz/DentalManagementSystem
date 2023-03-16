@@ -17,7 +17,7 @@ var KTSigninGeneralSchedules = function () {
                     'Date': {
                         validators: {
                             callback: {
-                                message: 'lịch hẹn không hợp lệ',
+                                message: 'lịch hẹn không hợp lệ ,thời gian thích hợp là từ thứ 2 đến thứ 6 và từ 8 giờ sáng đến 5 giờ chiều',
                                 callback: function (input) {
                                     var currentDate = new Date();
                                     var date = new Date(input.value);
