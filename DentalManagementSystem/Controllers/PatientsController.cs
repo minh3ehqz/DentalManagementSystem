@@ -42,7 +42,7 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Name,Birthday,Gender,Address,Phone,Email,BodyPrehistory,TeethPrehistory,Status,IsDeleted")] Patient patient)
         {
-            if(isAuth("/Patients/",out User user))
+            if(isAuth("/Patients/Create",out User user))
             {
                 ViewData["FullName"] = user.FullName;
                 ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
