@@ -28,6 +28,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
+
             ViewData["searchContent"] = textSearch;
             int count = DB.ListAll((string)ViewData["searchContent"]).Count();
             ViewData["thisPage"] = page;
@@ -117,7 +118,7 @@ namespace DentalManagementSystem.Controllers
                 TempData["addsuccess"] = "thêm mới thành công";
                 patientRecord.PatientId = PatientId;
                 patientRecord.UserId = user.Id;
-                DB.Add(patientRecord);
+                DBRecord.Add(patientRecord);
                 Log.Add(new SystemLog
                 {
                     CreatedDate = DateTime.Now,

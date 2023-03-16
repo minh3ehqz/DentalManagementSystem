@@ -9,6 +9,7 @@ namespace DentalManagementSystem.Controllers
     {
         SystemLogDBContext Log = new SystemLogDBContext();
         PatientRecordDBContext DB = new PatientRecordDBContext();
+        PatientRecordServiceMapDBContext SDB = new PatientRecordServiceMapDBContext();    
         public IActionResult Delete(long[] selectedValues)
         {
             if (!isAuth("/PatientsRecord/Delete", out User user))
@@ -37,6 +38,8 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
+            
+            ViewData["listService"] = SDB.ListAll(id);
             var patientRecord = DB.Get(id);
             return View(patientRecord);
         }
