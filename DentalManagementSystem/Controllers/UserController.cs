@@ -39,14 +39,15 @@ namespace DentalManagementSystem.Controllers
 
                 var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-                ViewData["stt"] = page - 1;
-
+                
+            ViewData["stt"] = page - 1;
+         
                 ViewBag.Search = search;
                 ViewBag.Page = page;
                 ViewBag.PageSize = pageSize;
                 ViewBag.TotalPages = totalPages;
-
-                return View(users);
+          
+            return View(users);
 
             }
         // thông tin chi tiết User

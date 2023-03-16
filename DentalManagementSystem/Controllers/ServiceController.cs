@@ -150,6 +150,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
+
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {

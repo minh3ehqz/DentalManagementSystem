@@ -1,5 +1,6 @@
 ﻿@using DentalManagementSystem.DAL;
 @using DentalManagementSystem.Models;
+@using DentalManagementSystem.Utils;
 @model User
 
 
@@ -11,7 +12,7 @@
 }
 
 
-<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container">
+<div style="max-width:none;width:1700px; class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container">
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
@@ -60,7 +61,7 @@
                 <dt class="col-sm-4">Sinh nhật
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Birthday)
+                        @Model.Birthday.Day/@Model.Birthday.Month/@Model.Birthday.Year
                 </dd>
             </dl>
         </div>
@@ -71,21 +72,24 @@
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Phone)
                 </dd>
+
                 <dt class="col-sm-4">Lương
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Salary)
                 </dd>
+
                 <dt class="col-sm-4">Email
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Email)
                 </dd>
+
                 <dt class="col-sm-4">
                    Chức vụ
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Role.Name)
+                    @RoleHelper.GetRoleNameById(Model.RoleId)
                 </dd>
             </dl>
         </div>
@@ -143,7 +147,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Tên đăng nhập</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="username" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="username" maxlength="250" required />
+                                            <input type="text" name="username" class="form-control form-control-solid mb-3 mb-lg-0"  value="@Model.Username" maxlength="250" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -154,7 +158,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Mật khẩu</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="password" maxlength="16" required />
+                                            <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0"  value="@Model.Password" maxlength="16" required />
                                             <!--end::Input-->
                                         </div>
                                         <!--begin::Input group-->
@@ -163,7 +167,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Họ và tên</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="fullname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="fullname" maxlength="250" required />
+                                            <input type="text" name="fullname" class="form-control form-control-solid mb-3 mb-lg-0"  value="@Model.FullName" maxlength="250" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -174,7 +178,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Sinh nhật</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="date" name="birthday" class="form-control form-control-solid mb-3 mb-lg-0" required />
+                                            <input type="date" name="birthday" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Birthday.ToString("yyyy-MM-dd")" required />
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                             <!--end::Input-->
                                         </div>
@@ -198,7 +202,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Email</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com" required />
+                                            <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Email" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -209,7 +213,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Số điện thoại</label>>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="10" required />
+                                            <input type="text" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Phone" maxlength="10" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -220,7 +224,7 @@
                                             <label class="required fw-semibold fs-5 mb-2">Lương</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="text" name="salary" class="form-control form-control-solid mb-3 mb-lg-0" required />
+                                            <input type="text" name="salary" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Salary" required />
 
                                             <!--end::Input-->
                                         </div>
@@ -244,7 +248,7 @@
                                     <div class="text-center pt-15">
                                         <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Hủy</button>
                                         <button type="submit" class="btn btn-primary" id="create_submit" form="add_employee_form">
-                                            <span class="indicator-label">Thay đổi</span>
+                                            <span class="indicator-label">Lưu</span>
                                             <span class="indicator-progress">
                                                 Please wait...
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
