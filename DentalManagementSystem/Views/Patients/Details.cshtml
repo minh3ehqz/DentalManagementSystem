@@ -631,14 +631,14 @@
                                             <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_patient_record .form-check-input" value="1">
                                         </div>
                                     </th>
-                                    <th class="min-w-50px">STT</th>
+                                    <th class="min-w-35px">STT</th>
                                     <th class="min-w-125px">Lí do đến khám</th>
                                     <th class="min-w-125px">Chẩn đoán</th>
                                     <th class="min-w-125px">Nguyên nhân</th>
-                                    <th class="min-w-125px">Ngày khám</th>
+                                    <th class="min-w-70px">Ngày khám</th>
                                     <th class="min-w-125px">Tủy</th>
                                     <th class="min-w-125px">Kê đơn</th>
-                                    <th class="min-w-90px"></th>
+                                    <th class="min-w-60px"></th>
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
@@ -647,7 +647,7 @@
 
                             <tbody class="text-gray-600 fw-semibold">
                             @{
-                            int index = 1 + (int)ViewData["stt"] * 10;
+                            int index = 1 + (int)ViewData["stt"] * 5;
                             }
                                 @foreach (var item in (List<PatientRecord>)ViewData["records"])
                                 {

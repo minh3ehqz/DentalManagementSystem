@@ -58,7 +58,7 @@ namespace DentalManagementSystem.Controllers
             
         }
         // thông tin chi tiết của bệnh nhân
-        public IActionResult Details(long id, string search, int page = 1, int pageSize = 10)
+        public IActionResult Details(long id, string search, int page = 1, int pageSize = 5)
         {
             if (!isAuth("/Patients/Details", out User user))
             {
@@ -71,7 +71,7 @@ namespace DentalManagementSystem.Controllers
             var query = DB.PatientRecords.Where(x => x.PatientId==id).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(u => u.Causal.Contains(search) || u.Debit.Contains(search) || u.Date.ToString().Contains(search) || u.Diagnostic.Contains(search));
+                query = query.Where(u => u.Causal.Contains(search) || u.Reason.Contains(search) || u.TreatmentName.Contains(search) || u.Diagnostic.Contains(search));
             }
 
             ViewData["stt"] = page - 1;
@@ -119,7 +119,8 @@ namespace DentalManagementSystem.Controllers
                 TempData["addsuccess"] = "thêm mới thành công";
                 patientRecord.PatientId = PatientId;
                 patientRecord.UserId = user.Id;
-                patientRecord.Date = DateTime.Now;  
+                patientRecord.Date = DateTime.Now;
+                patientRecord.Trim();
                 DBRecord.Add(patientRecord);
                 Log.Add(new SystemLog
                 {
