@@ -6,8 +6,7 @@
 
 
 @section Patientscript{
-    <script src="~/assets/js/custom/script/searchPatient.js"></script>
-    <script src="~/assets/js/custom/script/PatientValidate.js"></script>
+    <script src="~/assets/js/custom/script/editPatient.js"></script>
     <script src="~/assets/js/custom/script/Search_Patient_Record.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
     <script src="~/assets//js/custom/script/SchedulesValidate.js"></script>
@@ -82,10 +81,10 @@
                     @Html.DisplayFor(model => model.Address)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Phone)
+                    Số điện thoại
                 </dt>
                 <dd class="col-sm-10">
-                    Số điện thoại
+                    @Html.DisplayFor(model => model.Phone)
                 </dd>
             </dl>
             <dl class="row">
@@ -254,7 +253,7 @@
                                     <!--begin::Actions-->
                                     <div class="text-center pt-15">
                                         <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
-                                        <button type="submit" class="btn btn-primary" id="create_patient" form="add_patient_form">
+                                        <button type="submit" class="btn btn-primary" id="create_patient" form="add_patient_form" onclick="callInitFunction()">
                                             <span class="indicator-label">Submit</span>
                                             <span class="indicator-progress">
                                                 Please wait...
@@ -632,14 +631,15 @@
                                             <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_patient_record .form-check-input" value="1">
                                         </div>
                                     </th>
-                                    <th class="min-w-50px">STT</th>
+                                    <th class="min-w-35px">STT</th>
                                     <th class="min-w-125px">Lí do đến khám</th>
                                     <th class="min-w-125px">Chẩn đoán</th>
                                     <th class="min-w-125px">Nguyên nhân</th>
-                                    <th class="min-w-125px">Ngày khám</th>
+                                    <th class="min-w-70px">Ngày khám</th>
                                     <th class="min-w-125px">Tủy</th>
                                     <th class="min-w-125px">Kê đơn</th>
-                                    <th class="min-w-90px"></th>
+                                    <th class="min-w-60px"></th>
+                                    <th class="min-w-40px"></th>
                                 </tr>
                                 <!--end::Table row-->
                             </thead>
@@ -648,7 +648,7 @@
 
                             <tbody class="text-gray-600 fw-semibold">
                             @{
-                            int index = 1 + (int)ViewData["stt"] * 10;
+                            int index = 1 + (int)ViewData["stt"] * 5;
                             }
                                 @foreach (var item in (List<PatientRecord>)ViewData["records"])
                                 {
@@ -684,6 +684,19 @@
                                         </td>
                                         <td>
                                             <a asp-action="Details" asp-controller="PatientsRecord" asp-route-id="@item.Id">Details</a>
+                                        </td>
+                                        <td>
+                                                <form asp-action="DeleteRecord" id="recordDelete">
+                                                <input hidden value="@item.Id" name="id">
+                                                <input hidden value="@item.PatientId" name="patientId">
+                                                <button type="submit" class="btn btn-outline-danger" form="recordDelete">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+                                                    </svg>
+                                                    Xóa
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 }
@@ -867,7 +880,7 @@
                                         </td>
                                         <td>
                                             <form asp-action="Delete" asp-controller="Treatments" id="treatmentDelete">
-                                                <input hidden value="@item.Id" / name="id">
+                                                <input hidden value="@item.Id"  name="id">
                                                 <input hidden value="@Model.Id" name="patientid" />
                                                 <button type="submit" class="btn btn-outline-danger" form="treatmentDelete">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">

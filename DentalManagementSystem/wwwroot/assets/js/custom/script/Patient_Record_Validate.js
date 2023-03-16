@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var KTSigninGeneral2 = function () {
     // Elements
     var form;
     var submitButton;
@@ -17,8 +17,8 @@ var KTSigninGeneral = function () {
                     'Reason': {
                         validators: {
                             regexp: {
-                                regexp: /^[\p{L}\p{N}\s]+$ /,
-                                message: 'Mã vật tư chưa đúng',
+                                regexp: /^[^0-9]*$/,
+                                message: 'Vui lòng nhập ký tự chữ cái',
                             },
                         }
                     },
@@ -26,7 +26,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[^0-9]*$/,
-                                message: 'Tên vật tư không hợp lệ',
+                                message: 'Vui lòng nhập ký tự chữ cái',
                             },
                         }
                     },
@@ -35,7 +35,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
                     },
@@ -43,7 +43,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
                     },
@@ -51,7 +51,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
                     },
@@ -59,7 +59,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng nhập số",
                             },
                         }
                     },
@@ -67,7 +67,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng khhong nhập các ký tự đặc biệt",
                             },
                         }
                     },
@@ -75,7 +75,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Vui lòng khhong nhập các ký tự đặc biệt",
                             },
                         }
                     },
