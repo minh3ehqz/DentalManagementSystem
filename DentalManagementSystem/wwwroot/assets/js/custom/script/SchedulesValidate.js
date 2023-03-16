@@ -1,14 +1,14 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var KTSigninGeneralSchedules = function () {
     // Elements
     var form;
     var submitButton;
     var validator;
 
     // Handle form
-    var SchecduleshandleForm = function (e) {
+    var handleForm = function (e) {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
         validator = FormValidation.formValidation(
             form,
@@ -17,7 +17,7 @@ var KTSigninGeneral = function () {
                     'Date': {
                         validators: {
                             callback: {
-                                message: 'lịch hẹn không hợp lệ',
+                                message: 'lịch hẹn không hợp lệ ,thời gian thích hợp là từ thứ 2 đến thứ 6 và từ 8 giờ sáng đến 5 giờ chiều',
                                 callback: function (input) {
                                     var currentDate = new Date();
                                     var date = new Date(input.value);
@@ -104,13 +104,14 @@ var KTSigninGeneral = function () {
         init: function () {
             form = document.querySelector('#booking_form');
             submitButton = document.querySelector('#booking-btn');
-            SchecduleshandleForm();
+            handleForm();
         }
     };
 }();
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTSigninGeneral.init();
+    KTSigninGeneralSchedules.init();
 });
+
 

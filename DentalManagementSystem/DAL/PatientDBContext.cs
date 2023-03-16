@@ -30,10 +30,10 @@ namespace DentalManagementSystem.DAL
         public override Patient Get(long id)
         {
             return Patients
+                .Include(x => x.Treatments).ThenInclude(y => y.TreatmentServiceMaps)
                 .Include(x => x.PatientRecords).ThenInclude(y => y.PatientRecordServiceMaps)
                 .Include(x => x.PatientRecords).ThenInclude(y=>y.TreatmentServiceMaps)
                 .Include(x => x.PatientRecords).ThenInclude(y => y.MaterialExports)
-                .Include(x => x.Treatments).ThenInclude(y=>y.TreatmentServiceMaps)
                 .Include(x => x.Schedules)
                 .FirstOrDefault(x => x.Id == id);
         }

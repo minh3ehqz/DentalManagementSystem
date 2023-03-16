@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var KTSigninGeneralPatients = function () {
     // Elements
     var form;
     var submitButton;
@@ -14,63 +14,47 @@ var KTSigninGeneral = function () {
             form,
             {
                 fields: {
-                    'username': {
-                        validators: {
-                            regexp: {
-                                regexp: /^[a-zA-Z0-9]+$/,
-                                message: 'Tên đăng nhập chứa kí tự chữ hoặc số'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập tên đăng nhập'
-                            }
-                        }
-                    },
-                    'fullname': {
-                        validators: {
-                            regexp: {
-                                regexp: /[A-Z][a-z]/,
-                                message: 'Fullname chưa ít nhất một chữ hoa và chữ thường'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập họ và tên'
-                            }
-                        }
-                    },
-                    'password': {
-                        validators: {
-                            regexp: {
-                                regexp: /^(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                                message: 'Mật khẩu chứa ít nhát 8 kí tự, 1 chữ thường, 1 chữ sô'
-                            },
-                            notEmpty: {
-                                message: 'Chưa nhập mật khẩu'
-                            }
-                        }
-                    },
-                    'email': {
+                    'Email': {
                         validators: {
                             regexp: {
                                 regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'Email nhập vào chưa hợp lệ'
+                                message: 'Email không hợp lệ',
                             },
                             notEmpty: {
-                                message: 'Chưa nhập email'
+                                message: 'Email là bắt buộc',
                             }
                         }
                     },
-                    'phone': {
+                    'Phone': {
                         validators: {
                             regexp: {
-                                regexp: /^(0|\+84)(?!(?:0{10}|\d{1,9}0{1,9}))(?:\d){9}$/,
-                                message: 'Số điện thoại nhập chưa hợp lệ '
+                                regexp: /^(0|\+84)(\d{9})$/,
+                                message: 'số điện thoại không hợp lệ',
                             },
                             notEmpty: {
-                                message: 'Chưa nhập số điên thoại'
+                                message: 'Số điện thoại là bắt buộc',
+                            },
+                        }
+                    },
+
+                    'Name': {
+                        validators: {
+                            regexp: {
+                                regexp: /^[^0-9]*$/,
+                                message: "tên không được chứa số",
+                            },
+                            callback: {
+                                message: 'Tên phải có ít nhất 2 từ',
+                                callback: function (input) {
+                                    var name = input.value.trim();
+                                    var wordCount = name.split(' ').length;
+                                    return wordCount >= 2;
+                                }
                             }
                         }
                     },
 
-                    'birthday': {
+                    'Birthday': {
                         validators: {
                             notEmpty: {
                                 message: 'Ngày tháng năm sinh là bắt buộc'
@@ -85,17 +69,45 @@ var KTSigninGeneral = function () {
                             }
                         }
                     },
-                    'salary': {
+
+                    'BodyPrehistory': {
                         validators: {
-                            regexp: {
-                                regexp: /^[1-9]\d*$/,
-                                message: 'Chưa hợp lệ'
+                            callback: {
+                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
+                                callback: function (input) {
+                                    var name = input.value.trim();
+                                    var wordCount = name.split(' ').length;
+                                    return wordCount >= 2;
+                                }
                             },
-                            notEmpty: {
-                                message: 'Chưa nhập dữ liệu'
-                            }
                         }
-                    }
+                    },
+
+                    'TeethPrehistory': {
+                        validators: {
+                            callback: {
+                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
+                                callback: function (input) {
+                                    var name = input.value.trim();
+                                    var wordCount = name.split(' ').length;
+                                    return wordCount >= 2;
+                                }
+                            },
+                        }
+                    },
+
+                    'Address': {
+                        validators: {
+                            callback: {
+                                message: 'Trường dữ liệu phải có ít nhất 2 từ',
+                                callback: function (input) {
+                                    var name = input.value.trim();
+                                    var wordCount = name.split(' ').length;
+                                    return wordCount >= 2;
+                                }
+                            },
+                        }
+                    },
 
                 },
                 plugins: {
@@ -122,17 +134,10 @@ var KTSigninGeneral = function () {
 
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
-                    var email = document.querySelector("[name=email]").value;
-                    var phone = document.querySelector("[name=phone]").value;
-
+       
                     let url = window.location.origin;
-                    let valid = '';
-                    await fetch(url + '/User/checkEmailPhone?email=' + email + '&phone=' + phone + '').then((response) => response.text())
-                        .then((text) => {
-                            valid = text;
-                        });
-                    console.log(valid);
-
+                    let valid = 'Valid';
+                    
                     // Hide loading indication
                     submitButton.removeAttribute('data-kt-indicator');
 
@@ -142,10 +147,10 @@ var KTSigninGeneral = function () {
                     if (valid === 'Valid') {
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Tạo mới thành công!",
-                            icon: "Thành công",
+                            text: "Thao tác thành công!",
+                            icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Đồng ý",
+                            confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -158,9 +163,9 @@ var KTSigninGeneral = function () {
                         // Show error message popup
                         Swal.fire({
                             text: valid,
-                            icon: "Lỗi",
+                            icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok",
+                            confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -169,10 +174,10 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Có lỗi đã xảy ra, vui lòng nhập lại",
-                        icon: "Lỗi",
+                        text: "Đã có lỗi xảy ra vui lòng thử lại",
+                        icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok",
+                        confirmButtonText: "Ok, got it!",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -187,9 +192,8 @@ var KTSigninGeneral = function () {
     return {
         // Initialization
         init: function () {
-            form = document.querySelector('#add_employee_form');
-            submitButton = document.querySelector('#create_submit');
-
+            form = document.querySelector('#add_patient_form');
+            submitButton = document.querySelector('#create_patient');
             handleForm();
         }
     };
@@ -197,5 +201,6 @@ var KTSigninGeneral = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTSigninGeneral.init();
+    KTSigninGeneralPatients.init();
 });
+

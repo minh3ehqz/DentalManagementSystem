@@ -18,7 +18,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /[A-Z][a-z]/,
-                                message: 'tên phải có chữ hoa và chữ thường'
+                                message: 'Tên phải có chữ hoa và chữ thường'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập tên Service'
@@ -26,11 +26,7 @@ var KTSigninGeneral = function () {
                         }
                     },
                     'unit': {
-                        validators: {
-                            regexp: {
-                                regexp: /\d{1,1000}/,
-                                message: 'chưa hợp lệ'
-                            },
+                        validators:
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
                             }
@@ -40,7 +36,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /\d{1,1000}/,
-                                message: 'chưa hợp lệ'
+                                message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
@@ -51,10 +47,10 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /\d{1,1000}/,
-                                message: 'chưa hợp lệ'
+                                message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
-                                message: 'chưa nhập dữ liệu'
+                                message: 'Chưa nhập dữ liệu'
                             }
                         }
                     }
@@ -95,10 +91,10 @@ var KTSigninGeneral = function () {
 
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "You have successfully logged in!",
+                            text: "Tạo mới thành công",
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "Đồng ý",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -115,10 +111,10 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Đã có lỗi xảy ra, vui lòng nhập lại",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Đồng ý",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -131,12 +127,12 @@ var KTSigninGeneral = function () {
             e.preventDefault();
 
             Swal.fire({
-                text: "Are you sure you would like to cancel?",
+                text: "Bạn có chắc chắn muốn xóa",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
+                confirmButtonText: "Có",
+                cancelButtonText: "Không",
                 customClass: {
                     confirmButton: "btn btn-primary",
                     cancelButton: "btn btn-active-light"
