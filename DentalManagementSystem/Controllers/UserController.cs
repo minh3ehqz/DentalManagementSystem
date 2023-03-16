@@ -56,8 +56,17 @@ namespace DentalManagementSystem.Controllers
             }
 
             return View(user);
-        }
+        }// thông tin chi tiết User
+        public IActionResult ViewProfile()
+        {
+            if (!isAuth("/User/ViewProfile", out User user))
+            {
+                return NotFound();
+            }
 
+            return View(user);
+        }
+        
         [HttpPost]
         public IActionResult ChangePassword(string OldPassword, string NewPassword)
 		{
