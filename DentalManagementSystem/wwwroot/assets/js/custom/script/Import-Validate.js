@@ -35,7 +35,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Dữ liệu phải là số",
                             },
                         }
                     },
@@ -43,7 +43,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /^[0-9]*$/,
-                                message: "dữ liệu phải là số",
+                                message: "Dữ liệu phải là số",
                             },
                         }
                     },

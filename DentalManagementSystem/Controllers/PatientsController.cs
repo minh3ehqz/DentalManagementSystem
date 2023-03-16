@@ -155,7 +155,21 @@ namespace DentalManagementSystem.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult DeleteRecord(long id, int patientId)
+        {
+            if (!isAuth("/PatientsRecord/Delete", out User user))
+            {
+                return NotFound();
+            }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+            TempData["Delete messenger"] = "xóa thành công";
 
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh án " + id + " của bệnh nhân có mã số " + DBRecord.Get(id).PatientId });
+            DBRecord.Delete(id);
+            return Redirect("Details/" + patientId);
+        }
         public IActionResult checkEmailPhone(string email, string phone)
         {
             var checkEmail = DB.GetPatientsByEmail(email);
