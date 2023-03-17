@@ -67,13 +67,13 @@ namespace DentalManagementSystem.Controllers
 
         // POST: thêm mới đơn nhập vật phẩm
         [HttpPost]
-        public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
+        public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport, int id)
         {
             if (isAuth("/ImportMaterial/Create", out User user))
             {
                 TempData["addsuccess"] = "thêm mới thành công";
                 materialImport.Date = DateTime.Now;
-                materialImport.SupplyName = DBM.Get(materialImport.MaterialId).Name;
+                //materialImport.SupplyName = DBM.Get(id).Name;
                 DB.Add(materialImport);
                 Log.Add(new SystemLog
                 {
