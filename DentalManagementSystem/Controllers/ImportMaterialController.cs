@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using System.Drawing.Printing;
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem.Controllers
 {
     public class ImportMaterialController : AuthController
     {
         ImportMaterialDBContext DB = new ImportMaterialDBContext();
+        SystemLogDBContext Log = new SystemLogDBContext();
+        MaterialDBContext DBM = new MaterialDBContext();
 
         // GET: MaterialImport
         public IActionResult Index(string search, int page = 1, int pageSize = 10)
@@ -66,21 +69,38 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")]MaterialImport materialImport)
         {
-                materialImport.Date = DateTime.Now;           
+            if (isAuth("/ImportMaterial/Create", out User user))
+            {
+                TempData["addsuccess"] = "thêm mới thành công";
+                materialImport.Date = DateTime.Now;
+                materialImport.SupplyName = DBM.Get(materialImport.MaterialId).Name;
                 DB.Add(materialImport);
-                return RedirectToAction("Index");
-
+                Log.Add(new SystemLog
+                {
+                    CreatedDate = DateTime.Now,
+                    OwnerId = user.Id,
+                    Content = "người dùng đã thêm mới bệnh án "
+                    
+                });
+                return RedirectToAction(nameof(Index));
+            }
+            else return NotFound();
         }
 
         // GET: thay đổi thông tin đơn nhập vật phẩm
-        public IActionResult Edit(long id)
+        public IActionResult Edit([Bind("Id, MaterialId, Date, Amount, SupplyName, TotalPrice")] MaterialImport materialImport)
         {
-            var materialImport = DB.Get(id);
-            if (materialImport == null)
+            if (!isAuth("/ImportMaterial/Edit", out User user))
             {
                 return NotFound();
             }
-            return View(materialImport);
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin của bệnh nhân " });
+            DB.Update(materialImport);
+            TempData["editsuccess"] = "edit thành công";
+            return RedirectToAction("Details", new { id = materialImport.Id });
         }
 
         // POST: thay đổi thông tin đơn nhập vật phẩm
@@ -97,13 +117,19 @@ namespace DentalManagementSystem.Controllers
         // xóa đơn nhập vật phẩm
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(long[] selectedValues)
+        public IActionResult Delete(long id)
         {
-            TempData["Delete messenger"] = "xóa thành công";
-            foreach (long id in selectedValues)
+            if (!isAuth("/ImportMaterial/Delete", out User user))
             {
-                DB.Delete(id);
+                return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+            TempData["Delete messenger"] = "xóa thành công";
+            DB.Delete(id);
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa phiếu nhập " });
+            
             return RedirectToAction(nameof(Index));
         }
 
