@@ -34,7 +34,7 @@ var KTSigninGeneral2 = function () {
                     'Causal': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
+                                regexp: /^[^0-9]*$/,
                                 message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
@@ -42,7 +42,7 @@ var KTSigninGeneral2 = function () {
                     'TreatmentName': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
+                                regexp: /^[^0-9]*$/,
                                 message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
@@ -50,7 +50,7 @@ var KTSigninGeneral2 = function () {
                     'MarrowRecord': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
+                                regexp: /^[^0-9]*$/,
                                 message: "Vui lòng nhập ký tự chữ cái",
                             },
                         }
@@ -66,7 +66,7 @@ var KTSigninGeneral2 = function () {
                     'Note': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
+                                regexp: /^[^0-9]*$/,
                                 message: "Vui lòng khhong nhập các ký tự đặc biệt",
                             },
                         }
@@ -74,7 +74,7 @@ var KTSigninGeneral2 = function () {
                     'Prescription': {
                         validators: {
                             regexp: {
-                                regexp: /^[0-9]*$/,
+                                regexp: /^[^0-9]*$/,
                                 message: "Vui lòng khhong nhập các ký tự đặc biệt",
                             },
                         }
@@ -163,5 +163,5 @@ var KTSigninGeneral2 = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTSigninGeneral.init();
+    KTSigninGeneral2.init();
 });

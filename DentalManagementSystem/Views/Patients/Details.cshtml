@@ -496,7 +496,7 @@
                                                     <label class="required fw-semibold fs-6 mb-2">Thẻ ghi nợ</label>
                                                     <!--end::Label-->
                                                     <!--begin::Input-->
-                                                    <input type="text" name="Debit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Thẻ ghi nợ" maxlength="250" required />
+                                                    <input type="number" name="Debit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Thẻ ghi nợ" maxlength="250" required />
                                                     <!--end::Input-->
                                                 </div>
                                                 <!--end::Input group-->
@@ -687,7 +687,7 @@
                                         </td>
                                         <td>
                                                 <form asp-action="DeleteRecord" id="recordDelete">
-                                                <input hidden value="@item.Id" name="id">
+                                                <input hidden value="@item. " name="id">
                                                 <input hidden value="@item.PatientId" name="patientId">
                                                 <button type="submit" class="btn btn-outline-danger" form="recordDelete">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
