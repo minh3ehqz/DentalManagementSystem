@@ -12,7 +12,7 @@ if (!element) {
 var options = {
     series: [{
         name: 'Net Profit',
-        data: [30, 40, 40, 90, 90, 70, 70]
+        data: JSON.parse(document.getElementById('revenue-by-day').value)
     }],
     chart: {
         fontFamily: 'inherit',
@@ -42,7 +42,7 @@ var options = {
         colors: [baseColor]
     },
     xaxis: {
-        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+        categories: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30],
         axisBorder: {
             show: false,
         },

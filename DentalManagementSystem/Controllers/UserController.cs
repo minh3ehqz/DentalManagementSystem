@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using Microsoft.IdentityModel.Tokens;
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -38,15 +39,28 @@ namespace DentalManagementSystem.Controllers
 
                 var users = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
+                
+            ViewData["stt"] = page - 1;
+         
                 ViewBag.Search = search;
                 ViewBag.Page = page;
                 ViewBag.PageSize = pageSize;
                 ViewBag.TotalPages = totalPages;
-
-                return View(users);
+          
+            return View(users);
 
             }
-        
+        // thông tin chi tiết User
+        public IActionResult Details(long id)
+        {
+            if (!isAuth("/User/ViewProfile", out User user))
+            {
+                return NotFound();
+            }
+            User TargetUser = DB.Get(id);
+            return View("ViewProfile", TargetUser);
+        }
+
         // Chỉnh sửa profile
         public IActionResult EditProfile()
         {
@@ -54,10 +68,22 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
+
+            return View(user);
+        }// thông tin chi tiết User
+        public IActionResult ViewProfile()
+        {
+            if (!isAuth("/User/ViewProfile", out User user))
+            {
+                return NotFound();
+            }
 
             return View(user);
         }
-
+        
         [HttpPost]
         public IActionResult ChangePassword(string OldPassword, string NewPassword)
 		{
@@ -65,7 +91,9 @@ namespace DentalManagementSystem.Controllers
 			{
 				return NotFound();
 			}
-
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
             if (user.Password != OldPassword.Trim())
             {
                 ViewData["error-message"] = "Bạn nhập mật khẩu cũ không đúng";
@@ -96,6 +124,9 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = user.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
+            ViewData["Email"] = user.Email;
 
             Log.Add(new SystemLog
             {
@@ -112,6 +143,14 @@ namespace DentalManagementSystem.Controllers
         // GET: thay đổi thông tin user
         public IActionResult Edit(long id)
         {
+
+            if (!isAuth("/User/Edit", out User logUser))
+            {
+                return NotFound();
+            }
+            ViewData["FullName"] = logUser.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(logUser.RoleId);
+            ViewData["Email"] = logUser.Email;
             var user = DB.Get(id);
             if (user == null)
             {
@@ -130,12 +169,15 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
-            
+            ViewData["FullName"] = logUser.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(logUser.RoleId);
+            ViewData["Email"] = logUser.Email;
+
             User user = DB.Users.FirstOrDefault(s => s.Id == editUser.Id);
             if (user != null)
             {
                 user.Username = editUser.Username.Trim();
-                user.FullName = editUser.FullName;
+                user.FullName = editUser.FullName.Trim();
                 user.Birthday = editUser.Birthday;
                 user.Phone = editUser.Phone;
                 user.Salary = editUser.Salary;
@@ -161,6 +203,10 @@ namespace DentalManagementSystem.Controllers
             {
                 return NotFound();
             }
+            ViewData["FullName"] = logUser.FullName;
+            ViewData["Role"] = RoleHelper.GetRoleNameById(logUser.RoleId);
+            ViewData["Email"] = logUser.Email;
+
             TempData["Delete messenger"] = "xóa thành công";
             foreach (long id in selectedValues)
             {
@@ -178,37 +224,37 @@ namespace DentalManagementSystem.Controllers
         }
         
         //tìm user
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Search(long Id, String UserName, String FullName, DateTime Birthday, String Phone, int Salary, String Role, String Email, String Reset)
-        {
-            var users = DB.Users.Include(u => u.Role).ToList();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Search(long Id, String UserName, String FullName, DateTime Birthday, String Phone, int Salary, String Role, String Email, String Reset)
+        //{
+        //    var users = DB.Users.Include(u => u.Role).ToList();
 
 
-            var bday = Birthday.ToString();
+        //    var bday = Birthday.ToString();
 
-            if (!String.IsNullOrEmpty(Reset)) return View("Index", users);
+        //    if (!String.IsNullOrEmpty(Reset)) return View("Index", users);
 
-            if (Id != 0) users = users.Where(s => s.Id == Id).ToList();
+        //    if (Id != 0) users = users.Where(s => s.Id == Id).ToList();
 
-            if (!String.IsNullOrEmpty(UserName)) users = users.Where(s => s.Username.Contains(UserName.Trim())).ToList();
+        //    if (!String.IsNullOrEmpty(UserName)) users = users.Where(s => s.Username.Contains(UserName.Trim())).ToList();
 
-            if (!String.IsNullOrEmpty(FullName)) users = users.Where(s => s.FullName.Contains(FullName.Trim())).ToList();
+        //    if (!String.IsNullOrEmpty(FullName)) users = users.Where(s => s.FullName.Contains(FullName.Trim())).ToList();
 
-            if (!String.IsNullOrEmpty(Phone)) users = users.Where(s => s.Phone.Contains(Phone.Trim())).ToList();
+        //    if (!String.IsNullOrEmpty(Phone)) users = users.Where(s => s.Phone.Contains(Phone.Trim())).ToList();
 
-            if (!Birthday.ToString().Trim().Equals("1/1/0001 12:00:00 AM".Trim())) users = users.Where(s => s.Birthday.Equals(Birthday)).ToList();
+        //    if (!Birthday.ToString().Trim().Equals("1/1/0001 12:00:00 AM".Trim())) users = users.Where(s => s.Birthday.Equals(Birthday)).ToList();
 
-            if (Salary != 0) users = users.Where(s => s.Salary == Salary).ToList();
+        //    if (Salary != 0) users = users.Where(s => s.Salary == Salary).ToList();
 
-            if (!String.IsNullOrEmpty(Email)) users = users.Where(s => s.Email.Contains(Email.Trim())).ToList();
+        //    if (!String.IsNullOrEmpty(Email)) users = users.Where(s => s.Email.Contains(Email.Trim())).ToList();
 
-            if (!String.IsNullOrEmpty(Role)) users = DB.Users.Include(u => u.Role).Where(s => s.Role.Name.Contains(Role.Trim())).ToList();
+        //    if (!String.IsNullOrEmpty(Role)) users = DB.Users.Include(u => u.Role).Where(s => s.Role.Name.Contains(Role.Trim())).ToList();
 
 
 
-            return View("Index", users);
-        }
+        //    return View("Index", users);
+        //}
 
         public IActionResult checkEmailPhone(string email, string phone)
         {

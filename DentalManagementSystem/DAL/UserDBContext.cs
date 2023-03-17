@@ -31,7 +31,7 @@ namespace DentalManagementSystem.DAL
 		public override void Delete(long Id)
 		{
 			
-			Users.Remove(Users.First(x => x.Id == Id));
+			Users.Remove(Get(Id));
 			SaveChanges(); 
 		}
 
@@ -39,7 +39,9 @@ namespace DentalManagementSystem.DAL
 		{
 			return Users
 				.Include(x=>x.PatientRecords).ThenInclude(a=>a.PatientRecordServiceMaps)
-				.Include(x=>x.SystemLogs)
+				.Include(x=>x.PatientRecords).ThenInclude(a => a.MaterialExports)
+                .Include(x=>x.PatientRecords).ThenInclude(a => a.TreatmentServiceMaps)
+                .Include(x=>x.SystemLogs)
 				.Include(x=>x.Timekeepings)
 				.FirstOrDefault(x => x.Id == id);
 		}

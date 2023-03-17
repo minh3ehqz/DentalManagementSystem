@@ -27,7 +27,8 @@ namespace DentalManagementSystem.DAL
 
         public override List<PatientRecord> ListAll()
         {
-            return PatientRecords.Include(x => x.Patient).ToList();
+            return PatientRecords.Include(x => x.Patient)
+                .Include(x => x.PatientRecordServiceMaps).ThenInclude(x => x.Service).ToList();
         }
 
         public override List<PatientRecord> ListAll(long OwnerId)

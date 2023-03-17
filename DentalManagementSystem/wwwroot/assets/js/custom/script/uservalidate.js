@@ -72,12 +72,16 @@ var KTSigninGeneral = function () {
 
                     'birthday': {
                         validators: {
-                            regexp: {
-                                regexp: /^\d{2}\/\d{2}\/\d{4}$/,
-                                message: 'Chưa hợp lệ'
-                            },
                             notEmpty: {
-                                message: 'Chưa nhập dữ liệu'
+                                message: 'Ngày tháng năm sinh là bắt buộc'
+                            },
+                            callback: {
+                                message: 'Ngày tháng năm sinh không hợp lệ',
+                                callback: function (input) {
+                                    var currentDate = new Date();
+                                    var birthday = new Date(input.value);
+                                    return (currentDate >= birthday);
+                                }
                             }
                         }
                     },
