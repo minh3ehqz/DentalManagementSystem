@@ -18,7 +18,7 @@ var KTSigninGeneral = function () {
                         validators: {
                             regexp: {
                                 regexp: /[A-Z][a-z]/,
-                                message: 'tên phải có chữ hoa và chữ thường'
+                                message: 'Tên phải có chữ hoa và chữ thường'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập tên'
@@ -28,8 +28,8 @@ var KTSigninGeneral = function () {
                     'Unit': {
                         validators: {
                             regexp: {
-                                regexp: /[a-z]/,
-                                message: 'Chỉ nhập chữ'
+                                regexp: /[A-Z][a-z]/,
+                                message: 'Tên phải có chữ hoa và chữ thường'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
@@ -39,7 +39,7 @@ var KTSigninGeneral = function () {
                     'Amount': {
                         validators: {
                             regexp: {
-                                regexp: /^[1-9]\d*$/,
+                                regexp: /^\s*-?[0-9]{1,10}\s*$/,
                                 message: 'Chỉ được nhập số nguyên dương'
                             },
                             notEmpty: {
@@ -51,7 +51,7 @@ var KTSigninGeneral = function () {
                     'Price': {
                         validators: {
                             regexp: {
-                                regexp: /^[1-9]\d*$/,
+                                regexp: /^\s*-?[0-9]{1,10}\s*$/,
                                 message: 'Chỉ được nhập số nguyên dương'
                             },
                             notEmpty: {
@@ -78,13 +78,26 @@ var KTSigninGeneral = function () {
             e.preventDefault();
 
             // Validate form
-            validator.validate().then(function (status) {
+            validator.validate().then(async function (status) {
                 if (status == 'Valid') {
                     // Show loading indication
                     submitButton.setAttribute('data-kt-indicator', 'on');
-
+                 
+                    //Validate name of material
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
+                    var name = document.getElementById("Name").value;                   
+                    let url = window.location.origin;
+                    let valid = '';
+                    await fetch(url + '/Material/checkName?name=' + name).then((response) => response.text())
+                        .then((text) => {
+                            valid = text;
+                        });
+                    // Hide loading indication
+                    submitButton.removeAttribute('data-kt-indicator');
+
+                    // Enable button
+                    submitButton.disabled = false;
 
 
                     // Simulate ajax request
@@ -97,15 +110,16 @@ var KTSigninGeneral = function () {
 
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "You have successfully logged in!",
+                            text: "Thành công!",
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "Ok!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
                         }).then(function (result) {
                             if (result.isConfirmed) {
+                                console.log(form)
                                 form.submit(); // submit form
                                 var redirectUrl = form.getAttribute('data-kt-redirect-url');
                                 if (redirectUrl) {
@@ -117,44 +131,12 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Có lỗi, xem lại.",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok!",
                         customClass: {
                             confirmButton: "btn btn-primary"
-                        }
-                    });
-                }
-            });
-        });
-        const closeButton = element.querySelector('[data-kt-users-modal-action="close"]');
-        closeButton.addEventListener('click', e => {
-            e.preventDefault();
-
-            Swal.fire({
-                text: "Are you sure you would like to cancel?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, cancel it!",
-                cancelButtonText: "No, return",
-                customClass: {
-                    confirmButton: "btn btn-primary",
-                    cancelButton: "btn btn-active-light"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    form.reset(); // Reset form			
-                    modal.hide();
-                } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "Your form has not been cancelled!.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary",
                         }
                     });
                 }
@@ -168,7 +150,6 @@ var KTSigninGeneral = function () {
         init: function () {
             form = document.querySelector('#kt_modal_add_material');
             submitButton = document.querySelector('#create_material');
-
             handleForm();
         }
     };
