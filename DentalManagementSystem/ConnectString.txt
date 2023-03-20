@@ -1,1 +1,1 @@
-﻿server =DESKTOP-7H1LOKB; database = DentalSystemDB;uid=sa;pwd=Dopi4720;encrypt=true;trustServerCertificate=true;
+﻿server =21AK22-COM\MSSQLSERVER01; database = DentalSystemDB;uid=sa;pwd=1;encrypt=true;trustServerCertificate=true;

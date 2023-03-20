@@ -71,7 +71,7 @@
 					</span>
 					<!--end::Svg Icon-->
 					<form asp-action="Index" id="search">
-						<input type="text" name="textSearch" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm bệnh nhân" value="@ViewData["searchContent"]">
+						<input type="text" name="textSearch" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm" value="@ViewData["searchContent"]">
 					</form>
 				</div>
 				<!--end::Search-->
@@ -172,7 +172,7 @@
 							<!--begin::Modal header-->
 							<div class="modal-header" id="kt_modal_add_user_header">
 								<!--begin::Modal title-->
-								<h2 class="fw-bold">Add</h2>
+								<h2 class="fw-bold">Thêm mới</h2>
 								<!--end::Modal title-->
 								<!--begin::Close-->
 								<div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close">
@@ -243,10 +243,9 @@
 									</div>
 									<!--end::Scroll-->
 									<!--begin::Actions-->
-									<div class="text-center pt-15">
-										<button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Discard</button>
+									<div class="text-center pt-15">										
 										<button type="submit" class="btn btn-primary" id="create_submit_1" form="kt_modal_add_export">
-											<span class="indicator-label">Submit</span>
+											<span class="indicator-label">Lưu</span>
 											<span class="indicator-progress">
 												Please wait...
 												<span class="spinner-border spinner-border-sm align-middle ms-2"></span>
@@ -389,7 +388,7 @@
 								<td>
 									<form asp-action="Delete" method="post" id="delete-material">
 										<input name="Id" type="hidden" value="@item.Id" />
-										<input style="background-color:mediumpurple;color:white" class="btn btn-default" form="delete-material" type="submit" value="Delete" />
+										<input style="background-color:mediumpurple;color:white" class="btn btn-default" form="delete-material" type="submit" value="Xóa" />
 									</form>
 								</td>
 							</tr>
