@@ -63,7 +63,7 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create([Bind("Id, Name, Unit, Amount, Price")] Material material)
 		{
-			if (!isAuth("/Material/Create", out User user))
+			if (isAuth("/Material/Create", out User user))
 			{
 				TempData["addsuccess"] = "thêm mới thành công";
 				DB.Add(material);
@@ -117,7 +117,7 @@ namespace DentalManagementSystem.Controllers
 		}
 
 		public IActionResult checkName(string name)
-		{
+			{
 			var checkName = DB.getName(name);
 			if (checkName != null)
 			{
