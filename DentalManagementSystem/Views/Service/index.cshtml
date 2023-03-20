@@ -18,7 +18,7 @@
         <!--begin::Page title-->
         <div style="padding-left:0px;padding-top:2%" class="page-title d-flex flex-column align-items-start justify-content-left flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
             <!--begin::Heading-->
-            <h1 style="max-width:none;width:1700px; margin: -173px" class="d-flex text-dark fw-bolder my-0 fs-1">Danh sách dịch vụ</h1>
+            <h1 style="max-width:none;width:1700px; margin: -173px; font-size: calc(2.275rem + 0.3vw) !important" class="d-flex text-dark fw-bolder my-0 fs-1">Danh sách dịch vụ</h1>
             <!--end::Heading-->
             <ul class="breadcrumb breadcrumb-line text-muted fw-semibold fs-base my-1"></ul>
         </div>
@@ -138,7 +138,7 @@
                                 <!--begin::Form-->
                                 <form id="kt_modal_add_service_form" asp-action="create" method="post">
                                     <!--begin::Scroll-->
-                                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                                    <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-bs-target="#kt_modal_add_user" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
 
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
@@ -263,7 +263,7 @@
                                    
                                     <form id="delete-user" asp-action="Delete" method="post">
                                         <input name="selectedValues" type="hidden" value="@item.Id" />
-                                        <input class="btn btn-primary btn-sm" form="delete-user" type="submit" value="Delete" />
+                                        <input class="btn btn-primary btn-sm" form="delete-user" type="submit" value="Xóa" />
                                     </form>
                                 </td>
                             </tr>

@@ -58,7 +58,7 @@ namespace DentalManagementSystem.Controllers
                 return NotFound();
             }
             User TargetUser = DB.Get(id);
-            return View("ViewProfile", TargetUser);
+            return View(TargetUser);
         }
 
         // Chỉnh sửa profile
