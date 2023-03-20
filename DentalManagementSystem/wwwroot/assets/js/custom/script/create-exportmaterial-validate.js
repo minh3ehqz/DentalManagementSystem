@@ -59,6 +59,21 @@ var KTSigninGeneral = function () {
                             }
                         }
                     }
+                    'Date': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Ngày tháng năm sinh là bắt buộc'
+                            },
+                            callback: {
+                                message: 'Ngày tháng năm sinh không hợp lệ',
+                                callback: function (input) {
+                                    var currentDate = new Date();
+                                    var date = new Date(input.value);
+                                    return (date <= currentDate);
+                                }
+                            }
+                        }
+                    },
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -96,7 +111,7 @@ var KTSigninGeneral = function () {
 
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "You have successfully logged in!",
+                            text: "Thành công!",
                             icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
@@ -116,7 +131,7 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Có lỗi, hãy xem lại.",
                         icon: "error",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",

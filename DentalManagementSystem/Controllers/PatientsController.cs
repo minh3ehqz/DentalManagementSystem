@@ -166,7 +166,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["Email"] = user.Email;
             TempData["Delete messenger"] = "xóa thành công";
 
-            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh án " + id + " của bệnh nhân có mã số " + DBRecord.Get(id).PatientId });
+            Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã xóa bệnh án " + id + " của bệnh nhân có mã số " });
             DBRecord.Delete(id);
             return Redirect("Details/" + patientId);
         }
