@@ -1,1 +1,1 @@
-﻿server =DESKTOP-3PS4NQ2; database = DentalSystemDB;uid=sa;pwd=dopi4720;encrypt=true;trustServerCertificate=true;
+﻿server =DESKTOP-BII4AH5\SQLEXPRESS; database = DentalSystemDB;uid=sa;pwd=minh0941203221;encrypt=true;trustServerCertificate=true;

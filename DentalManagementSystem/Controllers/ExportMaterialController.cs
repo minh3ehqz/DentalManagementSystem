@@ -31,7 +31,7 @@ namespace DentalManagementSystem.Controllers
 
         public IActionResult Index(string textSearch, int page = 1)
         {
-            if (!isAuth(out User user))
+            if (!isAuth("/Material", out User user))
             {
                 return NotFound();
             }
