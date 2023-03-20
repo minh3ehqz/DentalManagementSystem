@@ -15,18 +15,33 @@ namespace DentalManagementSystem.Controllers
         ExportMaterialDBContext DB = new ExportMaterialDBContext();
 
         // GET: ExportMaterial
-        public IActionResult Index(long? id, long? MaterialId, int? Amount, int? totalPrice, long? PatientRecordId)
+        //public IActionResult Index(long? id, long? MaterialId, int? Amount, int? totalPrice, long? PatientRecordId)
+        //{
+        //    if (id != null || MaterialId != null || PatientRecordId != null || Amount != null || totalPrice != null)
+        //    {
+        //        var result = DB.MaterialExports.Where(x => (!id.HasValue || x.Id == id.Value)
+        //        && x.Amount == Amount    
+        //        && x.TotalPrice == totalPrice
+        //        && x.PatientRecordId == PatientRecordId).ToList();
+        //        return View(result);
+        //    }
+        //    var materialExportList = DB.ListAll();
+        //    return View(materialExportList);
+        //}
+
+        public IActionResult Index(string textSearch, int page = 1)
         {
-            if (id != null || MaterialId != null || PatientRecordId != null || Amount != null || totalPrice != null)
+            if (!isAuth(out User user))
             {
-                var result = DB.MaterialExports.Where(x => (!id.HasValue || x.Id == id.Value)
-                && x.Amount == Amount    
-                && x.TotalPrice == totalPrice
-                && x.PatientRecordId == PatientRecordId).ToList();
-                return View(result);
+                return NotFound();
             }
-            var materialExportList = DB.ListAll();
-            return View(materialExportList);
+            ViewData["searchContent"] = textSearch;
+            int count = DB.ListAll((string)ViewData["searchContent"]).Count();
+            ViewData["thisPage"] = page;
+            ViewData["stt"] = page - 1;
+            ViewData["numberOfPage"] = count % 10 == 0 ? (count / 10) : (count / 10) + 1;
+            var list = DB.ListInPage(page, (string)ViewData["searchContent"]);
+            return View(list);
         }
 
         // Details information of a record
@@ -45,7 +60,7 @@ namespace DentalManagementSystem.Controllers
         // POST: Add 1 record 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
+        public IActionResult Create([Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, Date, IsDeleted")] MaterialExport materialExport)
         {						
 			TempData["addsuccess"] = "thêm mới thành công"; 
 		    DB.Add(materialExport);
@@ -67,11 +82,11 @@ namespace DentalManagementSystem.Controllers
         // POST: Change information of a record
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, IsDeleted")] MaterialExport materialExport)
+        public IActionResult Edit(long id, [Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, Date, IsDeleted")] MaterialExport materialExport)
         {         
 				DB.Update(materialExport);
 				TempData["editsuccess"] = "edit thành công";
-				return RedirectToAction("Details", new { id = materialExport.Id });			
+				return RedirectToAction(nameof(Index));			
 		}
 
 
@@ -80,8 +95,8 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
         {
-			TempData["Delete messenger"] = "xóa thành công";
 			DB.Delete(id);
+			TempData["Delete messenger"] = "xóa thành công";			
             return RedirectToAction(nameof(Index));
         }
 
