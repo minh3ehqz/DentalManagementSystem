@@ -28,7 +28,11 @@ namespace DentalManagementSystem.Controllers
 
 		public IActionResult Index(string textSearch, int page = 1)
 		{
-			if (!isAuth("/Material",out User user))
+			//if (!isAuth(out User user))
+			//{
+			//	return NotFound();
+			//}
+			if (!isAuth("/Material/Delete", out User user))
 			{
 				return NotFound();
 			}
@@ -59,9 +63,14 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create([Bind("Id, Name, Unit, Amount, Price")] Material material)
 		{
-			TempData["addsuccess"] = "thêm mới thành công";
-			DB.Add(material);
-			return RedirectToAction(nameof(Index));
+			if (!isAuth("/Material/Delete", out User user))
+			{
+
+				TempData["addsuccess"] = "thêm mới thành công";
+				DB.Add(material);
+				return RedirectToAction(nameof(Index));
+			}
+			else return NotFound();
 		}
 
 		// GET: Change information of a record
@@ -81,6 +90,10 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(long id, [Bind("Id, Name, Unit, Amount, Price")] Material material)
 		{
+			if (!isAuth("/Material/Delete", out User user))
+			{
+				return NotFound();
+			}
 			DB.Update(material);
 			TempData["editsuccess"] = "edit thành công";
 			return RedirectToAction("Details", new { id = material.Id });
@@ -92,6 +105,10 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Delete(long[] selectedValues)
 		{
+			if (!isAuth("/Material/Delete", out User user))
+			{
+				return NotFound();
+			}
 			TempData["Delete messenger"] = "xóa thành công";
 			foreach (long id in selectedValues)
 			{
