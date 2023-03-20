@@ -1,4 +1,5 @@
 using DentalManagementSystem.Models;
+using DentalManagementSystem.Utils;
 
 namespace DentalManagementSystem
 {
@@ -38,6 +39,8 @@ namespace DentalManagementSystem
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            AutoMailHelper.ScanSchedules();
 
             app.Run();
         }
