@@ -1,7 +1,7 @@
 ﻿"use strict";
 
 // Class definition
-var KTSigninGeneral = function () {
+var KTSigninGeneralUser = function () {
     // Elements
     var form;
     var submitButton;
@@ -87,7 +87,9 @@ var KTSigninGeneral = function () {
                     },
                     'salary': {
                         validators: {
-                           
+                            regexp: {
+                                regexp: /^[1-9]\d*$/,
+                                message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
                                 message: 'Chưa nhập dữ liệu'
@@ -120,16 +122,9 @@ var KTSigninGeneral = function () {
 
                     // Disable button to avoid multiple click 
                     submitButton.disabled = true;
-                    var email = document.querySelector("[name=email]").value;
-                    var phone = document.querySelector("[name=phone]").value;
 
                     let url = window.location.origin;
-                    let valid = '';
-                    await fetch(url + '/User/checkEmailPhone?email=' + email + '&phone=' + phone + '').then((response) => response.text())
-                        .then((text) => {
-                            valid = text;
-                        });
-                    console.log(valid);
+                    let valid = 'Valid';
 
                     // Hide loading indication
                     submitButton.removeAttribute('data-kt-indicator');
@@ -140,10 +135,10 @@ var KTSigninGeneral = function () {
                     if (valid === 'Valid') {
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "Tạo mới thành công!",
-                            icon: "Thành công",
+                            text: "Chỉnh sửa thành công!",
+                            icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Đồng ý",
+                            confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -156,9 +151,9 @@ var KTSigninGeneral = function () {
                         // Show error message popup
                         Swal.fire({
                             text: valid,
-                            icon: "Lỗi",
+                            icon: "error",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok",
+                            confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
@@ -167,10 +162,10 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Có lỗi đã xảy ra, vui lòng nhập lại",
-                        icon: "Lỗi",
+                        text: "Đã có lỗi xảy ra vui lòng thử lại",
+                        icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok",
+                        confirmButtonText: "Đồng ý",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -195,5 +190,6 @@ var KTSigninGeneral = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTSigninGeneral.init();
+    KTSigninGeneralPatients.init();
 });
+

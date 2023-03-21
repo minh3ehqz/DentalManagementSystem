@@ -189,11 +189,11 @@
                 <!--begin::Input group-->
                 <div class="row mb-7">
                     <!--begin::Label-->
-                    <label class="col-lg-4 fw-semibold text-muted">Lương</label>
+                <label class="col-lg-4 fw-semibold text-muted">Tiền lương (VNĐ)</label>
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8">
-                        <span class="fw-bold fs-6 text-gray-800">@NumberFormatter.Separator(@Model.Salary)</span>
+                        <span class="fw-bold fs-6 text-gray-800">@NumberFormatter.Separator(@Model.Salary) VNĐ</span>
                     </div>
                     <!--end::Col-->
                 </div>
@@ -240,7 +240,7 @@
                             <!--begin::Modal body-->
                             <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                 <!--begin::Form add new-->
-                                <form id="add_employee_form" asp-action="Chỉnh sửa" class="form" method="post">
+                                <form id="add_employee_form" asp-action="Edit" class="form" method="post">
                                     <!--begin::Scroll-->
                                     <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                                         <!--begin::Input group-->
@@ -314,8 +314,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-5 mb-2">Số điện thoại</label>>
-                                            <!--end::Label-->
+                                            <label class="required fw-semibold fs-5 mb-2">Số điện thoại</label>                                            <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Phone" maxlength="10" required />
 
@@ -325,7 +324,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-5 mb-2">Lương</label>
+                                    <label class="required fw-semibold fs-5 mb-2">Tiền lương (VNĐ)</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="text" name="salary" class="form-control form-control-solid mb-3 mb-lg-0" value="@Model.Salary" required />
@@ -334,17 +333,7 @@
                                         </div>
                                         <!--end::Input group-->
                                         <!--begin::Input group-->
-                                        <div class="mb-10">
-                                            <!--begin::Label-->
-                                            <label class="form-label fw-semibold">Notifications:</label>
-                                            <!--end::Label-->
-                                            <!--begin::Switch-->
-                                            <div class="form-check form-switch form-switch-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="" name="notifications" checked="checked" />
-                                                <label class="form-check-label">Enabled</label>
-                                            </div>
-                                            <!--end::Switch-->
-                                        </div>
+                                        
                                         <!--end::Input group-->
                                     </div>
                                     <!--end::Scroll-->
@@ -379,7 +368,7 @@
         </div>
     
 @section Patientscript{
-    <script src="~/assets/js/custom/script/uservalidate.js"></script>
+    <script src="~/assets/js/custom/script/editUser.js"></script>
     <script src="~/assets/js/custom/script/search-service.js"></script>
     <script src="~/assets/js/widgets.bundle.js"></script>
 }

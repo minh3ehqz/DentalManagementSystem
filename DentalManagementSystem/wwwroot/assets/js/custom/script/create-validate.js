@@ -35,7 +35,7 @@ var KTSigninGeneral = function () {
                     'marketprice': {
                         validators: {
                             regexp: {
-                                regexp: /\d{1,1000}/,
+                                regexp: /^[0-9]+$/,
                                 message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
@@ -46,7 +46,7 @@ var KTSigninGeneral = function () {
                     'price': {
                         validators: {
                             regexp: {
-                                regexp: /\d{1,1000}/,
+                                regexp: ,
                                 message: 'Chưa hợp lệ'
                             },
                             notEmpty: {
