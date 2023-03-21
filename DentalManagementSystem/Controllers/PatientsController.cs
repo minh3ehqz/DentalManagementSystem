@@ -115,6 +115,10 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult ExportFile(string Data)
         {
+            if (!isAuth("/Patients/Index",out User user))
+            {
+                return Redirect("/Login");
+            }
             var Patients = JsonConvert.DeserializeObject<List<Patient>>(Data);
             List<string> TempData = new List<string>();
             MemoryStream memory = new MemoryStream();

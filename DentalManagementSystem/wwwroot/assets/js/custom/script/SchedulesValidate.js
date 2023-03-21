@@ -27,8 +27,13 @@ var KTSigninGeneralSchedules = function () {
                                     var isValidDay = dayOfWeek >= 1 && dayOfWeek <= 5; 
                                     var isValidTime = hours >= 8 && hours < 17; 
                                     var isValidDate = currentDate <= date && date.getFullYear() - currentDate.getFullYear() <= 1;
-                                    var isValidHours = date.getHours() > currentDate.getHours
-                                    return isValidDay && isValidTime && isValidDate && isValidHours;
+                                    var isValidHours = date.getHours() > currentDate.getHours;
+
+                                    console.log(isValidDay);
+                                    console.log(isValidTime);
+                                    console.log(isValidDate);
+                                    console.log(isValidHours);
+                                    return isValidDay && isValidTime && isValidDate ;
                                 }
                             },
                         }
