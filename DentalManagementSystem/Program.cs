@@ -42,6 +42,8 @@ namespace DentalManagementSystem
 
             AutoMailHelper.ScanSchedules();
 
+            app.UseWebSockets();
+
             app.Run();
         }
     }
