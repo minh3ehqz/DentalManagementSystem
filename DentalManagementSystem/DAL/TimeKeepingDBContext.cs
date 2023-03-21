@@ -7,15 +7,11 @@ namespace DentalManagementSystem.DAL
     {
         public override void Add(Timekeeping entity)
         {
-            var keeping = Timekeepings.FirstOrDefault(x=>x.UserId== entity.UserId && x.TimeCheckin == entity.TimeCheckin);
+            var keeping = Timekeepings.FirstOrDefault(x=>x.UserId== entity.UserId && x.TimeCheckin.Date == entity.TimeCheckin.Date);
             if (keeping == null)
             {
                 Timekeepings.Add(entity);
                 SaveChanges();
-            }
-            else
-            {
-                Update(entity);
             }
         }
 
