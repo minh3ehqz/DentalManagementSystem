@@ -8,7 +8,7 @@
     <!--begin::Page title-->
     <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
         <!--begin::Heading-->
-        <h1 class="text-dark fw-semibold my-0 fs-2">Thông tin chi tiết dịch vụ</h1>
+        
         <!--end::Heading-->
     </div>
     <!--end::Page title=-->
@@ -36,49 +36,89 @@
 </div>
 
 <div class="card container-xxl">
-    <div class="card-body">
-        <div>
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Unit)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Unit)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.MarketPrice)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.MarketPrice)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Price)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
-            </dl>
+    <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+        <!--begin::Card header-->
+        <div class="card-header cursor-pointer">
+            <!--begin::Card title-->
+            <div class="card-title m-0">
+                <h3 class="fw-bold m-0">Thông tin dịch vụ</h3>
+            </div>
+            <!--end::Card title-->
+            <!--begin::Action-->
+            <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
+                <!--begin::Add user-->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                    Chỉnh sửa
+                </button>
+                <!--end::Add user-->
+            </div>
+            <!--end::Action-->
         </div>
+        <!--begin::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body p-9">
+            <!--begin::Row-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Tên dịch vụ</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">@Model.Name</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Row-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Đơn vị</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">@Model.Unit</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Giá nhập</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">@Model.MarketPrice</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+            <!--begin::Input group-->
+            <div class="row mb-7">
+                <!--begin::Label-->
+                <label class="col-lg-4 fw-semibold text-muted">Giá xuất</label>
+                <!--end::Label-->
+                <!--begin::Col-->
+                <div class="col-lg-8">
+                    <span class="fw-bold fs-6 text-gray-800">@Model.Price</span>
+                </div>
+                <!--end::Col-->
+            </div>
+            <!--end::Input group-->
+        </div>
+        <!--end::Card body-->
+        &nbsp;&nbsp;
+        <a asp-action="Index">Quay trở lại</a>
+    </div>
+    <!--end::details View-->
+</div>
         <div class="card-header border-0 pt-6">
             <!--begin::Card title
             <!--begin::Card toolbar-->
             <div class="card-toolbar">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
-                    <!--begin::Add user-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
-                        Chỉnh sửa
-                    </button>
-                    <!--end::Add user-->
-                </div>
-                &nbsp;&nbsp;
-                <a asp-action="Index">Quay trở lại</a>
+                
+               
                 <!--begin::Modal - Add task-->
                 <div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true">
                     <!--begin::Modal dialog-->
@@ -128,7 +168,7 @@
                                             <label class="required fw-semibold fs-6 mb-2">Đơn vị</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
-                                            <input type="number" name="unit" class="form-control form-control-solid mb-3 mb-lg-0" required value="@Model.Unit"/>
+                                            <input type="text" name="unit" class="form-control form-control-solid mb-3 mb-lg-0" required value="@Model.Unit"/>
                                             
                                             <!--end::Input-->
                                         </div>
@@ -136,7 +176,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Giá thị trường</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Giá nhập</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" name="marketprice" class="form-control form-control-solid mb-3 mb-lg-0"  required value="@Model.MarketPrice"/>
@@ -147,7 +187,7 @@
                                         <!--begin::Input group-->
                                         <div class="fv-row mb-7">
                                             <!--begin::Label-->
-                                            <label class="required fw-semibold fs-6 mb-2">Giá</label>
+                                            <label class="required fw-semibold fs-6 mb-2">Giá xuất</label>
                                             <!--end::Label-->
                                             <!--begin::Input-->
                                             <input type="number" name="price" class="form-control form-control-solid mb-3 mb-lg-0"  required value="@Model.Price"/>
@@ -160,7 +200,7 @@
                                     <div class="text-center pt-15">
                                         <button type="reset" class="btn btn-light me-3" data-kt-users-modal-action="cancel">Hủy</button>
                                         <button type="submit" class="btn btn-primary" id="create_submit" form="kt_modal_add_service_form">
-                                            <span class="indicator-label">Chỉnh sửa</span>
+                                            <span class="indicator-label">Lưu</span>
                                             <span class="indicator-progress">
                                                 Please wait...
                                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

@@ -20,7 +20,7 @@ namespace DentalManagementSystem.Controllers
 
         // GET: Services
       
-        public IActionResult Index(string search, int page = 1, int pageSize = 2)
+        public IActionResult Index(string search, int page = 1, int pageSize = 10)
         {
            
             if (!isAuth("/Service", out User user))
@@ -120,17 +120,10 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = user.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
-            Service service;
-            service = DB.Services.FirstOrDefault(s => s.Id == editService.Id);
-            if (service != null)
-            {
-                service.Name = editService.Name;
-                service.Unit = editService.Unit;
-                service.MarketPrice = editService.MarketPrice;
-                service.Price = editService.Price;
-                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin dịch vụ " + service.Name + "" });
-            }
-            DB.SaveChanges();
+                Log.Add(new SystemLog { CreatedDate = DateTime.Now, OwnerId = user.Id, Content = "người dùng đã thay đổi thông tin dịch vụ " + editService.Name + "" });
+
+            DB.Update(editService);
+            TempData["editsuccess"] = "Chỉnh sửa thành công";
             return RedirectToAction("Details", new { id = editService.Id });
         }
 

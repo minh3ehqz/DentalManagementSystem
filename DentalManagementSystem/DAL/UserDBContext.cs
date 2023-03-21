@@ -4,9 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DentalManagementSystem.DAL
 {
-	public class UserDBContext : DBContext<User>
+ 
+    public class UserDBContext : DBContext<User>
 	{
-		public User GetByUsernamePassword(string username, string password)
+      
+        public User GetByUsernamePassword(string username, string password)
 		{
 			return Users.FirstOrDefault(x => x.Username == username && x.Password == password);
 		}

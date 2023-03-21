@@ -172,25 +172,16 @@ namespace DentalManagementSystem.Controllers
             ViewData["FullName"] = logUser.FullName;
             ViewData["Role"] = RoleHelper.GetRoleNameById(logUser.RoleId);
             ViewData["Email"] = logUser.Email;
-
-            User user = DB.Users.FirstOrDefault(s => s.Id == editUser.Id);
-            if (user != null)
-            {
-                user.Username = editUser.Username.Trim();
-                user.FullName = editUser.FullName.Trim();
-                user.Birthday = editUser.Birthday;
-                user.Phone = editUser.Phone;
-                user.Salary = editUser.Salary;
-                user.RoleId = editUser.RoleId;
-            }
+          
             Log.Add(new SystemLog
             {
                 CreatedDate = DateTime.Now,
                 OwnerId = logUser.Id,
                 Content = "người dùng đã thay đổi thông tin nhân viên " +
-                    "" + DB.Get(id).FullName + " có sô điện thoại là " + DB.Get(id).Phone + " và email là " + DB.Get(id).Email + ""
+                    "" + editUser.FullName + " có sô điện thoại là " + editUser.Phone + " và email là " + editUser.Email + ""
             });
-            DB.SaveChanges();
+            DB.Update(editUser);
+            TempData["editsuccess"] = "Chỉnh sửa thành công";
             return RedirectToAction("Details", new { id = editUser.Id });
         }
 
@@ -263,7 +254,7 @@ namespace DentalManagementSystem.Controllers
             if (checkEmail != null || checkPhone != null)
             {
                 string result = "";
-                if (checkEmail != null) result += "E0mail ";
+                if (checkEmail != null) result += "Email ";
                 if (checkPhone != null)
                 {
                     if (!result.Equals("")) result += "và ";
