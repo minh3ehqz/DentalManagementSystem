@@ -1,16 +1,19 @@
 ﻿using OfficeOpenXml.Style;
 using OfficeOpenXml;
 using System.Collections;
+using System.IO;
 
 namespace DentalManagementSystem.Utils
 {
     public class FileHelper
     {
-        public static FileStream ExportToExcel(List<string> Headers, List<string>Contents)
+        public static MemoryStream ExportToExcel(List<string> Headers, List<string>Contents)
         {
-			try
+            var memory = new MemoryStream();
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            try
             {
-                using (ExcelPackage p = new ExcelPackage())
+                using (ExcelPackage p = new ExcelPackage(memory))
                 {
                     // đặt tên người tạo file
                     p.Workbook.Properties.Author = "Dental Management System";
@@ -22,7 +25,7 @@ namespace DentalManagementSystem.Utils
                     p.Workbook.Worksheets.Add("Sheet 1");
 
                     // lấy sheet vừa add ra để thao tác
-                    ExcelWorksheet ws = p.Workbook.Worksheets[1];
+                    ExcelWorksheet ws = p.Workbook.Worksheets[0];
 
                     // đặt tên cho sheet
                     ws.Name = "Kteam sheet";
@@ -35,7 +38,7 @@ namespace DentalManagementSystem.Utils
                     var countColHeader = Headers.Count();
                     
                     int colIndex = 1;
-                    int rowIndex = 2;
+                    int rowIndex = 1;
 
                     //tạo các header từ column header đã tạo từ bên trên
                     foreach (var item in Headers)
@@ -52,32 +55,23 @@ namespace DentalManagementSystem.Utils
                     {
                         // bắt đầu ghi từ cột 1. Excel bắt đầu từ 1 không phải từ 0
                         colIndex = 1;
+                        rowIndex++;
                         // với mỗi item trong danh sách sẽ ghi trên 1 dòng
                         foreach (var item in content.Split('|'))
                         {
-                            // rowIndex tương ứng từng dòng dữ liệu
-                            rowIndex++;
-                            
                             //gán giá trị cho từng cell                      
                             ws.Cells[rowIndex, colIndex++].Value = item;
                         }
                     }
 
-                    //Lưu file lại
-                    Byte[] bin = p.GetAsByteArray();
-                    FileStream fs = null;
-                    using (fs = new FileStream($"Export{DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss")}", FileMode.Create))
-                    {
-                        fs.Write(bin, 0, bin.Length);
-                    }
-                    return fs;
+                    p.Save();
                 }
             }
-			catch (Exception)
+			catch (Exception ex)
 			{
 
 			}
-            return null;
+            return memory;
         }
     }
 }

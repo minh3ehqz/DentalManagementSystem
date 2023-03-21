@@ -33,7 +33,7 @@ namespace DentalManagementSystem.DAL
 
         public override List<PatientRecord> ListAll(long OwnerId)
         {
-            throw new NotImplementedException();
+            return PatientRecords.Include(x => x.Patient).ToList();
         }
 
         public override void Update(PatientRecord entity)
