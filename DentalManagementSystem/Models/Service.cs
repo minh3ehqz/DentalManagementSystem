@@ -9,7 +9,7 @@ public partial class Service
 
     public string Name { get; set; } = null!;
 
-    public string Unit { get; set; }
+    public string Unit { get; set; } = null!;
 
     public int MarketPrice { get; set; }
 

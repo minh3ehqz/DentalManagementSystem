@@ -32,7 +32,6 @@ public partial class Patient
     public virtual ICollection<Schedule> Schedules { get; } = new List<Schedule>();
 
     public virtual ICollection<Treatment> Treatments { get; } = new List<Treatment>();
-
     public void Trim()
     {
         Name = Name?.Trim();
