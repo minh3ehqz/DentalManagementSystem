@@ -32,7 +32,7 @@ namespace DentalManagementSystem.Controllers
 			//{
 			//	return NotFound();
 			//}
-			if (!isAuth("/Material/Delete", out User user))
+			if (!isAuth("/Material", out User user))
 			{
 				return NotFound();
 			}
@@ -63,9 +63,8 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Create([Bind("Id, Name, Unit, Amount, Price")] Material material)
 		{
-			if (!isAuth("/Material/Delete", out User user))
+			if (isAuth("/Material/Create", out User user))
 			{
-
 				TempData["addsuccess"] = "thêm mới thành công";
 				DB.Add(material);
 				return RedirectToAction(nameof(Index));
@@ -90,7 +89,7 @@ namespace DentalManagementSystem.Controllers
 		[ValidateAntiForgeryToken]
 		public IActionResult Edit(long id, [Bind("Id, Name, Unit, Amount, Price")] Material material)
 		{
-			if (!isAuth("/Material/Delete", out User user))
+			if (!isAuth("/Material/Edit", out User user))
 			{
 				return NotFound();
 			}
@@ -118,7 +117,7 @@ namespace DentalManagementSystem.Controllers
 		}
 
 		public IActionResult checkName(string name)
-		{
+			{
 			var checkName = DB.getName(name);
 			if (checkName != null)
 			{
