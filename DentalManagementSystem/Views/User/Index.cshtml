@@ -1,5 +1,6 @@
 ﻿@using DentalManagementSystem.DAL;
 @using DentalManagementSystem.Models;
+@using Newtonsoft.Json;
 @model List<User>
 
 
@@ -300,6 +301,8 @@
                             </div>
                             <!--end::Modal header-->
                                 <!--begin::Modal body-->
+                                <form method="post" asp-action="exportfile">
+                                    <input hidden name="Data" value="@JsonConvert.SerializeObject(Model)" />
                                 <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
                                     <!--begin::Form
                                         <!--begin::Input group -->
@@ -330,6 +333,7 @@
                                     <!--end::Actions-->
                                     <!--end::Form-->
                                 </div>
+                                </form>
                                 <!--end::Modal body-->
 
                         </div>

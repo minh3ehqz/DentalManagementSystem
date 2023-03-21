@@ -9,6 +9,7 @@ using DentalManagementSystem.DAL;
 using DentalManagementSystem.Models;
 using Microsoft.IdentityModel.Tokens;
 using DentalManagementSystem.Utils;
+using Newtonsoft.Json;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -185,6 +186,28 @@ namespace DentalManagementSystem.Controllers
             return RedirectToAction("Details", new { id = editUser.Id });
         }
 
+        [HttpPost]
+        public IActionResult ExportFile(string Data)
+        {
+            if (!isAuth("/Patients/Index", out User user))
+            {
+                return Redirect("/Login");
+            }
+            var Patients = JsonConvert.DeserializeObject<List<Patient>>(Data);
+            List<string> TempData = new List<string>();
+            MemoryStream memory = new MemoryStream();
+            foreach (var patient in Patients)
+            {
+                TempData.Add(patient.Name + "|" + patient.Birthday.ToShortDateString() + "|" + ((patient.Gender) ? "nam" : "nữ") + "|" + patient.Address + "|" + patient.Phone + "|" + patient.Email);
+            }
+            memory = FileHelper.ExportToExcel(new List<string>()
+            {
+                "Username","Tên","Ngày tháng năm sinh","giới tính","Địa chỉ","SĐT","Email"
+
+            }, TempData);
+
+            return File(memory.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "File thống kê.xlsx");
+        }
         // xóa user
         [HttpPost]
         [ValidateAntiForgeryToken]
