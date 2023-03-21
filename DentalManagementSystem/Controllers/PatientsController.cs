@@ -10,6 +10,8 @@ using DentalManagementSystem.Models;
 using DentalManagementSystem.Utils;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Drawing.Printing;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace DentalManagementSystem.Controllers
 {
@@ -108,6 +110,25 @@ namespace DentalManagementSystem.Controllers
             DB.Update(patient);
             TempData["editsuccess"] = "edit thành công";
             return RedirectToAction("Details", new { id = patient.Id });
+        }
+
+        [HttpPost]
+        public IActionResult ExportFile(string Data)
+        {
+            var Patients = JsonConvert.DeserializeObject<List<Patient>>(Data);
+            List<string> TempData = new List<string>();
+            FileStream fs = new FileStream($"Export{DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss")}.xlsx", FileMode.Create);
+            foreach (var patient in Patients)
+            {
+                TempData.Add(patient.Name + "|" + patient.Birthday.ToShortDateString()+"|"+((patient.Gender)?"nam":"nữ") + "|"+patient.Address+"|"+patient.Phone+"|"+patient.Email);
+            }
+            var bin =FileHelper.ExportToExcel(new List<string>()
+            {
+                "Tên","Ngày tháng năm sinh","giới tính","Địa chỉ","SĐT","Email"
+
+            }, TempData);
+            fs.Write(bin, 0, bin.Length);
+            return File(fs, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "File thống kê.xlsx");
         }
 
         //Thêm bệnh án

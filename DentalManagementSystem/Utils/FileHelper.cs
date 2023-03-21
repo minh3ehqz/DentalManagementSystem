@@ -6,9 +6,11 @@ namespace DentalManagementSystem.Utils
 {
     public class FileHelper
     {
-        public static FileStream ExportToExcel(List<string> Headers, List<string>Contents)
+        public static Byte[] ExportToExcel(List<string> Headers, List<string>Contents)
         {
-			try
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            try
             {
                 using (ExcelPackage p = new ExcelPackage())
                 {
@@ -22,7 +24,7 @@ namespace DentalManagementSystem.Utils
                     p.Workbook.Worksheets.Add("Sheet 1");
 
                     // lấy sheet vừa add ra để thao tác
-                    ExcelWorksheet ws = p.Workbook.Worksheets[1];
+                    ExcelWorksheet ws = p.Workbook.Worksheets[0];
 
                     // đặt tên cho sheet
                     ws.Name = "Kteam sheet";
@@ -65,15 +67,10 @@ namespace DentalManagementSystem.Utils
 
                     //Lưu file lại
                     Byte[] bin = p.GetAsByteArray();
-                    FileStream fs = null;
-                    using (fs = new FileStream($"Export{DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss")}", FileMode.Create))
-                    {
-                        fs.Write(bin, 0, bin.Length);
-                    }
-                    return fs;
+                    return bin;
                 }
             }
-			catch (Exception)
+			catch (Exception ex)
 			{
 
 			}
