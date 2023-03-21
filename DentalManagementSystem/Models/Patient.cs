@@ -32,4 +32,18 @@ public partial class Patient
     public virtual ICollection<Schedule> Schedules { get; } = new List<Schedule>();
 
     public virtual ICollection<Treatment> Treatments { get; } = new List<Treatment>();
+    public void Trim()
+    {
+        Name = Name?.Trim();
+        Address = Address?.Trim();
+        Email = Email?.Trim();
+        Phone = Phone?.Trim();
+        BodyPrehistory = BodyPrehistory?.Trim();
+        TeethPrehistory = TeethPrehistory?.Trim();
+    }
+
+    public override string ToString()
+    {
+        return (Id + " " + Name + " " + Birthday + " " + (Gender ? "nam" : "nữ") + " " + Address + " " + Phone + " " + Email).Trim();
+    }
 }
