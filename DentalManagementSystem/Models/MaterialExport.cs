@@ -22,4 +22,9 @@ public partial class MaterialExport
     public virtual Material Material { get; set; } = null!;
 
     public virtual PatientRecord PatientRecord { get; set; } = null!;
+
+	public override string ToString()
+	{
+		return (Id + " " + MaterialId + " " + Amount + " " + TotalPrice + " " + PatientRecordId + " " +  Date).Trim();
+	}
 }

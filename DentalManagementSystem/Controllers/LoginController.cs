@@ -1,10 +1,12 @@
 ﻿using DentalManagementSystem.DAL;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace DentalManagementSystem.Controllers
 {
     public class LoginController : AuthController
     {
+        TimeKeepingDBContext timeCheck = new TimeKeepingDBContext();
         public IActionResult Index()
         {
             if (isAuth("/Home", out _))
@@ -27,6 +29,15 @@ namespace DentalManagementSystem.Controllers
             if (user != null)
             {
                 HttpContext.Session.SetString("UserId", user.Id.ToString());
+                if(DateTime.Now.Hour >=8 && DateTime.Now.Hour <=17 && DateTime.Now.DayOfWeek >= DayOfWeek.Monday && DateTime.Now.DayOfWeek <= DayOfWeek.Friday)
+                {
+                    timeCheck.Add(new Models.Timekeeping
+                    {
+                        UserId = user.Id,
+                        TimeCheckin = DateTime.Now,
+                        TimeCheckout = DateTime.Parse("1755-01-01"),
+                    });
+                }
                 return Redirect("/Home");
             }
             ViewData["LoginError"] = "Sai tài khoản hoặc mật khẩu";

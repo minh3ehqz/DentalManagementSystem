@@ -31,11 +31,11 @@ namespace DentalManagementSystem.Controllers
 
         public IActionResult Index(string textSearch, int page = 1)
         {
-            if (!isAuth(out User user))
-            {
-                return NotFound();
-            }
-            ViewData["searchContent"] = textSearch;
+			if (!isAuth("/ExportMaterial", out User user))
+			{
+				return NotFound();
+			}
+			ViewData["searchContent"] = textSearch;
             int count = DB.ListAll((string)ViewData["searchContent"]).Count();
             ViewData["thisPage"] = page;
             ViewData["stt"] = page - 1;
@@ -61,16 +61,23 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, Date, IsDeleted")] MaterialExport materialExport)
-        {						
-			TempData["addsuccess"] = "thêm mới thành công"; 
+        {
+			if (isAuth("/ExportMaterial/Create", out User user)) { 
+				TempData["addsuccess"] = "thêm mới thành công"; 
 		    DB.Add(materialExport);
-            return RedirectToAction(nameof(Index));                        
-        }
+		    return RedirectToAction(nameof(Index));
+			}
+			else return NotFound();
+		}
 
         // GET: Change information of a record
         public IActionResult Edit(long id)
         {
-            var materialExport = DB.Get(id);
+			if (!isAuth("/ExportMaterial/Edit", out User user))
+			{
+				return NotFound();
+			}
+			var materialExport = DB.Get(id);
             if (materialExport == null)
             {
                 return NotFound();
@@ -83,8 +90,12 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(long id, [Bind("Id, MaterialId, Amount, TotalPrice, PatientRecordId, Date, IsDeleted")] MaterialExport materialExport)
-        {         
-				DB.Update(materialExport);
+        {
+			if (!isAuth("/ExportMaterial/Edit", out User user))
+			{
+				return NotFound();
+			}
+			DB.Update(materialExport);
 				TempData["editsuccess"] = "edit thành công";
 				return RedirectToAction(nameof(Index));			
 		}
@@ -95,6 +106,10 @@ namespace DentalManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(long id)
         {
+			if (!isAuth("/ExportMaterial/Delete", out User user))
+			{
+				return NotFound();
+			}
 			DB.Delete(id);
 			TempData["Delete messenger"] = "xóa thành công";			
             return RedirectToAction(nameof(Index));
