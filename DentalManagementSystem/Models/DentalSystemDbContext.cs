@@ -172,7 +172,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<PatientRecordServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83F93FDC4EC");
+            entity.HasKey(e => e.Id).HasName("PK__patient___3213E83FA1A50550");
 
             entity.ToTable("patient_record_service_map");
 
@@ -194,7 +194,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Permission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83F306ED099");
+            entity.HasKey(e => e.Id).HasName("PK__permissi__3213E83F2FFAB956");
 
             entity.ToTable("permission");
 
@@ -204,7 +204,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FED698E48");
+            entity.HasKey(e => e.Id).HasName("PK__roles__3213E83FE274DBD9");
 
             entity.ToTable("roles");
 
@@ -214,7 +214,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<RolePermissionMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83FF2AB472D");
+            entity.HasKey(e => e.Id).HasName("PK__role_per__3213E83FD1DD818E");
 
             entity.ToTable("role_permission_map");
 
@@ -235,7 +235,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83FD3179DFA");
+            entity.HasKey(e => e.Id).HasName("PK__schedule__3213E83F805802B5");
 
             entity.ToTable("schedule");
 
@@ -255,7 +255,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Service>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__services__3213E83F1C810966");
+            entity.HasKey(e => e.Id).HasName("PK__services__3213E83FAA096CF5");
 
             entity.ToTable("services");
 
@@ -282,7 +282,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Timekeeping>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83F8BA3CAD2");
+            entity.HasKey(e => e.Id).HasName("PK__timekeep__3213E83F92D12E99");
 
             entity.ToTable("timekeeping");
 
@@ -303,7 +303,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<Treatment>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83FB68B38C7");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F950A9BB6");
 
             entity.ToTable("treatments");
 
@@ -319,7 +319,7 @@ public partial class DentalSystemDbContext : DbContext
 
         modelBuilder.Entity<TreatmentServiceMap>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F74FDA6A9");
+            entity.HasKey(e => e.Id).HasName("PK__treatmen__3213E83F30078370");
 
             entity.ToTable("treatment_service_map");
 

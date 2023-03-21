@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace DentalManagementSystem.Models;
 
@@ -41,15 +40,4 @@ public partial class PatientRecord
     public virtual ICollection<TreatmentServiceMap> TreatmentServiceMaps { get; } = new List<TreatmentServiceMap>();
 
     public virtual User User { get; set; } = null!;
-    public void Trim()
-    {
-        Reason = Reason?.Trim();
-        Causal = Causal?.Trim();
-        Diagnostic = Diagnostic?.Trim();
-        TreatmentName = TreatmentName?.Trim();
-        MarrowRecord = MarrowRecord?.Trim();
-        Debit = Debit?.Trim();
-        Note = Note?.Trim();
-        Prescription = Prescription?.Trim();
-    }
 }
