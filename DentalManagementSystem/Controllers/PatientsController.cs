@@ -117,18 +117,18 @@ namespace DentalManagementSystem.Controllers
         {
             var Patients = JsonConvert.DeserializeObject<List<Patient>>(Data);
             List<string> TempData = new List<string>();
-            FileStream fs = new FileStream($"Export{DateTime.Now.ToString("dd-MM-yyyy HH.mm.ss")}.xlsx", FileMode.Create);
+            MemoryStream memory = new MemoryStream();
             foreach (var patient in Patients)
             {
                 TempData.Add(patient.Name + "|" + patient.Birthday.ToShortDateString()+"|"+((patient.Gender)?"nam":"nữ") + "|"+patient.Address+"|"+patient.Phone+"|"+patient.Email);
             }
-            var bin =FileHelper.ExportToExcel(new List<string>()
+            memory = FileHelper.ExportToExcel(new List<string>()
             {
                 "Tên","Ngày tháng năm sinh","giới tính","Địa chỉ","SĐT","Email"
 
             }, TempData);
-            fs.Write(bin, 0, bin.Length);
-            return File(fs, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "File thống kê.xlsx");
+            
+            return File(memory.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "File thống kê.xlsx");
         }
 
         //Thêm bệnh án
