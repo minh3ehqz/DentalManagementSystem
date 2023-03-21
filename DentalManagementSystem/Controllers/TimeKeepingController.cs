@@ -13,7 +13,7 @@ namespace DentalManagementSystem.Controllers
         TimeKeepingDBContext db = new TimeKeepingDBContext();
         public IActionResult Index(string search, int page = 1, int pageSize = 2)
         {
-            if (!isAuth("/User/EditProfile", out User user))
+            if (!isAuth("/TimeKeeping/Index", out User user))
             {
                 return NotFound();
             }
@@ -43,7 +43,7 @@ namespace DentalManagementSystem.Controllers
    
         public IActionResult ResetTimeKeeping(int id)
         {
-            if (!isAuth("/User/EditProfile", out User user))
+            if (!isAuth("/TimeKeeping/KeepingManager", out User user))
             {
                 return NotFound();
             }
@@ -59,7 +59,7 @@ namespace DentalManagementSystem.Controllers
         [HttpPost]
         public IActionResult CheckOut()
         {
-            if (!isAuth("/User/EditProfile", out User user))
+            if (!isAuth("/TimeKeeping/Index", out User user))
             {
                 return NotFound();
             }
@@ -72,7 +72,7 @@ namespace DentalManagementSystem.Controllers
 
         public IActionResult KeepingManager(string search, int page = 1, int pageSize = 2)
         {
-            if (!isAuth("/User/EditProfile", out User user))
+            if (!isAuth("/TimeKeeping/KeepingManager", out User user))
             {
                 return NotFound();
             }
