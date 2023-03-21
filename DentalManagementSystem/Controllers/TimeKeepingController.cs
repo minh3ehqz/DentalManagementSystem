@@ -21,7 +21,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["Role"] = RoleHelper.GetRoleNameById(user.RoleId);
             ViewData["Email"] = user.Email;
             
-            var query = db.Timekeepings.Where(x => x.UserId == user.Id).AsQueryable();
+            var query = db.Timekeepings.Where(x => x.UserId == user.Id).OrderByDescending(x=>x.TimeCheckin).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 query = query.Where(x => x.TimeCheckin == DateTime.Parse(search));
@@ -81,7 +81,7 @@ namespace DentalManagementSystem.Controllers
             ViewData["Email"] = user.Email;
 
 
-            var query = db.Timekeepings.AsQueryable();
+            var query = db.Timekeepings.OrderByDescending(x => x.TimeCheckin).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 query = query.Where(x => x.TimeCheckin == DateTime.Parse(search));
