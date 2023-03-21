@@ -15,7 +15,7 @@ namespace DentalManagementSystem.DAL
 
 		public Material getName(string name)
 		{
-			return Materials.FirstOrDefault(x => x.Name == name);
+			return Materials.FirstOrDefault(x => x.Name.Equals(name));
 		}
 		public int getAmount(long id)
 		{

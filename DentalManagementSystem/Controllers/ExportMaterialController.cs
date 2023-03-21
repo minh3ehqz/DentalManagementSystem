@@ -68,7 +68,6 @@ namespace DentalManagementSystem.Controllers
 		    return RedirectToAction(nameof(Index));
 			}
 			else return NotFound();
-
 		}
 
         // GET: Change information of a record

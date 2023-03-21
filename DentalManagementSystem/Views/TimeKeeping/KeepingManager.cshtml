@@ -1,0 +1,226 @@
+﻿@model List<Timekeeping>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@section Patientscript{
+
+}
+
+<div class="container-xxl d-flex align-items-center justify-content-between" id="kt_header_container" style="max-width:none">
+    <!--begin::Page title-->
+    <div style="padding-left:4%;padding-top:2%; margin: -229px;" class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-5 pb-lg-0" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', lg: '#kt_header_container'}">
+        <!--begin::Heading-->
+        <h1 class="text-dark fw-semibold my-0 fs-2">Quản lý chấm công</h1>
+        <!--end::Heading-->
+    </div>
+    <!--end::Page title=-->
+    <!--begin::Wrapper-->
+    <div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+        <!--begin::Aside mobile toggle-->
+        <div class="btn btn-icon btn-active-icon-primary" id="kt_aside_toggle">
+            <!--begin::Svg Icon | path: icons/duotune/abstract/abs015.svg-->
+            <span class="svg-icon svg-icon-2x">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                    <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Aside mobile toggle-->
+        <!--begin::Logo-->
+        <a href="../dist/index.html" class="d-flex align-items-center">
+            <img alt="Logo" src="~/assets/media/logos/logo-default.svg" class="h-40px" />
+        </a>
+        <!--end::Logo-->
+    </div>
+    <!--end::Wrapper-->
+</div>
+
+<div class="container-xxl" id="kt_content_container" style="max-width:none;width:1700px">
+    <!--begin::Card-->
+    <div class="card">
+        <!--begin::Card header-->
+        <div class="card-header border-0 pt-6">
+            <div class="card-title">
+                <!--begin::Search-->
+                <div class="d-flex align-items-center position-relative my-1">
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                    <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
+                            <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="currentColor"></path>
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                    <form asp-action="Index" id="search">
+                        <input type="text" name="search" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-14" placeholder="Tìm kiếm" value="@ViewData["searchContent"]">
+                    </form>
+                </div>
+                <!--end::Search-->
+            </div>
+            <!--begin::Card title
+            <!--begin::Card toolbar-->
+            <div class="card-toolbar">
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end " data-kt-user-table-toolbar="base">
+                    <!--begin::Menu 1-->
+                    <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true">
+                        <!--begin::Header-->
+                        <div class="px-7 py-5">
+                            <div class="fs-5 text-dark fw-bold">Filter Options</div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Separator-->
+                        <div class="separator border-gray-200"></div>
+                        <!--end::Separator-->
+                    </div>
+                    <!--end::Menu 1-->
+                    <!--end::Filter-->
+                    <!--begin::Add user-->
+                    <!--end::Add user-->
+                </div>
+                <div class="d-flex justify-content-end align-items-center d-none" data-kt-user-table-toolbar="selected">
+                    <div class="fw-bold me-5">
+                        <span class="me-2" data-kt-user-table-select="selected_count"></span>Selected
+                    </div>
+                    <button type="submit" class="btn btn-danger" data-kt-user-table-select="delete_selected" form="ListForm">
+                        Delete Selected
+                    </button>
+                </div>
+
+                <!--begin::Modal - Adjust Balance-->
+                <!--end::Modal - New Card-->
+            </div>
+            <!--end::Card toolbar-->
+        </div>
+        <!--end::Card header-->
+        <!--begin::Card body-->
+        <div class="card-body py-4">
+            <!--begin::Table-->
+            @using (Html.BeginForm("", "", FormMethod.Post, new { id = "ListForm" }))
+            {
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_table_users">
+                    <!--begin::Table head-->
+                    <thead>
+                        <!--begin::Table row-->
+                        <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0">
+                            <th class="w-10px pe-2 sorting_disabled" rowspan="1" colspan="1" aria-label=" " style="width: 29.8906px;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_table_users .form-check-input" value="1">
+                                </div>
+                            </th>
+                            <th class="min-w-125px">STT</th>
+                            <th class="min-w-125px">Nhân viên</th>
+                            <th class="min-w-125px">Bắt đầu ca làm</th>
+                            <th class="min-w-125px">Kết thúc ca làm</th>
+                            <th class="min-w-125px">Trạng thái</th>
+                            <th></th>
+                        </tr>
+                        <!--end::Table row-->
+                    </thead>
+                    <!--end::Table head-->
+                    <!--begin::Table body (nội dung dữ liệu)-->
+
+                    <tbody class="text-gray-600 fw-semibold">
+                        @{
+
+                            int index = 1 + (int)ViewData["stt"] * 2;
+
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                        <input class="form-check-input" name="selectedValues" type="checkbox" value="@item.Id" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>@index</p>
+                                    @{
+                                        index++;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-controller="User" asp-action="Details" asp-route-id="@item.UserId">@item.User.FullName</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TimeCheckin)
+                                </td>
+                                <td>
+                                    @if (item.TimeCheckout.Year == 1755)
+                                    {
+                                        <p style="color:red"> Chưa xác nhận kết thúc ca</p>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.TimeCheckout)
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.TimeCheckout.Year == 1755)
+                                    {
+                                        <p style="color:mediumpurple"> không xác định</p>
+                                    }
+                                    else if (item.TimeCheckin.Hour >= 9)
+                                    {
+                                        <p style="color:mediumpurple"> muộn làm</p>
+                                    }
+                                    else if (item.TimeCheckout.Hour <= 16)
+                                    {
+                                        <p style="color:mediumpurple"> về sớm</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="color:mediumpurple">tốt</p>
+                                    }
+                                </td>
+                                <td>
+                                    <a style="color:greenyellow" href="~/TimeKeeping/ResetTimeKeeping/@item.Id">Đặt lại</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                    <!--end::Table body-->
+                </table>
+            }
+            <div class="row">
+                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div>
+                <div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
+                    <div class="dataTables_paginate paging_simple_numbers" id="kt_table_users_paginate">
+                        <ul class="pagination">
+                            @for (var i = 1; i <= (int)ViewBag.TotalPages; i++)
+                            {
+                                @if (i == (int)ViewBag.Page)
+                                {
+                                    <li class="paginate_button page-item">
+                                        <form asp-action="KeepingManager">
+                                            <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link" style="background-color:mediumpurple;color:white">
+                                            <input hidden value="@ViewBag.Search" name="search">
+                                        </form>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="paginate_button page-item">
+                                        <form asp-action="KeepingManager">
+                                            <input name="page" type="submit" value="@i" aria-controls="kt_table_users" data-dt-idx="1" tabindex="0" class="page-link">
+                                            <input hidden value="@ViewBag.Search" name="search">
+                                        </form>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+    </div>
+    <!--end::Card-->
+</div>
